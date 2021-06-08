@@ -37,6 +37,6 @@ void widgetTrazado::paintGL()
 {
     renderizado->useRender();
 
-    myTriangle->renderTriangulo();
+    //myTriangle->renderTriangulo();
 
 }

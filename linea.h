@@ -1,27 +1,35 @@
 #ifndef LINEA_H
 #define LINEA_H
 
+#include <punto.h>
 #include <vector>
 
 class Linea
 {
 public:
-    Linea(std::vector<float>, std::vector<float>);
+    Linea();
+    Linea(float x1, float y1, float x2, float y2);
+    Linea(Punto, Punto);
 
-    std::vector<float> getPosicionO();
-    std::vector<float> getPosicionP();
-    void setPosicionO(std::vector<float>);
-    void setPosicionP(std::vector<float>);
+    void setX1(float);
+    void setY1(float);
+    void setX2(float);
+    void setY2(float);
 
+    float getX1();
+    float getY1();
+    float getX2();
+    float getY2();
+
+    Punto getPosicionP1();
+    Punto getPosicionP2();
+
+    std::vector<float> getVectorPosicion();
 private:
-    float posicionXi;
-    float posicionXj;
-    float posicionYi;
-    float posicionYj;
-
-    std::vector<float> posicionO;
-    std::vector<float> posicionP;
-
+    float x1;
+    float y1;
+    float x2;
+    float y2;
 };
 
 #endif // LINEA_H

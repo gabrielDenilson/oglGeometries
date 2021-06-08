@@ -5,6 +5,7 @@
 
 #include "shader.h"
 #include "triangulo.h"
+#include "linea.h"
 
 class renderFigures : protected QOpenGLExtraFunctions
 {
@@ -25,6 +26,8 @@ private:
     //float vertices[];
 
     unsigned int VBO, VAO;
+
+    unsigned int VBOline, VAOline;
 
     const char* direccionVertex;
     const char* direccionFragment;

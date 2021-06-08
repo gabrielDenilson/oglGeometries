@@ -22,6 +22,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     planotrazado.cpp \
+    punto.cpp \
     renderfigures.cpp \
     shader.cpp \
     triangulo.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     linea.h \
     mainwindow.h \
     planotrazado.h \
+    punto.h \
     renderfigures.h \
     shader.h \
     triangulo.h \

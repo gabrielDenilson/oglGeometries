@@ -15,6 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void creacionLinea();
+
 
 private:
     Ui::MainWindow *ui;

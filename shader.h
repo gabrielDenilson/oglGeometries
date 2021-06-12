@@ -7,13 +7,19 @@
 #include <sstream>
 #include <iostream>
 
-class Shader: protected QOpenGLExtraFunctions
+class Shader : QOpenGLFunctions
 {
 public:
-    Shader(const char*, const char*);
+    Shader();
 
+    void configurarShaders();
     //usar el programa ID
+    void setVertexDireccion(const char* vertexDireccion);
+    void setFragmentDireccion(const char* fragmentDireccion);
+
     void usar();
+
+    void release();
 
     //Uso de los uniforms
     void setBool(const std::string& name, bool value);
@@ -24,14 +30,13 @@ public:
 
     unsigned int ID;
 private:
+    const char* vertDireccion;
+    const char*fragDireccion;
 
     std::string vertexCodigo;
     std::string fragmentCodigo;
     std::ifstream vertexArchivo;
     std::ifstream fragmentArchivo;
-
-
-
 };
 
 #endif // SHADER_H

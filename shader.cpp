@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-Shader::Shader(const char*vertexDireccion, const char*fragmentDireccion)
+void Shader::configurarShaders()
 {
     initializeOpenGLFunctions();
 
@@ -10,8 +10,8 @@ Shader::Shader(const char*vertexDireccion, const char*fragmentDireccion)
     fragmentArchivo.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
     try {
-        vertexArchivo.open(vertexDireccion);
-        fragmentArchivo.open(fragmentDireccion);
+        vertexArchivo.open(vertDireccion);
+        fragmentArchivo.open(fragDireccion);
 
         std::stringstream vertexShaderStream, fragmentShaderStream;
 
@@ -36,7 +36,7 @@ Shader::Shader(const char*vertexDireccion, const char*fragmentDireccion)
     int exito;
     char infoLog[512];
 
-
+    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCodigo, NULL);
@@ -80,23 +80,48 @@ Shader::Shader(const char*vertexDireccion, const char*fragmentDireccion)
     glDeleteShader(fragment);
 }
 
+Shader::Shader()
+{
+
+}
+
+void Shader::setVertexDireccion(const char *vertexDireccion)
+{
+    this->vertDireccion = vertexDireccion;
+}
+
+void Shader::setFragmentDireccion(const char *fragmentDireccion)
+{
+    this->fragDireccion = fragmentDireccion;
+}
+
 void Shader::usar()
 {
-    glUseProgram(ID);
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glUseProgram(ID);
+}
+
+void Shader::release()
+{
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glUseProgram(0);
 }
 
 void Shader::setBool(const std::string &name, bool value)
 {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glUniform1i(f->glGetUniformLocation(ID, name.c_str()), (int)value);
 }
 
 void Shader::setFloat(const std::string &name, float value)
 {
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glUniform1f(f->glGetUniformLocation(ID, name.c_str()), value);
 }
 
 void Shader::setInt(const std::string &name, int value)
 {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glUniform1i(f->glGetUniformLocation(ID, name.c_str()), value);
 }
 

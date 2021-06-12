@@ -1,93 +1,121 @@
 #include "renderfigures.h"
 
 #include <QDebug>
+
+//Inicializa el programa de renderizacion con Direccion de Shaders Nulo
+renderFigures::renderFigures()
+    //: programaShader(0, 0)
+{
+}
+
+//Inicializa el programa de renderizacion con direccion de Shaders
 renderFigures::renderFigures(const char* vertexPath, const char* fragmentPath)
-    : programaShader(vertexPath, fragmentPath)
+    //: programaShader(vertexPath, fragmentPath)
 {
     initializeOpenGLFunctions();
 
-    glGenBuffers(1, &VBO);
-    glGenVertexArrays(1, &VAO);
-
-    glGenBuffers(1, &VBOline);
-    glGenVertexArrays(1,&VAOline);
-
-    //leerTriangulo();
     configurarBuffers();
 }
 
-void renderFigures::leerTriangulo()
+void renderFigures::generarVertexBuffers()
 {
-    QVector<float> verticesTriangulos{-0.5f, -0.5f, 0.0f,
-                                       0.5f, -0.5f, 0.0f,
-                                       0.0f,  0.5f, 0.0f };
+    GLuint nuevoVAO;
+    glGenVertexArrays(1, &nuevoVAO);
+    vectorVAO.push_back(nuevoVAO);
+}
 
+void renderFigures::gengerarBuffers(GLsizei numeroBuffers)
+{
+    for(int i = 0; i < (int)numeroBuffers; i++){
 
+        GLuint nuevoVBO;
+
+        glGenBuffers(numeroBuffers, &nuevoVBO);
+
+        vectorVBO.push_back(nuevoVBO);
+            //imprime asignacion de VBOs en el vector VBOvec
+            qDebug() << "vbo " << i << vectorVBO[i];
+    }
+}
+
+void renderFigures::setBufferSize(int)
+{
+
+}
+
+int renderFigures::getBufferSize()
+{
+    return (int)vectorVBO.size();
 }
 
 void renderFigures::configurarBuffers()
 {
-    /*float vertic[] = {
-        -0.5f, -0.5f, 0.0f,
-         1.0f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
-    };*/
+    //Linea eso(-0.4, 0.4, 0.4, 0.4);
+    //setVectorLineas(eso);
 
-    Linea objeto(-0.5, 0.5, 0.5, -0.5);
+//    Linea objeto(-0.5, 0.5, 0.5, -0.5);
+//    setVectorLineas(objeto);
 
-    //qDebug() << "float sizeof = " << sizeof(vertic);
-    //qDebug() << "float const void* = " << vertic ;
-
-//    float vertic[9];
-
-//    for(int i = 0; i < 9; i++){
-//        float dato = objeto.getCoordenadas(i);
-//        vertic[i] = dato;
-//    }
-    std::vector<float> vertic {objeto.getVectorPosicion()};
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertic), vertic.data(), GL_STATIC_DRAW);
-
-    //POSITION ATRIBUTE
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (float), (void*)0);
-        // note that this is allowed, the call to glVertexAttribPointer registered VBO
-        //as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-        // remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-        // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    //glBindVertexArray(0);
-
-    //LINEA
     Linea myLinea(-0.5, -0.5, 0.5, 0.5);
+    setVectorLineas(myLinea);
+    recibirLinea();
 
-    std::vector<float> verticesLineas {myLinea.getVectorPosicion(),};
 
-    //glBindVertexArray(VAOline);
-    glBindBuffer(GL_ARRAY_BUFFER, VBOline);
-    glBufferData(GL_ARRAY_BUFFER, sizeof (verticesLineas), verticesLineas.data(), GL_STATIC_DRAW);
-        //set vbo's data interpreted
+    generarVertexBuffers(); //generamos memoria para el VAO en vector VAO
+
+    glBindVertexArray(vectorVAO[0]);
+    glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexAttribBinding(0,0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof (float), (void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+
+    //loop para copiar los Datos al buffer VBOvec
+    for(int i = 0; i < (int)vectorVBO.size(); i++){
+        glBindBuffer(GL_ARRAY_BUFFER, vectorVBO[i]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vectorLineas[i].getVectorPosicion()),
+                vectorLineas[i].getVectorPosicion().data(), GL_STATIC_DRAW);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+}
+
+void renderFigures::setVectorLineas(Linea nuevaLinea)
+{
+    numeroLineas++;
+
+    gengerarBuffers(numeroLineas);
+
+    vectorLineas.push_back(nuevaLinea);
+    qDebug()<< "numero de lineas : " << vectorLineas.size();
 }
 
 void renderFigures::useRender()
 {
     programaShader.usar();
 
-    //glBindVertexArray(VAOline);
-    glBindVertexArray(VAO);
+    glBindVertexArray(vectorVAO[0]);
 
+    //looop para usar los VBOs
+    for(int i = 0; i < (int)vectorVBO.size(); i++){
+        glBindVertexBuffer(0, vectorVBO[i], 0, 3*sizeof (float));
+        glDrawArrays(GL_LINES, 0, 3);
+    }
 
-    glDrawArrays(GL_LINES, 0, 3);
+    update();
+}
+
+void renderFigures::recibirLinea()
+{
+    qDebug() << "se recibio/creo la linea" ;
+    numeroLineas++;
+
+    gengerarBuffers(numeroLineas);
+
+    Linea linea(-0.3, -0.4, 0.4, 0.3);
+    vectorLineas.push_back(linea);
+    qDebug()<< "numero de lineas : " << vectorLineas.size();
+
+    update();
 }

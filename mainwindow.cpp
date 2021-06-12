@@ -1,5 +1,8 @@
 #include "mainwindow.h"
+
 #include "ui_mainwindow.h"
+
+#include <QObject>
 
 #include "widgettrazado.h"
 
@@ -9,8 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    widgetTrazado *myWidget = new widgetTrazado();
-    ui->lienzo->addWidget(myWidget);
+    QObject::connect(ui->buttonLinea, SIGNAL (released()),
+                     ui->openGLWidget, SLOT (nuevaLinea()));
+
+    //widgetTrazado *myWidget = new widgetTrazado();
+    //ui->lienzo->addWidget(myWidget);
 
 
 }

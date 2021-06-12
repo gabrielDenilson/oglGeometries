@@ -1,8 +1,10 @@
 #ifndef LINEA_H
 #define LINEA_H
 
-#include <punto.h>
 #include <vector>
+
+#include "punto.h"
+
 
 class Linea
 {

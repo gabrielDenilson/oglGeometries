@@ -9,29 +9,60 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
-    <height>694</height>
+    <width>937</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="lienzo"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="widgetTrazado" name="openGLWidget"/>
-    </item>
-   </layout>
+   <widget class="widgetTrazado" name="openGLWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>871</width>
+      <height>473</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonLinea">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Linea</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>490</y>
+      <width>871</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>598</width>
+     <width>937</width>
      <height>21</height>
     </rect>
    </property>

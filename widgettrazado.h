@@ -8,6 +8,7 @@
 #include "trianguloprimitivo.h"
 
 #include "linea.h"
+#include "punto.h"
 #include "renderfigures.h"
 
 class widgetTrazado: public QOpenGLWidget, protected QOpenGLExtraFunctions
@@ -19,6 +20,7 @@ protected:
     void paintGL() ;
 
     virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
 
 public:
     widgetTrazado(QWidget *parent = 0);
@@ -26,20 +28,23 @@ public:
     ~widgetTrazado();
 
     void generarVertexBuffers();
-
-    void gengerarBuffers(GLsizei);
-
-    void setBufferSize(int);
-
-    int getBufferSize();
+    void gengerarBuffers(GLsizei numeroBuffers);
 
     void configurarBuffers();
 
+    void actualizarVBOLineas();
+
     void setVectorLineas(Linea nuevaLinea);
+
+    void renderLinea(Linea render, float x2, float y2);
+
+    int getBufferSize();
 
     void useRender();
 
     void creacionFigura();
+
+    Punto normalizarMousePress(QPoint posicion);
 
 
 public slots:
@@ -63,6 +68,8 @@ private:
     std::vector<GLuint> vectorVBO;
 
     GLsizei numeroLineas = 0;
+    Punto mousePosicion;
+    bool clickIzquierdoPress;
     std::vector<Linea> vectorLineas;
 
 };

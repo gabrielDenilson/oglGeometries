@@ -10,6 +10,10 @@ widgetTrazado::widgetTrazado(QWidget *parent)
       weidthWdg(0),
       heigthWdg(0)
 {
+    this->setMouseTracking(true);
+    clickIzquierdoPress = false;
+//    Linea prueba {-1, -1, 1, 1};
+//    vectorLineas.push_back(prueba);
 }
 
 widgetTrazado::~widgetTrazado()
@@ -37,11 +41,6 @@ void widgetTrazado::gengerarBuffers(GLsizei numeroBuffers)
     }
 }
 
-void widgetTrazado::setBufferSize(int)
-{
-
-}
-
 int widgetTrazado::getBufferSize()
 {
     return (int)vectorVBO.size();
@@ -49,48 +48,67 @@ int widgetTrazado::getBufferSize()
 
 void widgetTrazado::configurarBuffers()
 {
-//    Linea eso = {-0.5,0.5,0.0,0.0};
-//    vectorLineas.push_back(eso);
-//    Linea aquello = {0.5,0.5,0.5,-0.5};
-//    vectorLineas.push_back(aquello);
-
     generarVertexBuffers(); //generamos memoria para el VAO en vector VAO
     glBindVertexArray(vectorVAO[0]);
 
     gengerarBuffers(1);
-//    glBindBuffer(GL_ARRAY_BUFFER, vectorVBO[0]);
-//    glBufferData(GL_ARRAY_BUFFER,vectorLineas.size() * sizeof(Linea), &vectorLineas[0], GL_DYNAMIC_DRAW);
 
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof (float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, vectorVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Linea) * 10, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Linea) * 90, nullptr, GL_DYNAMIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof (float), (void*)0);
-
-    qDebug() <<"tamaño de linea: " << sizeof(Linea);
-    qDebug() <<"tamaño de vector linea: "<<vectorLineas.size() * sizeof(Linea);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
 
+//------------Actualiza el buffer de lineas ---------------
+void widgetTrazado::actualizarVBOLineas()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, vectorVBO[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vectorLineas.size() * sizeof (Linea), &vectorLineas[0]);
+
+    update();
+//    qDebug()<< "Se agrego una linea : " << vectorLineas.size();
+}
+
+//------------ Envia una nueva linea al vector <Linea> ----------
 void widgetTrazado::setVectorLineas(Linea nuevaLinea)
 {
-    numeroLineas++;
-
     vectorLineas.push_back(nuevaLinea);
-    qDebug()<< "numero de lineas : " << vectorLineas.size();
 }
 
+void widgetTrazado::renderLinea(Linea render, float x2, float y2)
+{
+    render.setX2(x2);
+    render.setY2(y2);
+    vectorLineas.back() = render;
+
+}
+
+//-------------- No definido ------------------------
 void widgetTrazado::useRender()
 {
-
 }
 
+//-------------- No definido ------------------------
 void widgetTrazado::creacionFigura()
 {
+}
+
+Punto widgetTrazado::normalizarMousePress(QPoint posicion)
+{
+    Punto normalizedPosicion;
+    float x,y;
+
+    x = -1.0 + 2.0 * (float)posicion.x() / weidthWdg;
+    normalizedPosicion.setX(x);
+
+    y = 1.0 - 2.0 * (float)posicion.y() / heigthWdg;
+    normalizedPosicion.setY(y);
+
+    return normalizedPosicion;
 }
 
 
@@ -113,43 +131,71 @@ void widgetTrazado::resizeGL(int w, int h)
 
 void widgetTrazado::paintGL()
 {
-    Linea esto = {0.9,0.3,0.2,0.2};
-    vectorLineas.push_back(esto);
-    Linea aquello = {-0.9,-0.3,0.2,-0.2};
-    vectorLineas.push_back(aquello);
-    float doslineas[] = {-0.5, -0.5,
-                          0.0,  0.0,
-                          0.5,  0.5,
-                          0.5, -0.5,
-                          0.0,  0.8,
-                          0.8,  0.8 };
-
-    glBindBuffer(GL_ARRAY_BUFFER, vectorVBO[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, vectorLineas.size() * sizeof (Linea), &vectorLineas[0]);
+    glClearColor(0.3, 0.3, 0.3, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glBindVertexArray(vectorVAO[0]);
 
 
     programaShader.usar();
-    glDrawArrays(GL_LINES, 0, 6);
+    glDrawArrays(GL_LINES, 0, 1000);
 
     programaShader.release();
 
 }
 
+// -------------- MOUSE PRUEBA ---------------
+int mouseContador = 0;
+float ultimaPosX;
+float ultimaPosY;
+Linea paraAgregar;
+//--------------------------------------------
 void widgetTrazado::mousePressEvent(QMouseEvent *event)
 {
-    float normalizedX = -1.0 + 2.0 * (float)event->x() / weidthWdg;
-    float normalizedY = 1.0 - 2.0 * (float)event->y() / heigthWdg;
     if(event->button() == Qt::LeftButton){
-        qDebug() << normalizedX;
-        qDebug() << normalizedY;
+        ultimaPosX = mousePosicion.getX();
+        ultimaPosY = mousePosicion.getY();
+        mouseContador++;
+    }
+
+
+    if(event->button()==0x00000001 && mouseContador == 1){
+//        paraAgregar.setX1(mousePosicion.getX());
+//        paraAgregar.setY1(mousePosicion.getY());
+                paraAgregar.setX1(ultimaPosX);
+                paraAgregar.setY1(ultimaPosY);
+        paraAgregar.setX2(ultimaPosX);
+        paraAgregar.setY2(ultimaPosY);
+
+        setVectorLineas(paraAgregar);
+        actualizarVBOLineas();
+
+    } else if(mouseContador == 2){
+        paraAgregar.setX2(ultimaPosX);
+        paraAgregar.setY2(ultimaPosY);
+        actualizarVBOLineas();
+        mouseContador = 0;
 
     }
 }
 
-//SLOTS
+//-------------- MOVIMIENTO DE MOUSE -----------------
+void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
+{
+    mousePosicion = normalizarMousePress(event->pos());
+
+    if(mouseContador ==1){
+        renderLinea(paraAgregar, mousePosicion.getX(), mousePosicion.getY());
+        actualizarVBOLineas();
+
+    }
+}
+
+//----------------------SLOTS-----------------------
 void widgetTrazado::nuevaLinea()
 {
-    qDebug() << "Nueva linea se ha dibujado";
+    //Linea de prueba
+    Linea esto = {-1, 1, 1, -1};
+    setVectorLineas(esto);
+    actualizarVBOLineas();
 }

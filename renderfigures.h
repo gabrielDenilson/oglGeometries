@@ -5,7 +5,7 @@
 #include <QGLWidget>
 #include <QOpenGLExtraFunctions>
 
-#include "shader.h"
+#include "externshader.h"
 #include "triangulo.h"
 #include "linea.h"
 
@@ -32,7 +32,7 @@ public:
 
     void useRender();
 
-    Shader programaShader;
+    ExternShader programaShader;
 
 public slots:
     void recibirLinea();

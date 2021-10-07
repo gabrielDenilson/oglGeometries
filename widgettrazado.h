@@ -56,7 +56,7 @@ signals:
 private:
 //    QOpenGLExtraFunctions *f = QOpenGLContext::currentContext()->extraFunctions();
 
-    Shader programaShader;
+    ExternShader programaShader;
 
     int weidthWdg;
     int heigthWdg;

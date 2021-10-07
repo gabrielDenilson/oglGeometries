@@ -1,8 +1,8 @@
-#include "shader.h"
+#include "externshader.h"
 
 #include <QDebug>
 
-void Shader::configurarShaders()
+void ExternShader::configurarShaders()
 {
     initializeOpenGLFunctions();
 
@@ -78,48 +78,49 @@ void Shader::configurarShaders()
     //Liberamos la memoria
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+
 }
 
-Shader::Shader()
+ExternShader::ExternShader()
 {
 
 }
 
-void Shader::setVertexDireccion(const char *vertexDireccion)
+void ExternShader::setVertexDireccion(const char *vertexDireccion)
 {
     this->vertDireccion = vertexDireccion;
 }
 
-void Shader::setFragmentDireccion(const char *fragmentDireccion)
+void ExternShader::setFragmentDireccion(const char *fragmentDireccion)
 {
     this->fragDireccion = fragmentDireccion;
 }
 
-void Shader::usar()
+void ExternShader::usar()
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glUseProgram(ID);
 }
 
-void Shader::release()
+void ExternShader::release()
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glUseProgram(0);
 }
 
-void Shader::setBool(const std::string &name, bool value)
+void ExternShader::setBool(const std::string &name, bool value)
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glUniform1i(f->glGetUniformLocation(ID, name.c_str()), (int)value);
 }
 
-void Shader::setFloat(const std::string &name, float value)
+void ExternShader::setFloat(const std::string &name, float value)
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glUniform1f(f->glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setInt(const std::string &name, int value)
+void ExternShader::setInt(const std::string &name, int value)
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glUniform1i(f->glGetUniformLocation(ID, name.c_str()), value);

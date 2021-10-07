@@ -1,5 +1,5 @@
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef EXTERNSHADER_H
+#define EXTERNSHADER_H
 
 #include <QOpenGLExtraFunctions>
 #include <string>
@@ -7,10 +7,10 @@
 #include <sstream>
 #include <iostream>
 
-class Shader : QOpenGLFunctions
+class ExternShader : QOpenGLFunctions
 {
 public:
-    Shader();
+    ExternShader();
 
     void configurarShaders();
     //usar el programa ID
@@ -39,4 +39,4 @@ private:
     std::ifstream fragmentArchivo;
 };
 
-#endif // SHADER_H
+#endif // EXTERNSHADER_H

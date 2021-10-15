@@ -10,7 +10,7 @@
 #include "shader.h"
 #include "texture.h"
 
-class ResourceManager : QOpenGLFunctions
+class ResourceManager :protected QOpenGLExtraFunctions
 {
 private:
     //Constructor privado, es decir, no queremos ningún objeto de administrador de recursos real. Sus miembros y funciones deben estar disponibles al público (estático).

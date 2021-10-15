@@ -5,6 +5,13 @@
 #include <QMouseEvent>
 #include <QDebug>
 
+//Librerias de renderizado
+#include "geometriesGL/src/comands/resourcemanager.h"
+#include "geometriesGL/src/comands/spriterender.h"
+#include "geometriesGL/src/comands/geometry.h"
+#include "geometriesGL/src/comands/compoundgeometry.h"
+#include "geometriesGL/src/comands/cmd_renderizarlineas.h"
+
 widgetTrazado::widgetTrazado(QWidget *parent)
     : QOpenGLWidget(parent),
       weidthWdg(0),
@@ -112,6 +119,18 @@ Punto widgetTrazado::normalizarMousePress(QPoint posicion)
 }
 
 
+//´´¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+SpriteRender *Renderer;
+
+Geometry *arbol;
+
+Geometry *rama;
+
+Geometry *hoja;
+
+//¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨^^
+
+
 void widgetTrazado::initializeGL()
 {
     initializeOpenGLFunctions();
@@ -119,6 +138,31 @@ void widgetTrazado::initializeGL()
     programaShader.setVertexDireccion("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/TutorialBegin/GeometriesGL/shaders/vertexShader.vs");
     programaShader.setFragmentDireccion("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/TutorialBegin/GeometriesGL/shaders/fragmentShader.fs");
     programaShader.configurarShaders();
+
+    //prueba de renderizado
+    ResourceManager::LoadShader("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/repositorios/oglGeometries/shaders/vertexShader_spriteRender.vert",
+                                "C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/repositorios/oglGeometries/shaders/fragmentShader_spriteRender.frag",
+                                nullptr,
+                                "sprite");
+
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->width()),
+                                      static_cast<float>(this->height()),
+                                      0.0f, -1.0f, 1.0f);
+    ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
+    ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
+
+    Shader myShader;
+    myShader = ResourceManager::GetShader("sprite");
+    Renderer = new SpriteRender(myShader); //         <- Caja
+
+    arbol = new CompoundGeometry;
+    rama = new CompoundGeometry;
+    hoja = new cmd_renderizarLineas(myShader);//         <- Caja
+
+    rama->add_Componente_Geometry(hoja);
+    arbol->add_Componente_Geometry(rama);
+
+    ResourceManager::LoadTexture("nofile", true, "cara");
 
 }
 
@@ -141,6 +185,16 @@ void widgetTrazado::paintGL()
     glDrawArrays(GL_LINES, 0, 1000);
 
     programaShader.release();
+
+    //Renderer->DrawSprite(ResourceManager::GetTexture("face"), glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+
+    //Prueba de renderizado
+    Texture myTexture;
+    myTexture = ResourceManager::GetTexture("face");
+    //Renderer->DrawSprite(myTexture, glm::vec2(200, 200), glm::vec2(70, 40), 40.0f, glm::vec3(1.0f, 0.5f, 0.0f));
+
+
+    arbol->draw_intern_Sprite(myTexture, glm::vec2(10, 10), glm::vec2(300, 3), 0.0f, glm::vec3(1.0f, 0.0f, 0.5f));
 
 }
 

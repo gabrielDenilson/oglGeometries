@@ -8,7 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-class Shader : QOpenGLFunctions
+class Shader :protected QOpenGLFunctions
 {
 public:
     // Estado

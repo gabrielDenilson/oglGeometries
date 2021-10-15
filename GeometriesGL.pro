@@ -22,6 +22,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     externshader.cpp \
+    geometriesGL/src/comands/cmd_renderizarlineas.cpp \
+    geometriesGL/src/comands/compoundgeometry.cpp \
+    geometriesGL/src/comands/geometry.cpp \
     geometriesGL/src/comands/resourcemanager.cpp \
     geometriesGL/src/comands/shader.cpp \
     geometriesGL/src/comands/spriterender.cpp \
@@ -40,7 +43,9 @@ HEADERS += \
     externshader.h \
     geometriesGL/res/purebaClase.h \
     geometriesGL/src/actions/actionsPrueba.h \
-    geometriesGL/src/comands/comandsPrueba.h \
+    geometriesGL/src/comands/cmd_renderizarlineas.h \
+    geometriesGL/src/comands/compoundgeometry.h \
+    geometriesGL/src/comands/geometry.h \
     geometriesGL/src/comands/resourcemanager.h \
     geometriesGL/src/comands/shader.h \
     geometriesGL/src/comands/spriterender.h \

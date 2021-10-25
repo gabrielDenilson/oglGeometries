@@ -8,6 +8,11 @@ Shader &Shader::Use()
     return *this;
 }
 
+Shader Shader::release()
+{
+    glUseProgram(this->ID);
+}
+
 void Shader::Compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource)
 {
     initializeOpenGLFunctions();

@@ -31,18 +31,6 @@ void CompoundGeometry::delete_Componente_Geometry(Geometry *eliminarGeometryPtr)
     eliminarGeometryPtr ->setParentPtr(nullptr);
 }
 
-void CompoundGeometry::draw_Componente_Geometry(Geometry *renderer)
-{
-    for(vector<Geometry*>::const_iterator iterador = lista_Componentes_Geometry.begin();
-        iterador != lista_Componentes_Geometry.end();
-        ++iterador)
-    {
-        if(*iterador != 0){
-            (*iterador) -> draw_Componente_Geometry(renderer);
-        }
-    }
-}
-
 void CompoundGeometry::draw_Componente_Geometry()
 {
     for(vector<Geometry*>::const_iterator iterador = lista_Componentes_Geometry.begin();
@@ -55,19 +43,10 @@ void CompoundGeometry::draw_Componente_Geometry()
     }
 }
 
-void CompoundGeometry::draw_intern_Sprite(Texture &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color)
+
+//Revisar esta linea si no funciona el get Child Geometry
+Geometry *CompoundGeometry::getChhilGeometry(int positionChild)
 {
-    for(vector<Geometry*>::const_iterator iterador = lista_Componentes_Geometry.begin();
-        iterador != lista_Componentes_Geometry.end();
-        ++iterador)
-    {
-        if(*iterador != 0){
-            (*iterador) -> draw_intern_Sprite(texture,
-                                              position,
-                                              size,
-                                              rotate,
-                                              color);
-        }
-    }
+    return this->lista_Componentes_Geometry.at(positionChild);
 }
 

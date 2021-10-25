@@ -1,44 +1,82 @@
 #ifndef CMD_RENDERIZARLINEAS_H
 #define CMD_RENDERIZARLINEAS_H
 
+#include <QOpenGLExtraFunctions>
+#include <Polyline2D.h>
+#include <Vec2.h>
+
 #include "geometry.h"
 #include "shader.h"
 #include "texture.h"
 
-#include <QOpenGLExtraFunctions>
+#include "linea.h"
+#include "punto.h"
 
-class cmd_renderizarLineas : public Geometry, protected QOpenGLExtraFunctions
+
+class cmd_renderizarLineas : protected QOpenGLExtraFunctions
 {
 public:
-    cmd_renderizarLineas();
+    Linea lineaCords; //atributo publico para usar con los eventos y hacer el rendrizado mas facil.
 
-    cmd_renderizarLineas(string nombreLinea);
+    cmd_renderizarLineas(); //Constructor vacio
+    cmd_renderizarLineas(string nombreLinea); // Constructor vacio String Nombre
+    cmd_renderizarLineas(Shader &shader, Texture &texture, glm::vec3 color);//Constructor para inicializar los archivos
+    ~cmd_renderizarLineas();
 
-    //Constructor para inicializar los archivos
-    cmd_renderizarLineas(Shader &shader);
+    void setLinea(Linea nuevaLinea); //asignar una linea a la instancia de la clase <solo se usa para reescribir el objeto>
+    void setColorLinea(glm::vec3 color);
 
-    virtual ~cmd_renderizarLineas();
 
-    virtual bool isComposite() const override {return false;}
+    void initBuffers(); //inicializa la memoria para almacenar una linea
+    void initOtherBuffers();
 
-    void add_Componente_Geometry(Geometry*) override;
-    void delete_Componente_Geometry(Geometry *) override;
+    void drawLinea();
+    void drawOtherLinea();
 
-    void draw_Componente_Geometry(Geometry *) override;
-    void draw_Componente_Geometry() override;
-    void draw_intern_Sprite(Texture  &texture,
-                            glm::vec2 position,
-                            glm::vec2 size = glm :: vec2(10.0f, 10.0f),
-                            float     rotate = 0.0f,
-                            glm::vec3 color = glm::vec3(1.0f)) override;
+    void setShaderProgram(Shader &newShader);
+    void setTextureProgram(Texture &newTexture);
+
+    void actualizarVBOlineas(QWidget *parent); //funcion vacia para actualizar la memoria en el GPU
+    void actualizarVBOThick(QWidget *parent);
+
+    void setPuntoInicial(Punto *puntoInicial, QWidget *parent);
+    void setPuntoFinal(Punto *puntoFinal, QWidget *parent);
+
+    void setFirstPointThick(Punto* puntoInicial, QWidget *parent);
+    void setLastPointThick(Punto* puntoFinal, QWidget *parent);
+
+    float getThick() const;
+    void setThick(float value);
+    void setColorThick(glm::vec3 color);
+
+    void drawTransforamtions(glm::vec2 position,
+                             glm::vec2 size,
+                             float     rotate = 0.0f);
 
 private:
 
-    Shader shader_Renderiza_Linea;
-    unsigned int cuadradoVAO;
+    //!Atributos de renderizado
+    unsigned int lineaVAO; //!Memoria vertex GL
+    unsigned int lineaVBO; //!Memoria buffer GL
 
-    void initRenderData();
+    unsigned int thickVAO; //!Memoria vertex GL
+    unsigned int thickVBO; //!Memoria buffer GL
 
+
+    //!Atributos de linea
+    glm::mat4 model = glm::mat4(1.0); //!Matriz de transfomarcion
+    Shader shader_Renderiza_Linea; //!Shader Program liena GL
+    Texture texture_Renderiza_Linea; //!Texture file linea GL
+
+    glm::vec3 colorLinea; //! Color vertex Linea
+    glm::vec3 colorThick; //! Color vertex Linea
+
+
+    std::vector<crushedpixel::Vec2> vertices; //!Coordenada de Grosor
+    std::vector<crushedpixel::Vec2> puntosCoord; //!Coordenadas de Linea
+
+    float thick; //!Tamaño de grosor Linea
+    string nombreCmd; //!Nombre de comando
 };
 
 #endif // CMD_RENDERIZARLINEAS_H

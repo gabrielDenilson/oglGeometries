@@ -23,6 +23,9 @@ public:
     float getX2();
     float getY2();
 
+    void setPuntoInicial(Punto*);
+    void setPuntoFinal(Punto*);
+
     Punto getPosicionP1();
     Punto getPosicionP2();
 

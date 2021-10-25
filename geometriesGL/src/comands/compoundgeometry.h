@@ -12,23 +12,23 @@ private:
     vector <Geometry*> lista_Componentes_Geometry;
 
 public:
+
+    //METODOS DE RAMA
     CompoundGeometry();
     CompoundGeometry(string nombreCompoundGeometry);
 
     virtual ~CompoundGeometry();
-
     bool isComposite() const override { return true; }
 
+    //GESTION DE HIJO real g
     void add_Componente_Geometry(Geometry *nuevoGeometryPtr) override;
     void delete_Componente_Geometry(Geometry *eliminarGeometryPtr) override;
 
-    void draw_Componente_Geometry(Geometry *) override;
+    //FUNCIONES DE DIBUJO
     void draw_Componente_Geometry() override;
-    void draw_intern_Sprite(Texture  &texture,
-                            glm::vec2 position,
-                            glm::vec2 size = glm :: vec2(10.0f, 10.0f),
-                            float     rotate = 0.0f,
-                            glm::vec3 color = glm::vec3(1.0f)) override;
+
+    //GETTERS AND SETTERS ATRIBUTOS DE HIJOS
+    Geometry *getChhilGeometry(int positionChil) override;
 };
 
 #endif // COMPOUNDGEOMETRY_H

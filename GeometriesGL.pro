@@ -4,10 +4,12 @@ LIBS += -lopengl32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 
-INCLUDEPATH += "C:\Users\GabrielSinn\OneDrive\Documentos\QML_all\repositorios\libreriasExternas"
+#INCLUDEPATH += "C:\Users\GabrielSinn\OneDrive\Documentos\QML_all\repositorios\libreriasExternas"
+
+INCLUDEPATH += $$PWD/geometriesGL/res/include
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -24,6 +26,7 @@ SOURCES += \
     externshader.cpp \
     geometriesGL/src/comands/cmd_renderizarlineas.cpp \
     geometriesGL/src/comands/compoundgeometry.cpp \
+    geometriesGL/src/comands/drawableobject_linea.cpp \
     geometriesGL/src/comands/geometry.cpp \
     geometriesGL/src/comands/resourcemanager.cpp \
     geometriesGL/src/comands/shader.cpp \
@@ -45,6 +48,7 @@ HEADERS += \
     geometriesGL/src/actions/actionsPrueba.h \
     geometriesGL/src/comands/cmd_renderizarlineas.h \
     geometriesGL/src/comands/compoundgeometry.h \
+    geometriesGL/src/comands/drawableobject_linea.h \
     geometriesGL/src/comands/geometry.h \
     geometriesGL/src/comands/resourcemanager.h \
     geometriesGL/src/comands/shader.h \

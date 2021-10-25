@@ -28,7 +28,7 @@ void SpriteRender::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 si
     model = glm::translate(model, glm::vec3(position, 0.0f));
 
     //.......mover el origen de rotacion al centro del cuatrado
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+    //model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
     //...... Rotacion
     model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
     //.......mover al origen hacia atras
@@ -57,6 +57,7 @@ void SpriteRender::initRenderData()
     //configurar VAO/VBO
     unsigned int VBO;
     float vertices[] = {
+        //posicion  textura
         0.0f, 1.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 0.0f,

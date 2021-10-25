@@ -61,6 +61,18 @@ float Linea::getY2()
     return y2;
 }
 
+void Linea::setPuntoInicial(Punto *posInicial)
+{
+    x1 = posInicial->getX(); //Origen de linea X
+    y1 = posInicial->getY(); //Origen de linea Y
+}
+
+void Linea::setPuntoFinal(Punto *posFinal)
+{
+    x2 = posFinal->getX();
+    y2 = posFinal->getY();
+}
+
 Punto Linea::getPosicionP1()
 {
     Punto p1(x1,y1);

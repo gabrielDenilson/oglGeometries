@@ -17,6 +17,7 @@ public:
     Shader() { };
     // configurar el shader actual como activo
     Shader  &Use();
+    Shader release();
     // compilar el shader del codigo existente
     void    Compile(const char *vertexSource, const char *fragmentSource, const char *geometrySource = nullptr); // note: geometry source code is optional
     // funciones de utilidad

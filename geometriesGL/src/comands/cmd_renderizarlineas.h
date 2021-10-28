@@ -53,6 +53,18 @@ public:
                              glm::vec2 size,
                              float     rotate = 0.0f);
 
+    glm::mat4 getModel() const;
+    void setModel(const glm::mat4 &value);
+
+    glm::mat4 getView() const;
+    void setView(const glm::mat4 &value);
+
+    glm::mat4 getProjection() const;
+    void setProjection(const glm::mat4 &value);
+
+    glm::mat4 getMVP() const;
+    void setMVP(const glm::mat4 &MVP);
+
 private:
 
     //!Atributos de renderizado
@@ -64,7 +76,13 @@ private:
 
 
     //!Atributos de linea
-    glm::mat4 model = glm::mat4(1.0); //!Matriz de transfomarcion
+    glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    glm::mat4 view          = glm::mat4(1.0f);
+    glm::mat4 projection    = glm::mat4(1.0f);
+
+    glm::mat4 m_MVP         = glm::mat4(1.0f);
+
+
     Shader shader_Renderiza_Linea; //!Shader Program liena GL
     Texture texture_Renderiza_Linea; //!Texture file linea GL
 

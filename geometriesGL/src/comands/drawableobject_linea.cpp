@@ -1,5 +1,4 @@
 #include "drawableobject_linea.h"
-#include <Polyline2D.h>
 
 DrawableObject_Linea::DrawableObject_Linea():
     Color    (1.0f),
@@ -82,4 +81,11 @@ void DrawableObject_Linea::setPuntoFinal(Punto *puntoFinal, QWidget *parent)
 void DrawableObject_Linea::drawLine()
 {
 
+}
+
+void DrawableObject_Linea::setMVP(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection)
+{
+    renderable->setProjection(projection);
+    renderable->setView(view);
+    renderable->setModel(model);
 }

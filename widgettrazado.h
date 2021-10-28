@@ -4,6 +4,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLExtraFunctions>
 #include <QObject>
+#include <QTime>
 
 #include "trianguloprimitivo.h"
 
@@ -11,23 +12,30 @@
 #include "punto.h"
 #include "renderfigures.h"
 #include "geometriesGL/src/comands/geometry.h"
+#include "geometriesGL/src/actions/camera2d.h"
 
 class widgetTrazado: public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
     Q_OBJECT
 protected:
-    void initializeGL() ;
-    void resizeGL(int w, int h) ;
-    void paintGL() ;
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
     ~widgetTrazado();
 
-    virtual void mousePressEvent(QMouseEvent *event);
-    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+
+    virtual void wheelEvent(QWheelEvent *event) override;
+
+    virtual void keyPressEvent(QKeyEvent *event) override;
 
 public:
     widgetTrazado(QWidget *parent = 0);
 
     Punto normalizarMousePress(QPoint posicion);
+
+    float getTime();
 
 public slots:
     void nuevaLinea();
@@ -43,6 +51,15 @@ private:
 
     //!Creacion de un Componente Geometrico: Revisar patron AbstractFactory
     Geometry *geometryTreeCompound;
+
+    Camera2D camera;
+    float lastX ;
+    float lastY ;
+    bool firstMouse;
+    // timing
+    float deltaTime = 0.0f;	// time between current frame and last frame
+    float lastFrame = 0.0f;
+    QTime time;
 
 };
 

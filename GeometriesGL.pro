@@ -24,8 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     externshader.cpp \
+    geometriesGL/src/actions/camera2d.cpp \
+    geometriesGL/src/actions/interactivefigure.cpp \
+    geometriesGL/src/comands/cmd_renderizargrid.cpp \
     geometriesGL/src/comands/cmd_renderizarlineas.cpp \
     geometriesGL/src/comands/compoundgeometry.cpp \
+    geometriesGL/src/comands/drawableobject_cuadrado.cpp \
+    geometriesGL/src/comands/drawableobject_grid.cpp \
     geometriesGL/src/comands/drawableobject_linea.cpp \
     geometriesGL/src/comands/geometry.cpp \
     geometriesGL/src/comands/resourcemanager.cpp \
@@ -44,10 +49,18 @@ SOURCES += \
 
 HEADERS += \
     externshader.h \
+    geometriesGL/res/LineSegment.h \
+    geometriesGL/res/Polyline2D.h \
+    geometriesGL/res/Vec2.h \
     geometriesGL/res/purebaClase.h \
     geometriesGL/src/actions/actionsPrueba.h \
+    geometriesGL/src/actions/camera2d.h \
+    geometriesGL/src/actions/interactivefigure.h \
+    geometriesGL/src/comands/cmd_renderizargrid.h \
     geometriesGL/src/comands/cmd_renderizarlineas.h \
     geometriesGL/src/comands/compoundgeometry.h \
+    geometriesGL/src/comands/drawableobject_cuadrado.h \
+    geometriesGL/src/comands/drawableobject_grid.h \
     geometriesGL/src/comands/drawableobject_linea.h \
     geometriesGL/src/comands/geometry.h \
     geometriesGL/src/comands/resourcemanager.h \

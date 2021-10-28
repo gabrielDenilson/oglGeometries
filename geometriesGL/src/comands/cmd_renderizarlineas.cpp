@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QDebug>
 
-#include <Polyline2D.h>
+//#include <Polyline2D.h>
+#include <geometriesGL/res/Polyline2D.h>
 
 #include "linea.h"
 
@@ -103,13 +104,20 @@ void cmd_renderizarLineas::drawLinea()
 {
     this->shader_Renderiza_Linea.Use();
     //Envia el sistema de coordenadas
-    this->shader_Renderiza_Linea.SetMatrix4("model", this->model);
+
+    // retrieve the matrix uniform locations
+    this->shader_Renderiza_Linea.SetMatrix4("model", model);
+    this->shader_Renderiza_Linea.SetMatrix4("view", view);
+    this->shader_Renderiza_Linea.SetMatrix4("projection", projection);
+
+//    this->shader_Renderiza_Linea.SetMatrix4("m_MVP", m_MVP);
+
     //Enviamos el color
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", this->colorLinea);
 
-    glBindBuffer(GL_ARRAY_BUFFER, this->lineaVBO);
-    //el tipo de memoria, offset = empieza en 0, tamaño de datos, datos
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Linea), &lineaCords );
+//    glBindBuffer(GL_ARRAY_BUFFER, this->lineaVBO);
+//    //el tipo de memoria, offset = empieza en 0, tamaño de datos, datos
+//    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Linea), &lineaCords );
 
     glBindVertexArray(this->lineaVAO);
     glDrawArrays(GL_LINES, 0, 2);
@@ -121,7 +129,9 @@ void cmd_renderizarLineas::drawLinea()
 void cmd_renderizarLineas::drawOtherLinea(){
     this->shader_Renderiza_Linea.Use();
 
-    this->shader_Renderiza_Linea.SetMatrix4("model", this->model);
+    this->shader_Renderiza_Linea.SetMatrix4("projection", projection);
+    this->shader_Renderiza_Linea.SetMatrix4("view", view);
+    this->shader_Renderiza_Linea.SetMatrix4("model", model);
     //Enviamos el color
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", colorThick);
 
@@ -168,8 +178,9 @@ void cmd_renderizarLineas::setPuntoInicial(Punto *puntoInicial, QWidget *parent)
 {
     this->lineaCords.setPuntoInicial(puntoInicial);
 
+    this->actualizarVBOlineas(parent);
     //actualizar padre Widget
-    parent->update();
+//    parent->update();
 }
 
 void cmd_renderizarLineas::setPuntoFinal(Punto *puntoFinal, QWidget *parent)
@@ -252,4 +263,44 @@ void cmd_renderizarLineas::drawTransforamtions(glm::vec2 position, glm::vec2 siz
     glBindVertexArray(this->lineaVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
+}
+
+glm::mat4 cmd_renderizarLineas::getModel() const
+{
+    return model;
+}
+
+void cmd_renderizarLineas::setModel(const glm::mat4 &value)
+{
+    model = value;
+}
+
+glm::mat4 cmd_renderizarLineas::getView() const
+{
+    return view;
+}
+
+void cmd_renderizarLineas::setView(const glm::mat4 &value)
+{
+    view = value;
+}
+
+glm::mat4 cmd_renderizarLineas::getProjection() const
+{
+    return projection;
+}
+
+void cmd_renderizarLineas::setProjection(const glm::mat4 &value)
+{
+    projection = value;
+}
+
+glm::mat4 cmd_renderizarLineas::getMVP() const
+{
+    return m_MVP;
+}
+
+void cmd_renderizarLineas::setMVP(const glm::mat4 &MVP)
+{
+    m_MVP = MVP;
 }

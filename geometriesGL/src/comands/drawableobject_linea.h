@@ -50,7 +50,8 @@ public:
 
     void drawLine();
 
-    void setMVP(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection);
+    void setMVP(const glm::mat4 &MVP);
+    glm::mat4 getMVP();
 
     void transformarLinea(glm::vec2 position, glm::vec2 size, float rotation);
 };

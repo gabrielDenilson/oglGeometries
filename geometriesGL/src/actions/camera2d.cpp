@@ -1,103 +1,95 @@
 #include "camera2d.h"
 
 #include <QDebug>
+#include <QOpenGLFunctions>
 
-Camera2D::Camera2D(glm::vec3 position,
-                   glm::vec3 up,
-                   float yaw,
-                   float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-                                  Vertical(glm::vec3(0.0f, -1.0f, 0.0f)),
-                                  MovementSpeed(SPEED),
-                                  MouseSensitivity(SENSITIVITY),
-                                  Zoom(ZOOM)
+Camera2D::Camera2D(float left, float right, float bottom, float top, QWidget *parent) :
+    m_parent(parent),
+    m_projectionMatrix (glm::ortho(left, right, bottom, top, -1.0f, 1.0f)),
+    m_viewMatrix(1.0f),
+    m_right(0.5f, 0.0f, 0.0f),
+    m_up(0.0f, 0.5f, 0.0f),
+    m_zoom(0.05f, 0.05f, 1.0f)
 {
-    Position = position;
-    WorldUp = up;
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
+
+    m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 }
 
-Camera2D::Camera2D(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-                                                : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-                                                  Vertical(glm::vec3(0.0f, -1.0f, 0.0f)),
-                                                  MovementSpeed(SPEED),
-                                                  MouseSensitivity(SENSITIVITY),
-                                                  Zoom(ZOOM)
+void Camera2D::reziseGlViewPort(const int width, const int height)
 {
-    Position = glm::vec3(posX, posY, posZ);
-    WorldUp = glm::vec3(upX, upY, upZ);
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
+//    QOpenGLFunctions *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions>();
+//    f->glViewport(0, 0, width, height);
+//    m_parent->update();
 }
 
-glm::mat4 Camera2D::GetViewMatrix()
+void Camera2D::ProccessKeyBoard(CameraMovement direction)
 {
-    return glm::lookAt(Position, Position + Front, Up);
+    if(direction == FORWARD){
+        this->m_position += this->m_up;
+        m_parent->update();;
+    }
+    if(direction == BACKWARD){
+        this->m_position -= this->m_up;
+        m_parent->update();
+    }
+    if(direction == LEFT){
+        this->m_position -= this->m_right;
+        m_parent->update();
+    }
+    if(direction == RIGHT){
+        this->m_position += this->m_right;
+        m_parent->update();
+    }
+    RecalculateViewMatrix();
 }
 
-void Camera2D::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+void Camera2D::ProccesScroll(float yoffset)
 {
-    float velocity = MovementSpeed; // * deltaTime;
-    if (direction == FORWARD)
-//        Position += Front * velocity;
-        Position += Vertical * velocity;
-    if (direction == BACKWARD)
-//        Position -= Front * velocity;
-        Position -= Vertical * velocity;
-    if (direction == LEFT)
-        Position -= Right * velocity;
-    if (direction == RIGHT)
-        Position += Right * velocity;
-}
-
-void Camera2D::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch)
-{
-    xoffset *= MouseSensitivity;
-    yoffset *= MouseSensitivity;
-
-    Yaw   += xoffset;
-    Pitch += yoffset;
-
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainPitch)
-    {
-        if (Pitch > 89.0f)
-            Pitch = 89.0f;
-        if (Pitch < -89.0f)
-            Pitch = -89.0f;
+    if(yoffset == 120){
+        this->m_scale -= m_zoom;
+        this->RecalculateViewMatrix();
+        m_parent->update();
+    } else if(yoffset == -120){
+        this->m_scale += m_zoom;
+        this->RecalculateViewMatrix();
+        m_parent->update();
     }
 
-    // update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
 }
 
-void Camera2D::ProcessMouseScroll(float yoffset)
+
+void Camera2D::processMouseMovement(float xoffset, float yoffset)
 {
-
-//    Zoom -= (yoffset * 0.0001f);
-//    Front *= glm::vec3(0.0f, 0.0f, Zoom);
-//    Position -= Front * MovementSpeed;
-
-//    qDebug() << Zoom;
-    if (yoffset ==  120)
-//        Zoom = 1.0f;
-        Position += Front * MovementSpeed;
-    if (yoffset == -120)
-
-        Position -= Front * MovementSpeed;
+    //move camera with mouse
+    m_position += xoffset;
+    m_position.x -= yoffset;
+    RecalculateViewMatrix();
+    m_parent->update();
 }
 
-void Camera2D::updateCameraVectors()
+glm::vec2 Camera2D::getWorldCoordinates(int *mouseX, int *mouseY){
+
+    glm::vec4 viewport = glm::vec4(0, 0, m_parent->width(), m_parent->height());
+    glm::vec3 worldCoords = glm::unProject(glm::vec3(*mouseX, float(m_parent->height()) - *mouseY, 0.0f), m_viewMatrix, m_projectionMatrix, viewport);
+
+    return glm::vec2(worldCoords.x, worldCoords.y);
+
+//    const glm::vec4 view(*mouseX / (m_parent->width() / 2.f) - 1,
+//                            1 - *mouseY / (m_parent->height() / 2.f), 0, 1);
+//            const auto pos = inverse(m_viewMatrix) * viewport;
+////            objects[0]->position = {pos.x / pos.w, pos.y / pos.w, 0};
+//            float posX = pos.x / pos.w;
+//            float posY = pos.y/pos.w;
+//            return glm::vec2 ( posX, posY);
+}
+
+void Camera2D::RecalculateViewMatrix()
 {
-    // calculate the new Front vector
-    glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
-    // also re-calculate the Right and Up vector
-    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    Up    = glm::normalize(glm::cross(Right, Front));
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_position) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation), glm::vec3(0, 0, 1)) *
+            glm::scale(glm::mat4(1.0f), m_scale);
+
+    m_viewMatrix = glm::inverse(transform);
+
+    m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 }

@@ -28,9 +28,7 @@ void DrawableObject_Grid::setColorGrid(glm::vec3 color)
     grid->setColorPoints(this->Color);
 }
 
-void DrawableObject_Grid::setMVP(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection)
+void DrawableObject_Grid::setMVP(const glm::mat4 &MVP)
 {
-    grid->setProjection(projection);
-    grid->setView(view);
-    grid->setModel(model);
+    grid->setMVP(MVP);
 }

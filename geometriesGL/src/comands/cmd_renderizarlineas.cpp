@@ -106,11 +106,7 @@ void cmd_renderizarLineas::drawLinea()
     //Envia el sistema de coordenadas
 
     // retrieve the matrix uniform locations
-    this->shader_Renderiza_Linea.SetMatrix4("model", model);
-    this->shader_Renderiza_Linea.SetMatrix4("view", view);
-    this->shader_Renderiza_Linea.SetMatrix4("projection", projection);
-
-//    this->shader_Renderiza_Linea.SetMatrix4("m_MVP", m_MVP);
+    this->shader_Renderiza_Linea.SetMatrix4("MVP", m_MVP);
 
     //Enviamos el color
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", this->colorLinea);
@@ -129,9 +125,7 @@ void cmd_renderizarLineas::drawLinea()
 void cmd_renderizarLineas::drawOtherLinea(){
     this->shader_Renderiza_Linea.Use();
 
-    this->shader_Renderiza_Linea.SetMatrix4("projection", projection);
-    this->shader_Renderiza_Linea.SetMatrix4("view", view);
-    this->shader_Renderiza_Linea.SetMatrix4("model", model);
+    this->shader_Renderiza_Linea.SetMatrix4("MVP", m_MVP);
     //Enviamos el color
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", colorThick);
 
@@ -231,69 +225,6 @@ void cmd_renderizarLineas::setColorThick(glm::vec3 color)
     colorThick = color;
 }
 
-
-void cmd_renderizarLineas::drawTransforamtions(glm::vec2 position, glm::vec2 size, float rotate)
-{
-
-    //Preparamos transformaciones
-    this->shader_Renderiza_Linea.Use();
-    //Transformaciones: 1.Scale 2.Rotacion 3. Traslacion
-    //se aplica en orden reverso
-    //......traslacion
-    model = glm::translate(model, glm::vec3(position, 0.0f));
-
-    //.......mover el origen de rotacion al centro del cuatrado
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-    //...... Rotacion
-    model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-    //.......mover al origen hacia atras
-    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-    //......ultima Escala
-    model = glm::scale(model, glm::vec3(size, 0.0f));
-
-    this->shader_Renderiza_Linea.SetMatrix4("model", model);
-
-    //Renderizar Texturas del cuadrado
-//    this->shader_Renderiza_Linea.SetVector3f("spriteColor", color);
-
-//    glActiveTexture(GL_TEXTURE0);
-//    texture.Bind();
-
-    //Renderizamos
-    glBindVertexArray(this->lineaVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
-}
-
-glm::mat4 cmd_renderizarLineas::getModel() const
-{
-    return model;
-}
-
-void cmd_renderizarLineas::setModel(const glm::mat4 &value)
-{
-    model = value;
-}
-
-glm::mat4 cmd_renderizarLineas::getView() const
-{
-    return view;
-}
-
-void cmd_renderizarLineas::setView(const glm::mat4 &value)
-{
-    view = value;
-}
-
-glm::mat4 cmd_renderizarLineas::getProjection() const
-{
-    return projection;
-}
-
-void cmd_renderizarLineas::setProjection(const glm::mat4 &value)
-{
-    projection = value;
-}
 
 glm::mat4 cmd_renderizarLineas::getMVP() const
 {

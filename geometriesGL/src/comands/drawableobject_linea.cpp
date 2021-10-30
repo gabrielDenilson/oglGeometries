@@ -83,9 +83,11 @@ void DrawableObject_Linea::drawLine()
 
 }
 
-void DrawableObject_Linea::setMVP(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection)
+void DrawableObject_Linea::setMVP(const glm::mat4 &MVP)
 {
-    renderable->setProjection(projection);
-    renderable->setView(view);
-    renderable->setModel(model);
+    renderable->setMVP(MVP);
+}
+
+glm::mat4 DrawableObject_Linea::getMVP(){
+    return renderable->getMVP();
 }

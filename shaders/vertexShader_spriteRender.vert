@@ -4,9 +4,7 @@ layout (location = 1) in  vec2 textuaCoord;
 
 out vec2 TexCoords;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 MVP;
 
 void main()
 {
@@ -15,5 +13,5 @@ void main()
 
 //    gl_Position =  vec4(vertex.x, vertex.y, 0.0, 1.0);
 
-    gl_Position = projection * view * model * vec4(vertex.x, vertex.y, 0.0, 1.0);
+    gl_Position = MVP * vec4(vertex.x, vertex.y, 0.0, 1.0);
 }

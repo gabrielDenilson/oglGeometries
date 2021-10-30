@@ -34,15 +34,6 @@ public:
 
     void actualizarVBOGrid(QWidget *parent); //funcion vacia para actualizar la memoria en el GPU
 
-    glm::mat4 getModel() const;
-    void setModel(const glm::mat4 &value);
-
-    glm::mat4 getView() const;
-    void setView(const glm::mat4 &value);
-
-    glm::mat4 getProjection() const;
-    void setProjection(const glm::mat4 &value);
-
     glm::mat4 getMVP() const;
     void setMVP(const glm::mat4 &MVP);
 
@@ -53,11 +44,7 @@ private:
     unsigned int gridVBO; //!Memoria buffer GL
 
     //!Atributos de Grid
-    glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-    glm::mat4 view          = glm::mat4(1.0f);
-    glm::mat4 projection    = glm::mat4(1.0f);
-
-    glm::mat4 m_MVP         = glm::mat4(1.0f);
+    glm::mat4 m_MVP = glm::mat4(1.0f);
 
     Shader shader_Renderiza_Grid; //!Shader Program liena GL
     Texture texture_Renderiza_Grid; //!Texture file linea GL

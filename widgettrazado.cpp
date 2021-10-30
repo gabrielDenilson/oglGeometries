@@ -19,7 +19,8 @@ widgetTrazado::widgetTrazado(QWidget *parent)
     : QOpenGLWidget(parent),
       weidthWdg(0),
       heigthWdg(0),
-      camera(glm::vec3(0.0f, 0.0f, 3.0f))
+      camera(0.0f, 160.0f, 0.0f, 90.0f, this)
+//      camera(-this->width()/2.0f,this->width()/2.0f, -this->height()/2.0f, this->height()/2.0f, this)
 {
     this->setMouseTracking(true);
 
@@ -43,6 +44,7 @@ widgetTrazado::~widgetTrazado()
 DrawableObject_Linea *hoja;
 DrawableObject_Cuadrado *hojaCuadrada;
 DrawableObject_Grid *hojaGrid;
+glm::mat4 ProjectionRT (1.0f);
 
 //¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨^^
 void widgetTrazado::initializeGL()
@@ -109,6 +111,13 @@ void widgetTrazado::initializeGL()
 
     hojaGrid = new DrawableObject_Grid(myShader, myTextura, glm::vec3(1.0f, 1.0f, 1.0f));
 
+//    ProjectionRT = glm::perspective(glm::radians(camera.Zoom), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
+//static_cast<float>(this->width())/16
+//static_cast<float>(this->height())/16, -1.0f, 1.0f)
+    ProjectionRT = glm::ortho(0.0f, 16.0f,
+                              0.0f, 9.0f);
+
+
     geometryTreeCompound->add_Componente_Geometry(hoja);
     geometryTreeCompound->add_Componente_Geometry(hojaCuadrada);
     geometryTreeCompound->add_Componente_Geometry(hojaGrid);
@@ -134,16 +143,29 @@ void widgetTrazado::paintGL()
 //    glViewport(0, 0, width()/2, height()/2);
 
     // pass projection matrix to shader (note that in this case it could change every frame)
-    glm::mat4 ProjectionRT = glm::perspective(glm::radians(camera.Zoom), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
-//    glm::mat4 ProjectionRT = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+//    ProjectionRT = glm::perspective(glm::radians(camera.Zoom), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
+
     // camera/view transformation
-    glm::mat4 ViewRT = camera.GetViewMatrix();
+    glm::mat4 ViewRT(1.0f);
+//    ViewRT= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    ViewRT = camera.getViewProjectionMatrix();
 
-    hojaCuadrada->setProjection(ProjectionRT);
-    hojaCuadrada->setView(ViewRT);
+//    translation_matrix = glm::translate(0.0f, 0.0f, 0.0);
+//    scaling_matrix  = mat4_scaling(1.0 / width(), 1.0 / height(), 1.0)
 
-    hoja->setMVP(glm::mat4(1.0f), ViewRT, ProjectionRT);
-    hojaGrid->setMVP(glm::mat4(1.0f), ViewRT, ProjectionRT);
+    glm::mat4 ModelRT (1.0f);
+//    ModelRT  = glm::scale(ModelRT, glm::vec3( glm::vec2(100.0f, 100.0f), 1.0f));
+
+    glm::mat4 myMVP (1.0f);
+
+
+    myMVP =ViewRT * ModelRT;
+
+
+    hoja->setMVP(myMVP);
+    hojaCuadrada->setMVP(myMVP);
+    hojaGrid->setMVP(myMVP);
+
 
     geometryTreeCompound->draw_Componente_Geometry();
 
@@ -179,6 +201,16 @@ void widgetTrazado::mousePressEvent(QMouseEvent *event)
         hoja->setPuntoFinal(&puntoFinal,this);
 
     }
+
+    int x = event->pos().x();
+    int y = event->pos().y();
+    qDebug()<< "width: " << this->width() << " height: " << this->height() ;
+    qDebug()<< "x: " << x << " y: " << y ;
+
+    glm::vec2 mousePos = camera.getWorldCoordinates(&x, &y);
+
+    qDebug()<< "x: " << mousePos.x << " y: " << mousePos.y ;
+
 }
 
 //-------------- MOVIMIENTO DE MOUSE -----------------
@@ -194,16 +226,17 @@ void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
 //        firstMouse = false;
 //    }
 
-//    float xoffset = event->x() - lastX;
-//    float yoffset = lastY - event->y(); // reversed since y-coordinates go from bottom to top
+    float xoffset = event->x() - lastX;
+    float yoffset = lastY - event->y(); // reversed since y-coordinates go from bottom to top
 
-//    lastX = event->x();
-//    lastY = event->y();
+    lastX = event->x();
+    lastY = event->y();
 
-//    camera.ProcessMouseMovement(xoffset, yoffset);
+
 
     if(mouseContador == 1){
-        hoja->setPuntoFinal(&mousePosicion, this);
+//        hoja->setPuntoFinal(&mousePosicion, this);
+//        camera.processMouseMovement(xoffset, yoffset);
     }
 
     update();
@@ -211,7 +244,10 @@ void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
 
 void widgetTrazado::wheelEvent(QWheelEvent *event)
 {
-    camera.ProcessMouseScroll(event->delta());
+
+    float yoffset = event->delta();
+
+    camera.ProccesScroll(yoffset);
 
     qDebug()<< event->delta();
 
@@ -220,29 +256,19 @@ void widgetTrazado::wheelEvent(QWheelEvent *event)
 
 void widgetTrazado::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key() == Qt::Key_Left)
-    {
-        //camera object moves left
-        camera.ProcessKeyboard(LEFT, deltaTime);
-        update();
+
+    //recieve keys UP DOWN LEFT RIGHT
+    if(event->key() == Qt::Key_Down){
+        camera.ProccessKeyBoard(BACKWARD);
     }
-    else if(event->key() == Qt::Key_Right)
-    {
-        //camera object moves right
-        camera.ProcessKeyboard(RIGHT, deltaTime);
-        update();
+    if(event->key() == Qt::Key_Up){
+        camera.ProccessKeyBoard(FORWARD);
     }
-    else if(event->key() == Qt::Key_Up)
-    {
-        //camera object moves up
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-        update();
+    if(event->key() == Qt::Key_Left){
+        camera.ProccessKeyBoard(LEFT);
     }
-    else if(event->key() == Qt::Key_Down)
-    {
-        //camera object moves down
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-        update();
+    if(event->key() == Qt::Key_Right){
+        camera.ProccessKeyBoard(RIGHT);
     }
 }
 
@@ -265,6 +291,51 @@ float widgetTrazado::getTime()
     time = QTime::currentTime();
     return time.second() + time.msec()/1000.0;
 }
+
+void updateTranslate(){
+//    matTranslation = glm::translate(glm::mat4 (1.0f), glm::vec3(vecTranslate, 0.0f));
+}
+
+void updateScale(const int viewWidth, const int viewHeight)
+{
+//    vecScale = glm::vec2(factScale, factScale / viewHeight * viewWidth);
+//    matScaling = glm::scale(glm::mat4(1), glm::vec3(vecScale, 1));
+//    matTransform = matTranslation * matScaling;
+}
+
+void updateViewport(const int width, const int height)
+{
+    glViewport(0, 0, width, height);
+    updateScale(width, height);
+}
+
+//void mouse_button_callback(GLFWwindow *window, const int button, const int action, const int mods)
+//{
+//    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+//    {
+//        double x, y;
+//        int width, height;
+//        glfwGetCursorPos(window, &x, &y);
+//        glfwGetWindowSize(window, &width, &height);
+
+//        const glm::vec2 view(x / (width / 2.f) - 1,
+//                        1 - y / (height / 2.f));
+
+//        objects[0]->position = vec3((view - vecTranslate) / vecScale, 0);
+
+//        /* Or:
+//        const vec4 view(x / (width / 2.f) - 1,
+//                        1 - y / (height / 2.f), 0, 1);
+//        const auto pos = inverse(matTransform) * view;
+//        objects[0]->position = {pos.x / pos.w, pos.y / pos.w, 0};
+//        */
+//    }
+//}
+
+//void window_size_callback(GLFWwindow *window, const int width, const int height)
+//{
+//    updateViewport(width, height);
+//}
 
 
 //----------------------SLOTS-----------------------

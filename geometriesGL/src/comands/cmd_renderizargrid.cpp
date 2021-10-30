@@ -59,7 +59,7 @@ void cmd_renderizarGrid::setVectorPointsGrid(std::vector<glm::vec2> &points){
     float Y = 0;
     float Distance = 1;
 
-    int N = 10;
+    int N = 300;
 
 
     for (int j = 0; j <= N; j++) {
@@ -77,7 +77,7 @@ void cmd_renderizarGrid::setVectorPointsGrid(std::vector<glm::vec2> &points){
     for(int i = 0; i <= (int)points.size()+1; i++){
         float x = points[i].x;
         float y = points[i].y;
-        qDebug() << i << "x:" << x << " y:" << y;
+//        qDebug() << i << "x:" << x << " y:" << y;
     }
 }
 
@@ -85,11 +85,7 @@ void cmd_renderizarGrid::drawGrid(){
     shader_Renderiza_Grid.Use();
 
     // retrieve the matrix uniform locations
-    this->shader_Renderiza_Grid.SetMatrix4("model", model);
-    this->shader_Renderiza_Grid.SetMatrix4("view", view);
-    this->shader_Renderiza_Grid.SetMatrix4("projection", projection);
-
-//    this->shader_Renderiza_Linea.SetMatrix4("m_MVP", m_MVP);
+    this->shader_Renderiza_Grid.SetMatrix4("MVP", m_MVP);
 
     //Enviamos el color
     this->shader_Renderiza_Grid.SetVector3f("spriteColor", this->colorGrid);
@@ -99,35 +95,6 @@ void cmd_renderizarGrid::drawGrid(){
     glBindVertexArray(0);
 }
 
-glm::mat4 cmd_renderizarGrid::getModel() const
-{
-    return model;
-}
-
-void cmd_renderizarGrid::setModel(const glm::mat4 &value)
-{
-    model = value;
-}
-
-glm::mat4 cmd_renderizarGrid::getView() const
-{
-    return view;
-}
-
-void cmd_renderizarGrid::setView(const glm::mat4 &value)
-{
-    view = value;
-}
-
-glm::mat4 cmd_renderizarGrid::getProjection() const
-{
-    return projection;
-}
-
-void cmd_renderizarGrid::setProjection(const glm::mat4 &value)
-{
-    projection = value;
-}
 
 glm::mat4 cmd_renderizarGrid::getMVP() const
 {

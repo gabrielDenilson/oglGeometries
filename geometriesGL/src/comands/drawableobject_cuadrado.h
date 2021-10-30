@@ -61,16 +61,6 @@ public:
     Punto *getPuntoC();
     Punto *getPuntoD();
 
-
-    glm::mat4 getModel() const;
-    void setModel(const glm::mat4 &value);
-
-    glm::mat4 getView() const;
-    void setView(const glm::mat4 &value);
-
-    glm::mat4 getProjection() const;
-    void setProjection(const glm::mat4 &value);
-
     glm::mat4 getMVP() const;
     void setMVP(const glm::mat4 &MVP);
 };

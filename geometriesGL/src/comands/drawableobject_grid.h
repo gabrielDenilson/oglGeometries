@@ -35,9 +35,7 @@ public:
     //RENDER FUNCTIONS
     void setColorGrid(glm::vec3 color);
 
-    void setMVP(const glm::mat4 &model,
-                const glm::mat4 &view,
-                const glm::mat4 &projection);
+    void setMVP(const glm::mat4 &MVP);
 };
 
 

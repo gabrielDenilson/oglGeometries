@@ -98,53 +98,6 @@ Punto *DrawableObject_Cuadrado::getPuntoD()
     return D;
 }
 
-glm::mat4 DrawableObject_Cuadrado::getModel() const
-{
-    lineaA->getModel();
-    lineaB->getModel();
-    lineaC->getModel();
-    lineaD->getModel();
-}
-
-void DrawableObject_Cuadrado::setModel(const glm::mat4 &value)
-{
-    lineaA->setModel(value);
-    lineaB->setModel(value);
-    lineaC->setModel(value);
-    lineaD->setModel(value);
-}
-
-glm::mat4 DrawableObject_Cuadrado::getView() const
-{
-    lineaA->getView();
-    lineaB->getView();
-    lineaC->getView();
-    lineaD->getView();
-}
-
-void DrawableObject_Cuadrado::setView(const glm::mat4 &value)
-{
-    lineaA->setView(value);
-    lineaB->setView(value);
-    lineaC->setView(value);
-    lineaD->setView(value);
-}
-
-glm::mat4 DrawableObject_Cuadrado::getProjection() const
-{
-    lineaA->getProjection();
-    lineaB->getProjection();
-    lineaC->getProjection();
-    lineaD->getProjection();
-}
-
-void DrawableObject_Cuadrado::setProjection(const glm::mat4 &value)
-{
-    lineaA->setProjection(value);
-    lineaB->setProjection(value);
-    lineaC->setProjection(value);
-    lineaD->setProjection(value);
-}
 
 glm::mat4 DrawableObject_Cuadrado::getMVP() const
 {

@@ -95,6 +95,16 @@ static float angle(const Vec2 &a, const Vec2 &b) {
 	return std::acos(dot(a, b) / (magnitude(a) * magnitude(b)));
 }
 
+/**
+ * less decimals of a Vec2.
+ */
+template<typename Vec2>
+static Vec2 round(const Vec2 &vec, int decimals) {
+    return {std::round(vec.x * std::pow(10, decimals)) / std::pow(10, decimals),
+            std::round(vec.y * std::pow(10, decimals)) / std::pow(10, decimals)};
+}
+
+
 } // namespace Vec2Maths
 
 }

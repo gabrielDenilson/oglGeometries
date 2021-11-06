@@ -2,8 +2,8 @@
 #define CMD_RENDERIZARCUADRADO_H
 
 #include <QOpenGLExtraFunctions>
-#include <Polyline2D.h>
-#include <Vec2.h>
+#include <geometriesGL/res/Polyline2D.h>
+#include <geometriesGL/res/Vec2.h>
 
 #include "geometry.h"
 #include "shader.h"
@@ -14,6 +14,23 @@
 
 class cmd_renderizarGrid : protected QOpenGLExtraFunctions
 {
+private:
+    //!Atributos de renderizado
+    unsigned int gridVAO; //!Memoria vertex GL
+    unsigned int gridVBO; //!Memoria buffer GL
+
+    //!Atributos de Grid
+    glm::mat4 m_MVP = glm::mat4(1.0f);
+
+    Shader shader_Renderiza_Grid; //!Shader Program liena GL
+    Texture texture_Renderiza_Grid; //!Texture file linea GL
+    const Shader *ptr_Shader;
+
+    glm::vec3 colorGrid; //!Color of the points of Grid
+
+    std::vector<glm::vec2> Vertices;
+    string nombreCmd; //!Nombre de comando
+
 public:
 
     cmd_renderizarGrid(); //Constructor vacio
@@ -29,30 +46,16 @@ public:
 
     void drawGrid();
 
-    void setShaderProgram(Shader &newShader);
-    void setTextureProgram(Texture &newTexture);
+    void setShaderProgram(const Shader &newShader);
+    void setTextureProgram(Texture *newTexture);
+
+    void setShaderNormal(const Shader *newShader);
 
     void actualizarVBOGrid(QWidget *parent); //funcion vacia para actualizar la memoria en el GPU
 
     glm::mat4 getMVP() const;
     void setMVP(const glm::mat4 &MVP);
 
-private:
-
-    //!Atributos de renderizado
-    unsigned int gridVAO; //!Memoria vertex GL
-    unsigned int gridVBO; //!Memoria buffer GL
-
-    //!Atributos de Grid
-    glm::mat4 m_MVP = glm::mat4(1.0f);
-
-    Shader shader_Renderiza_Grid; //!Shader Program liena GL
-    Texture texture_Renderiza_Grid; //!Texture file linea GL
-
-    glm::vec3 colorGrid; //!Color of the points of Grid
-
-    std::vector<glm::vec2> Vertices;
-    string nombreCmd; //!Nombre de comando
 };
 
 #endif // CMD_RENDERIZARCUADRADO_H

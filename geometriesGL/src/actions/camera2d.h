@@ -33,6 +33,11 @@ private:
     glm::vec3 m_right;
     glm::vec3 m_up;
     glm::vec3 m_zoom;
+
+    glm::vec3 m_lastPosition;
+
+    int g_lastX;
+    int g_lastY;
 public:
 
 
@@ -59,7 +64,11 @@ public:
 
     void processMouseMovement(float xoffset, float yoffset);
 
-    glm::vec2 getWorldCoordinates(int *mouseX, int *mouseY);
+    glm::vec2 getWorldCoordinates(float mouseX, float mouseY);
+
+    void onMousePress(float mouseX, float mouseY);
+
+    void MoveWorldWithMouse(float mouseX, float mouseY);
 private:
     void RecalculateViewMatrix();
 };

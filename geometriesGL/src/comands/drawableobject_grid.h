@@ -20,6 +20,8 @@ public:
 
     bool transformar;
 
+public:
+
     DrawableObject_Grid();
     DrawableObject_Grid(Shader &shaderProgram,
                         Texture &textura,
@@ -29,9 +31,16 @@ public:
 
     bool isComposite() const override{ return false; }
 
-    //DRAW FUNCTIONS
+    //!DRAW FUNCTIONS
     void draw_Componente_Geometry() override;
 
+    //!GETTERS AND SETTERS DE HIJO
+    void setShader(const Shader &shaderProgram) override;
+    void setTexture(Texture *textureProgram) override;
+    void setCamera(Camera2D *viewMatrix) override;
+
+    void setShaderNormal(const Shader *shaderProgram);
+    void setTextureNormal(Texture &textureProgram);
     //RENDER FUNCTIONS
     void setColorGrid(glm::vec3 color);
 

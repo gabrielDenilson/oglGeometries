@@ -6,13 +6,20 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "shader.h"
 #include "texture.h"
 #include "spriterender.h"
+#include "geometriesGL/src/actions/camera2d.h"
 
 using namespace std;
 
 class Geometry
 {
+protected:
+    Geometry* ptr_parent_;
+
+    string nombreGeometry;
+
 public:
     //METODOS DE ARBOL
     Geometry();
@@ -27,20 +34,18 @@ public:
     virtual ~Geometry();
     virtual bool isComposite() const  { return false; }
 
-    //GESTION DE HIJOS
+    //!GESTION DE HIJOS
     virtual void add_Componente_Geometry(Geometry* ){}
     virtual void delete_Componente_Geometry(Geometry* ){}
 
-    //FUNCIONES DE DIBUJO
+    //!FUNCIONES DE DIBUJO
     virtual void draw_Componente_Geometry(){}
 
-    //GETTERS AND SETTERS ATRIBUTOS DE HIJOS
+    //!GETTERS AND SETTERS ATRIBUTOS DE HIJOS
+    virtual void setShader(const Shader &){}
+    virtual void setTexture(Texture *){}
+    virtual void setCamera(Camera2D *){}
     virtual Geometry *getChhilGeometry(int){return nullptr;};
-
-protected:
-    Geometry* ptr_parent_;
-
-    string nombreGeometry;
 };
 
 #endif // GEOMETRY_H

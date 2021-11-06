@@ -52,7 +52,7 @@ private:
     //!Creacion de un Componente Geometrico: Revisar patron AbstractFactory
     Geometry *geometryTreeCompound;
 
-    Camera2D camera;
+    Camera2D *camera;
     float lastX ;
     float lastY ;
     bool firstMouse;

@@ -14,6 +14,14 @@
 class DrawableObject_Cuadrado :public Geometry, protected QOpenGLExtraFunctions
 
 {
+public:
+    glm::vec3 Color;
+    Shader shaderProgram;
+    Texture Sprite;
+    bool transformation;
+    glm::mat4 model = glm::mat4(1.0f);
+
+
 private:
     cmd_renderizarLineas *lineaA;
     cmd_renderizarLineas *lineaB;
@@ -24,13 +32,8 @@ private:
     Punto *B;
     Punto *C;
     Punto *D;
-public:
-    glm::vec3 Color;
-    Shader shaderProgram;
-    Texture Sprite;
-    bool transformation;
-    glm::mat4 model = glm::mat4(1.0f);
 
+public:
     //color, shaderProgram, Sprite, transfomarBool, model matrix
     DrawableObject_Cuadrado();
     DrawableObject_Cuadrado(Shader &shaderProgram,
@@ -41,9 +44,13 @@ public:
 
     bool isComposite() const override { return false; }
 
-    //DRAW FUNCTIONS
+    //!DRAW FUNCTIONS
     void draw_Componente_Geometry() override;
 
+    //!GETTERS AND SETTERS OF CHILD
+    void setShader(const Shader &shaderCompound) override;
+    void setTexture(Texture *textureCompound) override;
+    void setCamera(Camera2D *viewMatrix) override;
     //DINAMIC RENDER FUNCTIONS
     void setColor(glm::vec3 color);
     void setThick(float thick);

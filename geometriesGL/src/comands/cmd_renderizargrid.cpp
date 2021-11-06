@@ -2,22 +2,26 @@
 
 #include <QDebug>
 
-cmd_renderizarGrid::cmd_renderizarGrid()
+cmd_renderizarGrid::cmd_renderizarGrid() : colorGrid(1.0f)
 {
-
+    initializeOpenGLFunctions();
+    this->nombreCmd = "renderGrid";
+    initBuffers();
 }
 
 cmd_renderizarGrid::cmd_renderizarGrid(string nombreLinea)
 {
-
+    initializeOpenGLFunctions();
+    this->nombreCmd = nombreLinea;
+    initBuffers();
 }
 
 cmd_renderizarGrid::cmd_renderizarGrid(Shader &shader, Texture& texture, glm::vec3 color)
 {
     initializeOpenGLFunctions();
 
-    this->shader_Renderiza_Grid = shader;
-    this->texture_Renderiza_Grid = texture;
+//    this->shader_Renderiza_Grid = shader;
+//    this->texture_Renderiza_Grid = texture;
     this->colorGrid = color;
     //Inicializa la memoria para Grid
     initBuffers();
@@ -59,7 +63,7 @@ void cmd_renderizarGrid::setVectorPointsGrid(std::vector<glm::vec2> &points){
     float Y = 0;
     float Distance = 1;
 
-    int N = 300;
+    int N = 100;
 
 
     for (int j = 0; j <= N; j++) {
@@ -74,16 +78,12 @@ void cmd_renderizarGrid::setVectorPointsGrid(std::vector<glm::vec2> &points){
         }
     }
 
-    for(int i = 0; i <= (int)points.size()+1; i++){
-        float x = points[i].x;
-        float y = points[i].y;
-//        qDebug() << i << "x:" << x << " y:" << y;
-    }
 }
 
 void cmd_renderizarGrid::drawGrid(){
-    shader_Renderiza_Grid.Use();
+//    ptr_Shader->Use();
 
+    this->shader_Renderiza_Grid.Use();
     // retrieve the matrix uniform locations
     this->shader_Renderiza_Grid.SetMatrix4("MVP", m_MVP);
 
@@ -93,6 +93,25 @@ void cmd_renderizarGrid::drawGrid(){
     glBindVertexArray(gridVAO);
     glDrawArrays(GL_POINTS, 0, Vertices.size());
     glBindVertexArray(0);
+    this->shader_Renderiza_Grid.release();
+
+//    this->ptr_Shader->release();
+}
+
+void cmd_renderizarGrid::setShaderProgram(const Shader &newShader)
+{
+    this->shader_Renderiza_Grid = newShader;
+}
+
+void cmd_renderizarGrid::setTextureProgram(Texture *newTexture)
+{
+//    this->texture_Renderiza_Grid = newTexture;
+}
+
+void cmd_renderizarGrid::setShaderNormal(const Shader *newShader)
+{
+//    this->shader_Renderiza_Grid = newShader;
+    this->ptr_Shader = newShader;
 }
 
 

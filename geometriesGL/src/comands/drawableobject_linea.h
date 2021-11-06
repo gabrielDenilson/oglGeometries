@@ -22,6 +22,9 @@ public:
     bool transformar;
     glm::mat4 model = glm::mat4(1.0); //inicializacion no afecta a la figura
 
+    crushedpixel::Vec2 roundPoint; //!Coordenada de Grosor
+
+public:
     //FUNCIONES DE HOJA
     DrawableObject_Linea();
     DrawableObject_Linea(Shader &shaderProgram,  //Constructor principal para reservar memoria:
@@ -31,11 +34,13 @@ public:
     ~DrawableObject_Linea();
     bool isComposite() const override { return false; }
 
-    //FUNCIONES DE DIBUJO
+    //!FUNCIONES DE DIBUJO
     void draw_Componente_Geometry() override;
 
-    //GETTERS AND SETTERS DE HIJO
-
+    //!GETTERS AND SETTERS DE HIJO
+    void setShader(const Shader &shaderProgram) override;
+    void setTexture(Texture *textureProgram) override;
+    void setCamera(Camera2D *viewMatrix) override;
     //Funciondes de renderizado dinamico
 
     void setColorLinea(glm::vec3 color);
@@ -53,7 +58,6 @@ public:
     void setMVP(const glm::mat4 &MVP);
     glm::mat4 getMVP();
 
-    void transformarLinea(glm::vec2 position, glm::vec2 size, float rotation);
 };
 
 #endif // DRAWABLEOBJECT_LINEA_H

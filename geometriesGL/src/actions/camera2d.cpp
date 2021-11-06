@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QOpenGLFunctions>
+#include <math.h>
 
 Camera2D::Camera2D(float left, float right, float bottom, float top, QWidget *parent) :
     m_parent(parent),
@@ -26,7 +27,7 @@ void Camera2D::ProccessKeyBoard(CameraMovement direction)
 {
     if(direction == FORWARD){
         this->m_position += this->m_up;
-        m_parent->update();;
+        m_parent->update();
     }
     if(direction == BACKWARD){
         this->m_position -= this->m_up;
@@ -67,20 +68,34 @@ void Camera2D::processMouseMovement(float xoffset, float yoffset)
     m_parent->update();
 }
 
-glm::vec2 Camera2D::getWorldCoordinates(int *mouseX, int *mouseY){
+glm::vec2 Camera2D::getWorldCoordinates(float mouseX, float mouseY){
 
     glm::vec4 viewport = glm::vec4(0, 0, m_parent->width(), m_parent->height());
-    glm::vec3 worldCoords = glm::unProject(glm::vec3(*mouseX, float(m_parent->height()) - *mouseY, 0.0f), m_viewMatrix, m_projectionMatrix, viewport);
+    glm::vec3 worldCoords = glm::unProject(glm::vec3(mouseX, float(m_parent->height()) - mouseY, 0.0f),
+                                           m_viewMatrix, m_projectionMatrix, viewport);
 
     return glm::vec2(worldCoords.x, worldCoords.y);
 
-//    const glm::vec4 view(*mouseX / (m_parent->width() / 2.f) - 1,
-//                            1 - *mouseY / (m_parent->height() / 2.f), 0, 1);
-//            const auto pos = inverse(m_viewMatrix) * viewport;
-////            objects[0]->position = {pos.x / pos.w, pos.y / pos.w, 0};
-//            float posX = pos.x / pos.w;
-//            float posY = pos.y/pos.w;
-//            return glm::vec2 ( posX, posY);
+}
+
+void Camera2D::onMousePress(float x, float y){
+    m_lastPosition = glm::vec3(getWorldCoordinates(x, y), 1.0f);
+
+}
+
+void Camera2D::MoveWorldWithMouse(float mouseX, float mouseY){
+    //find difference between new position , and old position in world space
+    glm::vec3 newPosition = glm::vec3(getWorldCoordinates(mouseX, mouseY), 1.0f);
+
+    glm::vec3 difference =  m_lastPosition - newPosition;
+    m_lastPosition = newPosition;
+    //move camera
+    m_position += difference;
+
+    qDebug() <<"POSITIO: "<< m_position.x << " :x" << m_position.y << " :y";
+
+    this->RecalculateViewMatrix();
+//    m_parent->update();
 }
 
 void Camera2D::RecalculateViewMatrix()

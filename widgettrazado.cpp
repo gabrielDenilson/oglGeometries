@@ -19,7 +19,7 @@ widgetTrazado::widgetTrazado(QWidget *parent)
     : QOpenGLWidget(parent),
       weidthWdg(0),
       heigthWdg(0),
-      camera(0.0f, 160.0f, 0.0f, 90.0f, this)
+      camera(new Camera2D(0.0f, 160.0f, 0.0f, 90.0f, this))
 //      camera(-this->width()/2.0f,this->width()/2.0f, -this->height()/2.0f, this->height()/2.0f, this)
 {
     this->setMouseTracking(true);
@@ -73,55 +73,37 @@ void widgetTrazado::initializeGL()
                                                         //                    qDebug() << this->height();
 
 
-//    glm::mat4 Mod         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-//    glm::mat4 Viw          = glm::mat4(1.0f);
-//    glm::mat4 Proj    = glm::mat4(1.0f);
-//    Mod = glm::rotate(Mod, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-//    Viw  = glm::translate(Viw, glm::vec3(0.0f, 0.0f, -3.0f));
-//    Proj = glm::perspective(glm::radians(45.0f), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
-//    Proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 100.f, 100.0f);
-
-
     Shader myShader;
     myShader = ResourceManager::GetShader("sprite");
-
-    this->geometryTreeCompound = new CompoundGeometry;
-
     ResourceManager::LoadTexture("nofile", true, "cara");
-
     Texture myTextura;
     myTextura = ResourceManager::GetTexture("cara");
 
-    hoja = new DrawableObject_Linea(myShader, myTextura, glm::vec3(0.0f, 1.0f, 0.0f));
+    this->geometryTreeCompound = new CompoundGeometry;
 
-    hoja->setThick(0.05);
-    hoja->setColorLinea(glm::vec3(0.3, 0.0, 0.0));
-    hoja->setColorThick(glm::vec3(0.0, 0.3, 0.0));
+    hoja = new DrawableObject_Linea();
 
-    hoja->setThick(0.05);
-    hoja->setColorLinea(glm::vec3(0.3, 0.0, 0.0));
-    hoja->setColorThick(glm::vec3(0.0, 0.3, 0.0));
+    hoja->setThick(0.3);
+    hoja->setColorLinea(glm::vec3(1.0, 0.0, 0.0));
+    hoja->setColorThick(glm::vec3(0.0, 1.0, 0.0));
 
-    hojaCuadrada = new DrawableObject_Cuadrado(myShader, myTextura, glm::vec3(0.0f, 1.0f, 0.0f));
+    hojaCuadrada = new DrawableObject_Cuadrado();
+//    hojaCuadrada->setColor(glm::vec3(0.1f, 0.0f, 0.0f));
 
     hojaCuadrada->setPuntoA(new Punto(-0.5f, -0.5f), this);
     hojaCuadrada->setPuntoB(new Punto(-0.5f,  0.5f), this);
     hojaCuadrada->setPuntoC(new Punto( 0.5f,  0.5f), this);
     hojaCuadrada->setPuntoD(new Punto( 0.5f, -0.5f), this);
 
-    hojaGrid = new DrawableObject_Grid(myShader, myTextura, glm::vec3(1.0f, 1.0f, 1.0f));
-
-//    ProjectionRT = glm::perspective(glm::radians(camera.Zoom), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
-//static_cast<float>(this->width())/16
-//static_cast<float>(this->height())/16, -1.0f, 1.0f)
-    ProjectionRT = glm::ortho(0.0f, 16.0f,
-                              0.0f, 9.0f);
-
+    hojaGrid = new DrawableObject_Grid();
+//    hojaGrid->setShader(ResourceManager::GetShader("sprite"));
 
     geometryTreeCompound->add_Componente_Geometry(hoja);
     geometryTreeCompound->add_Componente_Geometry(hojaCuadrada);
     geometryTreeCompound->add_Componente_Geometry(hojaGrid);
 
+    geometryTreeCompound->setShader(ResourceManager::GetShader("sprite"));
+//    geometryTreeCompound->setTexture(ptrTexture);
 }
 
 void widgetTrazado::resizeGL(int w, int h)
@@ -140,33 +122,13 @@ void widgetTrazado::paintGL()
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-//    glViewport(0, 0, width()/2, height()/2);
 
-    // pass projection matrix to shader (note that in this case it could change every frame)
-//    ProjectionRT = glm::perspective(glm::radians(camera.Zoom), (float)this->width() / (float)this->height(), 0.1f, 100.0f);
+//    hoja->setMVP(myMVP);
+//    hojaCuadrada->setMVP(myMVP);
+//    hojaGrid->setMVP(myMVP);
+    geometryTreeCompound->setCamera(camera);
 
-    // camera/view transformation
-    glm::mat4 ViewRT(1.0f);
-//    ViewRT= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-    ViewRT = camera.getViewProjectionMatrix();
-
-//    translation_matrix = glm::translate(0.0f, 0.0f, 0.0);
-//    scaling_matrix  = mat4_scaling(1.0 / width(), 1.0 / height(), 1.0)
-
-    glm::mat4 ModelRT (1.0f);
-//    ModelRT  = glm::scale(ModelRT, glm::vec3( glm::vec2(100.0f, 100.0f), 1.0f));
-
-    glm::mat4 myMVP (1.0f);
-
-
-    myMVP =ViewRT * ModelRT;
-
-
-    hoja->setMVP(myMVP);
-    hojaCuadrada->setMVP(myMVP);
-    hojaGrid->setMVP(myMVP);
-
-
+//    geometryTreeCompound->setCamera(&camera);
     geometryTreeCompound->draw_Componente_Geometry();
 
 }
@@ -177,46 +139,69 @@ int mouseContador = 0;
 float ultimaPosX;
 float ultimaPosY;
 Linea paraAgregar;
+
 Punto puntoFinal;
+glm::vec2 worlfPoint;
 
 //--------------------------------------------
 void widgetTrazado::mousePressEvent(QMouseEvent *event)
 {
+    float x = event->pos().x();
+    float y = event->pos().y();
+    worlfPoint = camera->getWorldCoordinates(x, y);
+//    qDebug() <<"WP: "<< worlfPoint.x << " x" << worlfPoint.y <<" y";
+
+    camera->onMousePress(x, y);
+
+    puntoFinal.setX(worlfPoint.x);
+    puntoFinal.setY(worlfPoint.y);
+//    qDebug() << puntoFinal.getX() << " x" << puntoFinal.getY() <<" y";
+
     if(event->button() == Qt::LeftButton){
-        puntoFinal = mousePosicion;
         mouseContador++;
     }
 
 //  Bucles de renderizado dinamico
     if(event->button()==0x00000001 && mouseContador == 1){
 
+
         hoja->setPuntoInicial(&puntoFinal, this);
-        hoja->setPuntoFinal(&puntoFinal, this); // si se mueve los puntos O y P son iguales y no se renderiza nada
+//        hoja->setPuntoFinal(&puntoFinal, this); // si se mueve los puntos O y P son iguales y no se renderiza nada
+
 
     } else if(event->button()==0x00000001 && mouseContador == 2){ //comprueba si se solto el raton =? Termina la linea : continua sujeta al mouse
 
         mouseContador = 0; // regresa el contador al valor inicial
 
-        puntoFinal = mousePosicion;
         hoja->setPuntoFinal(&puntoFinal,this);
+
+//        qDebug() << puntoFinal.getX() << " x" << puntoFinal.getY() <<" y";
+
+
 
     }
 
-    int x = event->pos().x();
-    int y = event->pos().y();
-    qDebug()<< "width: " << this->width() << " height: " << this->height() ;
-    qDebug()<< "x: " << x << " y: " << y ;
-
-    glm::vec2 mousePos = camera.getWorldCoordinates(&x, &y);
-
-    qDebug()<< "x: " << mousePos.x << " y: " << mousePos.y ;
 
 }
 
 //-------------- MOVIMIENTO DE MOUSE -----------------
 void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
 {
-    mousePosicion = normalizarMousePress(event->pos());
+    float x = event->pos().x();
+    float y = event->pos().y();
+
+    if(event->buttons() & Qt::LeftButton){
+//        float x = event->pos().x();
+//        float y = event->pos().y();
+//     worlfPoint = camera->getWorldCoordinates(x, y);
+//     puntoFinal.setX(worlfPoint.x);
+//     puntoFinal.setY(worlfPoint.y);
+
+
+//        glm::vec2 xy = camera.getWorldCoordinates(event->pos().x(), event->pos().y());
+//        qDebug() << "WC x: " << xy.x << " y:" <<xy.y;
+    }
+//    mousePosicion = normalizarMousePress(event->pos());
     //qDebug() << event->x() << event->y(); //imprime posicion del mouse
 
 //    if(firstMouse)
@@ -226,17 +211,25 @@ void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
 //        firstMouse = false;
 //    }
 
-    float xoffset = event->x() - lastX;
-    float yoffset = lastY - event->y(); // reversed since y-coordinates go from bottom to top
-
-    lastX = event->x();
-    lastY = event->y();
+    int xoffset = event->x();
+    int yoffset = event->y(); // reversed since y-coordinates go from bottom to top
 
 
 
     if(mouseContador == 1){
-//        hoja->setPuntoFinal(&mousePosicion, this);
+        worlfPoint = camera->getWorldCoordinates(x, y);
+        puntoFinal.setX(worlfPoint.x);
+        puntoFinal.setY(worlfPoint.y);
+
+//                qDebug() << puntoFinal.getX() << " x" << puntoFinal.getY() <<" y";
+
+        hoja->setPuntoFinal(&puntoFinal, this);
+
 //        camera.processMouseMovement(xoffset, yoffset);
+//        camera.MoveWorldWithMouse(&xoffset, &yoffset);
+//        float x = event->pos().x();
+//        float y = event->pos().y();
+//        camera->MoveWorldWithMouse(x, y);
     }
 
     update();
@@ -247,7 +240,7 @@ void widgetTrazado::wheelEvent(QWheelEvent *event)
 
     float yoffset = event->delta();
 
-    camera.ProccesScroll(yoffset);
+    camera->ProccesScroll(yoffset);
 
     qDebug()<< event->delta();
 
@@ -259,16 +252,16 @@ void widgetTrazado::keyPressEvent(QKeyEvent *event)
 
     //recieve keys UP DOWN LEFT RIGHT
     if(event->key() == Qt::Key_Down){
-        camera.ProccessKeyBoard(BACKWARD);
+        camera->ProccessKeyBoard(BACKWARD);
     }
     if(event->key() == Qt::Key_Up){
-        camera.ProccessKeyBoard(FORWARD);
+        camera->ProccessKeyBoard(FORWARD);
     }
     if(event->key() == Qt::Key_Left){
-        camera.ProccessKeyBoard(LEFT);
+        camera->ProccessKeyBoard(LEFT);
     }
     if(event->key() == Qt::Key_Right){
-        camera.ProccessKeyBoard(RIGHT);
+        camera->ProccessKeyBoard(RIGHT);
     }
 }
 

@@ -6,21 +6,50 @@
 
 //#include <Polyline2D.h>
 #include <geometriesGL/res/Polyline2D.h>
+#include <geometriesGL/res/focmaths.h>
 
 #include "linea.h"
 
 using namespace crushedpixel;
 
-
-cmd_renderizarLineas::cmd_renderizarLineas()
+//!Constructor without shader and texture
+cmd_renderizarLineas::cmd_renderizarLineas() : lineaCords(0.0 , 0.0f, 0.0f, 0.0f),
+                                               puntosCoord{  { 0.0f , 0.0f},
+                                                             { 0.0f , 0.0f} },
+                                               thick(0.1)
 {
+    initializeOpenGLFunctions();
+    this->nombreCmd = "renderLine";
+    //Shader and  Texture is not initialized... will be in the teclaration de ParentCompound
+
+    vertices = crushedpixel::Polyline2D::create(puntosCoord,
+                                                thick,
+                                                crushedpixel::Polyline2D::JointStyle::ROUND,
+                                                crushedpixel::Polyline2D::EndCapStyle::ROUND);
+    //Inicializa la memoria para una linea
+    initBuffers();
+    initOtherBuffers();
 }
 
-cmd_renderizarLineas::cmd_renderizarLineas(string nombreLinea)
+//!Constructor with Name without shader and texture
+cmd_renderizarLineas::cmd_renderizarLineas(string nombreLinea) : lineaCords(0.0 , 0.0f, 0.0f, 0.0f),
+                                                                 puntosCoord{  { 0.0f , 0.0f},
+                                                                              { 0.0f , 0.0f} },
+                                                                 thick(0.1)
 {
-    nombreCmd = nombreLinea;
+    initializeOpenGLFunctions();
+    this->nombreCmd = nombreLinea;
+
+    vertices = crushedpixel::Polyline2D::create(puntosCoord,
+                                                thick,
+                                                crushedpixel::Polyline2D::JointStyle::ROUND,
+                                                crushedpixel::Polyline2D::EndCapStyle::ROUND);
+    //Inicializa la memoria para una linea
+    initBuffers();
+    initOtherBuffers();
 }
 
+//!Constructor with shader and texture
 cmd_renderizarLineas::cmd_renderizarLineas(Shader &shader, Texture& texture, glm::vec3 color) :
 
     lineaCords(0.0 , 0.0f, 0.0f, 0.0f),
@@ -33,22 +62,42 @@ cmd_renderizarLineas::cmd_renderizarLineas(Shader &shader, Texture& texture, glm
 {
     initializeOpenGLFunctions();
 
+    this->nombreCmd = "renderLine";
+
     this->shader_Renderiza_Linea = shader;
-    this->texture_Renderiza_Linea = texture;
+//    this->texture_Renderiza_Linea = texture;
     this->colorLinea = color;
 
     vertices = crushedpixel::Polyline2D::create(puntosCoord,
                                                 thick,
                                                 crushedpixel::Polyline2D::JointStyle::ROUND,
                                                 crushedpixel::Polyline2D::EndCapStyle::ROUND);
+
+
     //Inicializa la memoria para una linea
     initBuffers();
     initOtherBuffers();
 }
 
+
+
 cmd_renderizarLineas::~cmd_renderizarLineas()
 {
+}
 
+void cmd_renderizarLineas::setShaderProgram(const Shader &newShader)
+{
+    this->shader_Renderiza_Linea = newShader;
+}
+
+void cmd_renderizarLineas::setTextureProgram(Texture *newTexture)
+{
+    this->texture_Renderiza_Linea = newTexture;
+}
+
+void cmd_renderizarLineas::setColorLinea(glm::vec3 color)
+{
+    this->colorLinea = color;
 }
 
 // Reescribe el objeto LineaCoords
@@ -57,10 +106,6 @@ void cmd_renderizarLineas::setLinea(Linea nuevaLinea)
     this->lineaCords = nuevaLinea;
 }
 
-void cmd_renderizarLineas::setColorLinea(glm::vec3 color)
-{
-    this->colorLinea = color;
-}
 
 void cmd_renderizarLineas::initBuffers()
 {
@@ -103,20 +148,14 @@ void cmd_renderizarLineas::initOtherBuffers()
 void cmd_renderizarLineas::drawLinea()
 {
     this->shader_Renderiza_Linea.Use();
-    //Envia el sistema de coordenadas
 
     // retrieve the matrix uniform locations
     this->shader_Renderiza_Linea.SetMatrix4("MVP", m_MVP);
-
     //Enviamos el color
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", this->colorLinea);
 
-//    glBindBuffer(GL_ARRAY_BUFFER, this->lineaVBO);
-//    //el tipo de memoria, offset = empieza en 0, tamaño de datos, datos
-//    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Linea), &lineaCords );
-
     glBindVertexArray(this->lineaVAO);
-    glDrawArrays(GL_LINES, 0, 2);
+    glDrawArrays(GL_LINES, 0, sizeof(lineaCords)/sizeof(float));
 
     glBindVertexArray(0);
     this->shader_Renderiza_Linea.release();
@@ -133,21 +172,11 @@ void cmd_renderizarLineas::drawOtherLinea(){
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glDrawArrays(GL_TRIANGLES, 0, 200);
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     glDisable(GL_BLEND);
 
     glBindVertexArray(0);
     this->shader_Renderiza_Linea.release();
-}
-
-void cmd_renderizarLineas::setShaderProgram(Shader &newShader)
-{
-    this->shader_Renderiza_Linea = newShader;
-}
-
-void cmd_renderizarLineas::setTextureProgram(Texture &newTexture)
-{
-    this->texture_Renderiza_Linea = newTexture;
 }
 
 void cmd_renderizarLineas::actualizarVBOlineas(QWidget* parent)
@@ -170,11 +199,14 @@ void cmd_renderizarLineas::actualizarVBOThick(QWidget *parent)
 //Setters of the render Line
 void cmd_renderizarLineas::setPuntoInicial(Punto *puntoInicial, QWidget *parent)
 {
+
+
     this->lineaCords.setPuntoInicial(puntoInicial);
+    this->lineaCords.setPuntoFinal(puntoInicial);
 
     this->actualizarVBOlineas(parent);
     //actualizar padre Widget
-//    parent->update();
+    parent->update();
 }
 
 void cmd_renderizarLineas::setPuntoFinal(Punto *puntoFinal, QWidget *parent)

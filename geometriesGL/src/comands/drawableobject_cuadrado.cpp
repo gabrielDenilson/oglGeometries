@@ -1,8 +1,16 @@
 #include "drawableobject_cuadrado.h"
 
-DrawableObject_Cuadrado::DrawableObject_Cuadrado()
+DrawableObject_Cuadrado::DrawableObject_Cuadrado():
+    Color    (1.0f),
+    shaderProgram(),
+    Sprite   (),
+    model (glm::mat4(1.0))
 {
-
+    lineaA = new cmd_renderizarLineas();
+    lineaB = new cmd_renderizarLineas();
+    lineaC = new cmd_renderizarLineas();
+    lineaD = new cmd_renderizarLineas();
+    this->transformation = false;
 }
 
 DrawableObject_Cuadrado::DrawableObject_Cuadrado(Shader &shaderProgram, Texture &texture, glm::vec3 color) {
@@ -29,10 +37,34 @@ void DrawableObject_Cuadrado::draw_Componente_Geometry()
     lineaD->drawLinea();
 }
 
+void DrawableObject_Cuadrado::setShader(const Shader &shaderCompound)
+{
+    lineaA->setShaderProgram(shaderCompound);
+    lineaB->setShaderProgram(shaderCompound);
+    lineaC->setShaderProgram(shaderCompound);
+    lineaD->setShaderProgram(shaderCompound);
+}
+
+void DrawableObject_Cuadrado::setTexture(Texture *textureCompound)
+{
+    lineaA->setTextureProgram(textureCompound);
+    lineaB->setTextureProgram(textureCompound);
+    lineaC->setTextureProgram(textureCompound);
+    lineaD->setTextureProgram(textureCompound);
+}
+
+void DrawableObject_Cuadrado::setCamera(Camera2D *viewMatrix)
+{
+    this->setMVP(viewMatrix->getViewProjectionMatrix());
+}
+
 void DrawableObject_Cuadrado::setColor(glm::vec3 color)
 {
     this->Color = color;
-    lineaA->setColorLinea(color);
+    lineaA->setColorLinea(Color);
+    lineaB->setColorLinea(Color);
+    lineaC->setColorLinea(Color);
+    lineaD->setColorLinea(Color);
 }
 
 void DrawableObject_Cuadrado::setThick(float thick)

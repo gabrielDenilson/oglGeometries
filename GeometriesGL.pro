@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     externshader.cpp \
+    geometriesGL/res/focmaths.cpp \
     geometriesGL/src/actions/camera2d.cpp \
     geometriesGL/src/actions/interactivefigure.cpp \
     geometriesGL/src/comands/cmd_renderizargrid.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     geometriesGL/res/LineSegment.h \
     geometriesGL/res/Polyline2D.h \
     geometriesGL/res/Vec2.h \
+    geometriesGL/res/focmaths.h \
     geometriesGL/res/purebaClase.h \
     geometriesGL/src/actions/actionsPrueba.h \
     geometriesGL/src/actions/camera2d.h \

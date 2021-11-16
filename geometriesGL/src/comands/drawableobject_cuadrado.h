@@ -45,7 +45,7 @@ public:
     bool isComposite() const override { return false; }
 
     //!DRAW FUNCTIONS
-    void draw_Componente_Geometry() override;
+    void draw_Componente_Geometry(QWidget *parent) override;
 
     //!GETTERS AND SETTERS OF CHILD
     void setShader(const Shader &shaderCompound) override;

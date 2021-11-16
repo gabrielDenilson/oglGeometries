@@ -14,9 +14,11 @@ using namespace crushedpixel;
 
 //!Constructor without shader and texture
 cmd_renderizarLineas::cmd_renderizarLineas() : lineaCords(0.0 , 0.0f, 0.0f, 0.0f),
+                                               colorLinea(glm::vec3()),
                                                puntosCoord{  { 0.0f , 0.0f},
-                                                             { 0.0f , 0.0f} },
-                                               thick(0.1)
+                                                             { 0.0f , 0.0f}  },
+                                               END_LINE(Polyline2D::EndCapStyle::SQUARE),
+                                               thick(0.2)
 {
     initializeOpenGLFunctions();
     this->nombreCmd = "renderLine";
@@ -25,10 +27,11 @@ cmd_renderizarLineas::cmd_renderizarLineas() : lineaCords(0.0 , 0.0f, 0.0f, 0.0f
     vertices = crushedpixel::Polyline2D::create(puntosCoord,
                                                 thick,
                                                 crushedpixel::Polyline2D::JointStyle::ROUND,
-                                                crushedpixel::Polyline2D::EndCapStyle::ROUND);
+                                                END_LINE);
     //Inicializa la memoria para una linea
     initBuffers();
     initOtherBuffers();
+
 }
 
 //!Constructor with Name without shader and texture
@@ -58,7 +61,8 @@ cmd_renderizarLineas::cmd_renderizarLineas(Shader &shader, Texture& texture, glm
     puntosCoord{  { 0.0f , 0.0f},
                   { 0.0f , 0.0f}
                },
-    thick(0.1)
+    END_LINE(Polyline2D::EndCapStyle::SQUARE),
+    thick(0.2)
 {
     initializeOpenGLFunctions();
 
@@ -71,7 +75,7 @@ cmd_renderizarLineas::cmd_renderizarLineas(Shader &shader, Texture& texture, glm
     vertices = crushedpixel::Polyline2D::create(puntosCoord,
                                                 thick,
                                                 crushedpixel::Polyline2D::JointStyle::ROUND,
-                                                crushedpixel::Polyline2D::EndCapStyle::ROUND);
+                                                END_LINE);
 
 
     //Inicializa la memoria para una linea
@@ -136,7 +140,7 @@ void cmd_renderizarLineas::initOtherBuffers()
             numPoints = (GLsizei) puntosCoord.size();
             numVertices = (GLsizei) vertices.size();
 
-            glBufferData(GL_ARRAY_BUFFER, sizeof(Vec2)*200, nullptr, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(Vec2)*120, nullptr, GL_DYNAMIC_DRAW);
             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2 * sizeof(float)));
             glEnableVertexAttribArray(0);
 
@@ -145,7 +149,7 @@ void cmd_renderizarLineas::initOtherBuffers()
 
 }
 
-void cmd_renderizarLineas::drawLinea()
+void cmd_renderizarLineas::drawLinea(QWidget *parent)
 {
     this->shader_Renderiza_Linea.Use();
 
@@ -155,13 +159,17 @@ void cmd_renderizarLineas::drawLinea()
     this->shader_Renderiza_Linea.SetVector3f("spriteColor", this->colorLinea);
 
     glBindVertexArray(this->lineaVAO);
+
     glDrawArrays(GL_LINES, 0, sizeof(lineaCords)/sizeof(float));
 
+
     glBindVertexArray(0);
+
     this->shader_Renderiza_Linea.release();
+    parent->update();
 }
 
-void cmd_renderizarLineas::drawOtherLinea(){
+void cmd_renderizarLineas::drawOtherLinea(QWidget *parent){
     this->shader_Renderiza_Linea.Use();
 
     this->shader_Renderiza_Linea.SetMatrix4("MVP", m_MVP);
@@ -172,7 +180,11 @@ void cmd_renderizarLineas::drawOtherLinea(){
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+    parent->update();
+
     glDisable(GL_BLEND);
 
     glBindVertexArray(0);
@@ -188,6 +200,13 @@ void cmd_renderizarLineas::actualizarVBOlineas(QWidget* parent)
     parent->update();
 }
 
+void cmd_renderizarLineas::actualizarVBOlineas()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, this->lineaVBO);
+    //el tipo de memoria, offset = empieza en 0, tamaño de datos, datos
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Linea), &lineaCords );
+}
+
 void cmd_renderizarLineas::actualizarVBOThick(QWidget *parent)
 {
     glBindBuffer(GL_ARRAY_BUFFER, this->thickVBO);
@@ -196,13 +215,32 @@ void cmd_renderizarLineas::actualizarVBOThick(QWidget *parent)
     parent->update();
 }
 
+void cmd_renderizarLineas::receiveDirectPostion(float x1, float y1, float x2, float y2)
+{
+    this->lineaCords.setX1(x1);
+    this->lineaCords.setY1(y1);
+    this->lineaCords.setX2(x2);
+    this->lineaCords.setY2(y2);
+
+    this->actualizarVBOlineas();
+}
+
+void cmd_renderizarLineas::setEndLine(Polyline2D::EndCapStyle end_line)
+{
+    this->END_LINE = end_line;
+}
+
 //Setters of the render Line
 void cmd_renderizarLineas::setPuntoInicial(Punto *puntoInicial, QWidget *parent)
 {
 
 
     this->lineaCords.setPuntoInicial(puntoInicial);
-    this->lineaCords.setPuntoFinal(puntoInicial);
+
+    Punto *offset = new Punto();
+    offset->setX(puntoInicial->getX() + 0.0f);
+    offset->setY(puntoInicial->getY() + 0.1f);
+    this->lineaCords.setPuntoFinal(offset);
 
     this->actualizarVBOlineas(parent);
     //actualizar padre Widget
@@ -219,7 +257,7 @@ void cmd_renderizarLineas::setPuntoFinal(Punto *puntoFinal, QWidget *parent)
 void cmd_renderizarLineas::setFirstPointThick(Punto *puntoInicial, QWidget *parent)
 {
     this->puntosCoord.clear();
-    this->puntosCoord.push_back({puntoInicial->getX(), puntoInicial->getY()});
+    this->puntosCoord.push_back({this->lineaCords.getX1(), this->lineaCords.getY1()});
     // actualizar widget padre
     parent->update();
 }
@@ -228,16 +266,16 @@ void cmd_renderizarLineas::setLastPointThick(Punto *puntoFinal, QWidget *parent)
 {
     //Enviamos el ultima punto a thick points
     if(puntosCoord.size() <= 1){
-        this->puntosCoord.push_back({puntoFinal->getX(), puntoFinal->getY()});
+        this->puntosCoord.push_back({this->lineaCords.getX2(), this->lineaCords.getY2()});
     } else {
-        this->puntosCoord.at(1).x = puntoFinal->getX();
-        this->puntosCoord.at(1).y = puntoFinal->getY();
+        this->puntosCoord.at(1).x = this->lineaCords.getX2();
+        this->puntosCoord.at(1).y = this->lineaCords.getY2();
     }
     //Creamos los vertices de thick line
     this->vertices = crushedpixel::Polyline2D::create(puntosCoord,
                                                       thick,
                                                       crushedpixel::Polyline2D::JointStyle::ROUND,
-                                                      crushedpixel::Polyline2D::EndCapStyle::ROUND);
+                                                      END_LINE);
     //Actualizamos la memoria VBO
     this->actualizarVBOThick(parent);
 }
@@ -265,5 +303,5 @@ glm::mat4 cmd_renderizarLineas::getMVP() const
 
 void cmd_renderizarLineas::setMVP(const glm::mat4 &MVP)
 {
-    m_MVP = MVP;
+    this->m_MVP = MVP;
 }

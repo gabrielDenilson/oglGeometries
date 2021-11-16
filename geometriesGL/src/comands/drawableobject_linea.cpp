@@ -13,6 +13,8 @@ DrawableObject_Linea::DrawableObject_Linea():
     model (glm::mat4(1.0))
 {
     renderable = new cmd_renderizarLineas();
+    renderable->setColorLinea(COLORG::LIGHT_STEEL_BLUE);
+    renderable->setColorThick(COLORG::LIGHT_STEEL_BLUE);
     //Transformacion por defecto desactivada
     this->transformar= false;
 }
@@ -33,10 +35,10 @@ DrawableObject_Linea::~DrawableObject_Linea()
 
 }
 
-void DrawableObject_Linea::draw_Componente_Geometry()
+void DrawableObject_Linea::draw_Componente_Geometry(QWidget *parent)
 {
-    renderable->drawOtherLinea();
-    renderable->drawLinea();
+    renderable->drawOtherLinea(parent);
+    renderable->drawLinea(parent);
 }
 
 void DrawableObject_Linea::setShader(const Shader &shaderProgram)
@@ -52,9 +54,24 @@ void DrawableObject_Linea::setTexture(Texture *textureProgram)
 }
 
 void DrawableObject_Linea::setCamera(Camera2D *viewMatrix)
-{
+    {
     //For now only set camera's position with the projection view
-    this->setMVP(viewMatrix->getViewProjectionMatrix());
+    this->setMVP(viewMatrix->getVPmatrix());
+}
+
+void DrawableObject_Linea::setStartPoint(Punto *firstPoint, Geometry *, QWidget *parent)
+{
+    setPuntoInicial(firstPoint, parent);
+}
+
+void DrawableObject_Linea::setEndPoint(Punto *endPoint, Geometry *, QWidget *parent)
+{
+    setPuntoFinal(endPoint, parent);
+}
+
+void DrawableObject_Linea::setDirectPosition(float x1, float y1, float x2, float y2)
+{
+    this->renderable->receiveDirectPostion(x1, y1, x2, y2);
 }
 
 
@@ -80,6 +97,9 @@ Punto DrawableObject_Linea::getPuntoInicial()
     return renderable->lineaCords.getPosicionP1();
 }
 
+float roundX;
+
+
 void DrawableObject_Linea::setPuntoInicial(Punto *puntoInicial, QWidget *parent)
 {
     float roundX = puntoInicial->getX();
@@ -94,7 +114,7 @@ void DrawableObject_Linea::setPuntoInicial(Punto *puntoInicial, QWidget *parent)
     //set the valor of inicial point on CMD-lineas classs
     renderable->setPuntoInicial(&puntoNuevo, parent);
 
-    renderable->setFirstPointThick(puntoInicial, parent);
+    renderable->setFirstPointThick(&puntoNuevo, parent);
 }
 
 Punto DrawableObject_Linea::getPuntoFinal()

@@ -12,6 +12,7 @@
 #include "linea.h"
 #include "punto.h"
 
+using namespace crushedpixel;
 
 class cmd_renderizarLineas : protected QOpenGLExtraFunctions
 {
@@ -40,6 +41,7 @@ private:
 
     std::vector<crushedpixel::Vec2> vertices; //!Coordenada de Grosor
     std::vector<crushedpixel::Vec2> puntosCoord; //!Coordenadas de Linea
+    crushedpixel::Polyline2D::EndCapStyle END_LINE;
 
     float thick; //!Tamaño de grosor Linea
     string nombreCmd; //!Nombre de comando
@@ -59,12 +61,18 @@ public:
     void initBuffers(); //inicializa la memoria para almacenar una linea
     void initOtherBuffers();
 
-    void drawLinea();
-    void drawOtherLinea();
+    void drawLinea(QWidget *parent);
+    void drawOtherLinea(QWidget *parent);
 
 
     void actualizarVBOlineas(QWidget *parent); //funcion vacia para actualizar la memoria en el GPU
+    void actualizarVBOlineas();
+
     void actualizarVBOThick(QWidget *parent);
+
+    void receiveDirectPostion(float x1, float y1, float x2, float y2);
+
+    void setEndLine(crushedpixel::Polyline2D::EndCapStyle end_line);
 
     void setPuntoInicial(Punto *puntoInicial, QWidget *parent);
     void setPuntoFinal(Punto *puntoFinal, QWidget *parent);

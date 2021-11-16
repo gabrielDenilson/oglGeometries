@@ -17,7 +17,7 @@ DrawableObject_Grid::~DrawableObject_Grid()
 
 }
 
-void DrawableObject_Grid::draw_Componente_Geometry()
+void DrawableObject_Grid::draw_Componente_Geometry(QWidget *parent)
 {
     grid->drawGrid();
 }
@@ -34,7 +34,8 @@ void DrawableObject_Grid::setTexture(Texture *textureProgram)
 
 void DrawableObject_Grid::setCamera(Camera2D *viewMatrix)
 {
-    this->setMVP(viewMatrix->getViewProjectionMatrix());
+    this->setMVP(viewMatrix->getVPmatrix());
+//    this->setMVP(viewMatrix->getViewProjectionMatrix());
 }
 
 void DrawableObject_Grid::setShaderNormal(const Shader *shaderProgram)

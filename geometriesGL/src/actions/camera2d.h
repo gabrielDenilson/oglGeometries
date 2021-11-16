@@ -38,7 +38,30 @@ private:
 
     int g_lastX;
     int g_lastY;
+
+    int cop_swidth;
+    int cop_sheight;
+    float cop_m_zoom;
+    glm::vec3 cop_position;
+    glm::vec3 cop_rotation;
+    glm::vec3 cop_m_direction;
+    glm::vec3 cop_m_up;
+    glm::vec3 cop_m_right;
+    glm::vec3 cop_m_offset;
+    glm::mat4 cop_m_projection;
+    glm::mat4 cop_m_viewMatrix;
+    glm::mat4 cop_m_eyeCamera;
+
+
+
 public:
+    Camera2D(int width, int height, QWidget *parent);
+    glm::vec3 screenToWorldSpace(int mousex, int mousey);
+    void update();
+    void processMouseMovement(float x, float y);
+    void onMousePress(float mouseX, float mouseY);
+    void setZoom(float zoom);
+    const glm::mat4& getVPmatrix();
 
 
     Camera2D(float left, float right, float bottom, float top, QWidget *parent);
@@ -62,11 +85,9 @@ public:
 
     void ProccesScroll(float yoffset);
 
-    void processMouseMovement(float xoffset, float yoffset);
 
     glm::vec2 getWorldCoordinates(float mouseX, float mouseY);
 
-    void onMousePress(float mouseX, float mouseY);
 
     void MoveWorldWithMouse(float mouseX, float mouseY);
 private:

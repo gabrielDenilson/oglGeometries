@@ -19,6 +19,9 @@ public:
     CompoundGeometry();
     CompoundGeometry(string nombreCompoundGeometry);
 
+    void update_compound();
+    int get_compound_size();
+
     virtual ~CompoundGeometry();
     bool isComposite() const override { return true; }
 
@@ -26,14 +29,19 @@ public:
     void add_Componente_Geometry(Geometry *nuevoGeometryPtr) override;
     void delete_Componente_Geometry(Geometry *eliminarGeometryPtr) override;
 
+    Geometry *getLastChild();
+
     //!FUNCIONES DE DIBUJO
-    void draw_Componente_Geometry() override;
+    void draw_Componente_Geometry(QWidget *parent) override;
 
     //!GETTERS AND SETTERS ATRIBUTOS DE HIJOS
     void setShader(const Shader &shaderCompound) override;
     void setTexture(Texture *textureCompound) override;
     void setCamera(Camera2D *camera)override;
+    void setStartPoint(Punto *firstPoint, Geometry *child, QWidget *parent) override;
+    void setEndPoint(Punto *lastPoint, Geometry *child, QWidget *parent) override;
     Geometry *getChhilGeometry(int positionChil) override;
+    Geometry *getChildGeometry(Geometry *geometryPointer);
 };
 
 #endif // COMPOUNDGEOMETRY_H

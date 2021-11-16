@@ -6,11 +6,13 @@
 
 #include "widgettrazado.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
+    : QMainWindow(parent, flags)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+//    ui->openGLWidget->setWi
+    this->setContentsMargins(0, 0, 0, 0);
 
     QObject::connect(ui->buttonLinea, SIGNAL (released()),
                      ui->openGLWidget, SLOT (nuevaLinea()));

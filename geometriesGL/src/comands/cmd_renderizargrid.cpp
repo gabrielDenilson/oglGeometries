@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-cmd_renderizarGrid::cmd_renderizarGrid() : colorGrid(1.0f)
+cmd_renderizarGrid::cmd_renderizarGrid() : colorGrid(0.5f)
 {
     initializeOpenGLFunctions();
     this->nombreCmd = "renderGrid";
@@ -91,7 +91,12 @@ void cmd_renderizarGrid::drawGrid(){
     this->shader_Renderiza_Grid.SetVector3f("spriteColor", this->colorGrid);
 
     glBindVertexArray(gridVAO);
+
+
+    glEnable(GL_PROGRAM_POINT_SIZE);
     glDrawArrays(GL_POINTS, 0, Vertices.size());
+    glDisable(GL_PROGRAM_POINT_SIZE);
+
     glBindVertexArray(0);
     this->shader_Renderiza_Grid.release();
 

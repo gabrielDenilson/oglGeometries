@@ -4,6 +4,8 @@
 
 Shader &Shader::Use()
 {
+    initializeOpenGLFunctions();
+
     glUseProgram(this->ID);
     return *this;
 }

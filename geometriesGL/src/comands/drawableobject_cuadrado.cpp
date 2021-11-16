@@ -29,12 +29,12 @@ DrawableObject_Cuadrado::~DrawableObject_Cuadrado()
 
 }
 
-void DrawableObject_Cuadrado::draw_Componente_Geometry()
+void DrawableObject_Cuadrado::draw_Componente_Geometry(QWidget *parent)
 {
-    lineaA->drawLinea();
-    lineaB->drawLinea();
-    lineaC->drawLinea();
-    lineaD->drawLinea();
+    lineaA->drawLinea(parent);
+    lineaB->drawLinea(parent);
+    lineaC->drawLinea(parent);
+    lineaD->drawLinea(parent);
 }
 
 void DrawableObject_Cuadrado::setShader(const Shader &shaderCompound)
@@ -98,16 +98,16 @@ void DrawableObject_Cuadrado::setPuntoC(Punto *puntoC, QWidget *parent)
 {
     C = puntoC;
     //set LineaC and LineaD with the new point
-    lineaC->setPuntoInicial(C, parent);
     lineaD->setPuntoInicial(C, parent);
+    lineaC->setPuntoInicial(C, parent);
 }
 
 void DrawableObject_Cuadrado::setPuntoD(Punto *puntoD, QWidget *parent)
 {
     D = puntoD;
     //set LineaC and LineaD with the new point
-    lineaC->setPuntoFinal(D, parent);
     lineaB->setPuntoFinal(D, parent);
+    lineaC->setPuntoFinal(D, parent);
 }
 
 Punto *DrawableObject_Cuadrado::getPuntoA()

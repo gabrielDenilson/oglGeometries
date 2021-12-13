@@ -91,10 +91,15 @@ void widgetTrazado::mousePressEvent(QMouseEvent *event)
     puntoFinal.setX(worlfPoint.x);
     puntoFinal.setY(worlfPoint.y);
 
+    if(event->button() == Qt::LeftButton){
+
+    }
+
     if(DRAW_STATE == MOVE_SCENE){
         if(event->button() == Qt::LeftButton){
 //            mouseContador++;
             camera->onMousePress(x, y);
+            sceneGroup->doSelect(&puntoFinal);
         }
         } else if(signal_draw == true){
             start_End_Draw_State(event, DRAW_STATE);
@@ -114,7 +119,6 @@ void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
             if(event->buttons() & Qt::LeftButton){
                 if(!(event->modifiers() & Qt::ShiftModifier)){
                     //move world
-                    qDebug() << x << " x" << y <<" y";
                     camera->processMouseMovement(x, y);
                 }
 
@@ -129,6 +133,7 @@ void widgetTrazado::mouseMoveEvent(QMouseEvent *event)
             puntoFinal.setX(worlfPoint.x);
             puntoFinal.setY(worlfPoint.y);
             sceneGroup->receiveLastPoint(&puntoFinal, this);
+            qDebug() << x << " x" << y <<" ySEMUEVE";
         }
     }
 

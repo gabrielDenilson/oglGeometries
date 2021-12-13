@@ -38,73 +38,73 @@ FormDrawable::FormDrawable(QWidget *parent) :
                         "}";
 
     // CREATE LAYOUTS AND ADD TO BOXES
-    ui->setupUi(this);
-    QHBoxLayout *layoutCentral = new QHBoxLayout(this);
+       ui->setupUi(this);
+       QHBoxLayout *layoutCentral = new QHBoxLayout(this);
 
-    QVBoxLayout *layoutLeft = new QVBoxLayout();
+       QVBoxLayout *layoutLeft = new QVBoxLayout();
 
-    buttonLinea = new QPushButton("/");  buttonLinea->setStyleSheet(styleSheet);
-                                         buttonLinea->setMinimumSize(20, 20);
-                                         buttonLinea->setMaximumSize(20, 20);
+       buttonLinea = new QPushButton("/");  buttonLinea->setStyleSheet(styleSheet);
+                                            buttonLinea->setMinimumSize(20, 20);
+                                            buttonLinea->setMaximumSize(20, 20);
 
-    buttonLineaPadre = new QPushButton("-");   buttonLineaPadre->setStyleSheet(styleSheet);
-                                               buttonLineaPadre->setMinimumSize(20, 20);
-                                               buttonLineaPadre->setMaximumSize(20, 20);
+       buttonLineaPadre = new QPushButton("-");   buttonLineaPadre->setStyleSheet(styleSheet);
+                                                  buttonLineaPadre->setMinimumSize(20, 20);
+                                                  buttonLineaPadre->setMaximumSize(20, 20);
 
-    buttonLineaHija = new QPushButton("/"); buttonLineaHija->setStyleSheet(styleSheet);
-                                                buttonLineaHija->setMinimumSize(20, 20);
-                                                buttonLineaHija->setMaximumSize(20, 20);
+       buttonLineaHija = new QPushButton("/"); buttonLineaHija->setStyleSheet(styleSheet);
+                                                   buttonLineaHija->setMinimumSize(20, 20);
+                                                   buttonLineaHija->setMaximumSize(20, 20);
 
-    buttonPunto = new QPushButton(".");  buttonPunto->setStyleSheet(styleSheet);
-                                            buttonLineaHija->setMinimumSize(20, 20);
-                                            buttonLineaHija->setMaximumSize(20, 20);
-    QPushButton *button5 = new QPushButton("Five");  button5->setStyleSheet(styleSheet);
+       buttonPunto = new QPushButton(".");  buttonPunto->setStyleSheet(styleSheet);
+                                               buttonLineaHija->setMinimumSize(20, 20);
+                                               buttonLineaHija->setMaximumSize(20, 20);
+       QPushButton *button5 = new QPushButton("Five");  button5->setStyleSheet(styleSheet);
 
-    layoutLeft->addWidget(buttonLinea);
-    layoutLeft->addWidget(buttonLineaPadre);
-    layoutLeft->addWidget(buttonLineaHija);
-    layoutLeft->addWidget(buttonPunto);
-    layoutLeft->addWidget(button5);
+       layoutLeft->addWidget(buttonLinea);
+       layoutLeft->addWidget(buttonLineaPadre);
+       layoutLeft->addWidget(buttonLineaHija);
+       layoutLeft->addWidget(buttonPunto);
+       layoutLeft->addWidget(button5);
 
-    QVBoxLayout *layoutRight = new QVBoxLayout();
+       QVBoxLayout *layoutRight = new QVBoxLayout();
 
-    QPushButton *button1R = new QPushButton("One");
-    QPushButton *button2R = new QPushButton("Two");
-    QPushButton *button3R = new QPushButton("Three");
-    QPushButton *button4R = new QPushButton("Four");
-    QPushButton *button5R = new QPushButton("Five");
-    layoutRight->addWidget(button1R);
-    layoutRight->addWidget(button2R);
-    layoutRight->addWidget(button3R);
-    layoutRight->addWidget(button4R);
-    layoutRight->addWidget(button5R);
+       QPushButton *button1R = new QPushButton("One");
+       QPushButton *button2R = new QPushButton("Two");
+       QPushButton *button3R = new QPushButton("Three");
+       QPushButton *button4R = new QPushButton("Four");
+       QPushButton *button5R = new QPushButton("Five");
+       layoutRight->addWidget(button1R);
+       layoutRight->addWidget(button2R);
+       layoutRight->addWidget(button3R);
+       layoutRight->addWidget(button4R);
+       layoutRight->addWidget(button5R);
 
 
-    // ADD GROUP OF BUTTONS TO CENTRAL LAYOUT
-    layoutCentral->addLayout(layoutLeft);
-//    layoutCentral->addLayout(layoutMiddle);
-    layoutCentral->addLayout(layoutRight);
+       // ADD GROUP OF BUTTONS TO CENTRAL LAYOUT
+       layoutCentral->addLayout(layoutLeft);
+   //    layoutCentral->addLayout(layoutMiddle);
+       layoutCentral->addLayout(layoutRight);
 
-    layoutCentral->setAlignment(layoutLeft, Qt::AlignLeft);
-    layoutCentral->setAlignment(layoutRight, Qt::AlignRight);
+       layoutCentral->setAlignment(layoutLeft, Qt::AlignLeft);
+       layoutCentral->setAlignment(layoutRight, Qt::AlignRight);
 
-    //CONECCIONES DE LOS BOTONES
-    connect(this->buttonLinea, SIGNAL(pressed()), this, SLOT(buttonLinea_click_action()));
-    connect(this->buttonLineaPadre, SIGNAL(pressed()), this, SLOT(buttonLineaPadre_click_action()));
-    connect(this->buttonLineaHija, SIGNAL(pressed()), this, SLOT(buttonLineaHija_click_action()));
-    connect(this->buttonPunto, SIGNAL(pressed()), this, SLOT(buttonPunto_click_action()));
-    connect(this, SIGNAL(draw_order(bool, TIPO)), ui->openGLWidget, SLOT(draw_object(bool, TIPO)));
+       //CONECCIONES DE LOS BOTONES
+       connect(this->buttonLinea, SIGNAL(pressed()), this, SLOT(buttonLinea_click_action()));
+       connect(this->buttonLineaPadre, SIGNAL(pressed()), this, SLOT(buttonLineaPadre_click_action()));
+       connect(this->buttonLineaHija, SIGNAL(pressed()), this, SLOT(buttonLineaHija_click_action()));
+       connect(this->buttonPunto, SIGNAL(pressed()), this, SLOT(buttonPunto_click_action()));
+       connect(this, SIGNAL(draw_order(bool, TIPO)), ui->openGLWidget, SLOT(draw_object(bool, TIPO)));
 
-    //SET CHECKABLE ALL BUTTONS OF FUNCTIONALITY
-    this->buttonLinea->setCheckable(true);
-    this->buttonLineaPadre->setCheckable(true);
-    this->buttonLineaHija->setCheckable(true);
-    this->buttonPunto->setCheckable(true);
+       //SET CHECKABLE ALL BUTTONS OF FUNCTIONALITY
+       this->buttonLinea->setCheckable(true);
+       this->buttonLineaPadre->setCheckable(true);
+       this->buttonLineaHija->setCheckable(true);
+       this->buttonPunto->setCheckable(true);
 
-    ui->openGLWidget->setLayout(layoutCentral);
+       ui->openGLWidget->setLayout(layoutCentral);
 
-    this->setMaximumSize(1300, 700);
-    this->setMinimumSize(1300, 700);
+       this->setMaximumSize(1300, 700);
+       this->setMinimumSize(1300, 700);
 }
 
 void FormDrawable::resizeEvent(QResizeEvent *event)

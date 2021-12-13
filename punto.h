@@ -7,6 +7,7 @@ class Punto
 public:
     Punto();
     Punto(float, float);
+    ~Punto();
 
     void setX(float);
     void setY(float);

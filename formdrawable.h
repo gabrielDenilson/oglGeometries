@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <geometriesGL/src/actions/interactivefigure.h>
+#include "form_measures.h"
 
 namespace Ui {
 class FormDrawable;
@@ -21,6 +22,7 @@ protected:
     QPushButton *buttonLineaHija;
     QPushButton *buttonPunto;
 
+    Form_measures *widget_measure;
 public:
 
     explicit FormDrawable(QWidget *parent = nullptr);

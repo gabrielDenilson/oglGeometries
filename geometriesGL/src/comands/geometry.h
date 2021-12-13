@@ -50,6 +50,9 @@ public:
     virtual void setStartPoint(Punto*, Geometry*, QWidget*){};
     virtual void setEndPoint(Punto*, Geometry*, QWidget*){};
     virtual Geometry *getChhilGeometry(int){return nullptr;};
+
+    virtual vector<Punto> &get_points_area(){};
+    virtual void setColorPunto(glm::vec3){};
 };
 
 #endif // GEOMETRY_H

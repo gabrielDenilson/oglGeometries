@@ -44,6 +44,7 @@ void DrawableObject_Linea::draw_Componente_Geometry(QWidget *parent)
 void DrawableObject_Linea::setShader(const Shader &shaderProgram)
 {
     //set the shader normally way
+//    this->shaderProgram = shaderProgram;
     renderable->setShaderProgram(shaderProgram);
 }
 
@@ -54,9 +55,19 @@ void DrawableObject_Linea::setTexture(Texture *textureProgram)
 }
 
 void DrawableObject_Linea::setCamera(Camera2D *viewMatrix)
-    {
+{
     //For now only set camera's position with the projection view
     this->setMVP(viewMatrix->getVPmatrix());
+}
+
+Shader DrawableObject_Linea::getShader()
+{
+//    return renderable->getShaderProgram();
+}
+
+Camera2D DrawableObject_Linea::getCamera()
+{
+//    return cameraLinea;
 }
 
 void DrawableObject_Linea::setStartPoint(Punto *firstPoint, Geometry *, QWidget *parent)

@@ -30,6 +30,7 @@ private:
     glm::mat4 m_MVP         = glm::mat4(1.0f);
 
     std::vector<float> verticesRectangle;
+    std::vector<Punto> puntoRectangle;
 
     Shader shader_Renderiza_Punto; //!Shader Program liena GL
     Texture *texture_Renderiza_Punto; //!Texture file linea GL
@@ -59,9 +60,7 @@ public:
 
     void actualizarVBOPunto(QWidget *parent); //funcion vacia para actualizar la memoria en el GPU
 
-    void actualizarVBOThick(QWidget *parent);
-
-    void receiveDirectPostion(float x1, float y1, float x2, float y2);
+    void receiveDirectPostion(float x1, float y1);
 
     void setPuntoPosition(Punto *puntoInicial, QWidget *parent);
 
@@ -73,6 +72,7 @@ public:
     glm::mat4 getMVP() const;
     void setMVP(const glm::mat4 &MVP);
 
+    vector<Punto> &getPuntosArea();
 };
 
 #endif // CMD_RENDERIZARPUNTO_H

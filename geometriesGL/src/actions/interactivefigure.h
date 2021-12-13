@@ -46,6 +46,7 @@ private:
     Geometry *lastLineaSimple;
     Geometry *lastLineaPadre;
     Geometry *lastLineaHija;
+    Geometry *lastPunto;
 
 public:
     InteractiveFigure();
@@ -60,6 +61,9 @@ public:
 
     void receiveFirstPoint(Punto *puntoInicial, QWidget *parent);
     void receiveLastPoint(Punto *puntoFinal, QWidget *parent);
+
+    void doSelect(Punto *P);
+    bool checkSelect(Punto *P, Punto *A, Punto *B, Punto *C, Punto *D);
 
     //ALMACENAMIENTO DE MEMORIA
     void create_buffer_lines(int linesSize);

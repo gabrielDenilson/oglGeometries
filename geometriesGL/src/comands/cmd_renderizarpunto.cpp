@@ -11,7 +11,7 @@ cmd_renderizarPunto::cmd_renderizarPunto() :  puntoCords(0.0 , 0.0f),
     this->nombreCmd = "renderLine";
     //Shader and  Texture is not initialized... will be in the teclaration de ParentCompound
     //Inicializa la memoria para una linea
-    initBuffers();
+//    initBuffers();
     initOtherBuffers();
 
 }
@@ -66,7 +66,7 @@ void cmd_renderizarPunto::initOtherBuffers()
       glBindVertexArray(this->thickVAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, this->thickVBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 10, nullptr, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 8, nullptr, GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->thickEBO);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
@@ -78,9 +78,9 @@ void cmd_renderizarPunto::initOtherBuffers()
     glBindVertexArray(0);
 }
 
-void cmd_renderizarPunto::drawPunto(QWidget *parent)
+void cmd_renderizarPunto::drawPunto(QWidget *)
 {
-
+// dibuja el pixel punto de PuntoSquare
 }
 
 void cmd_renderizarPunto::drawOtherPunto(QWidget *parent)
@@ -114,14 +114,9 @@ void cmd_renderizarPunto::actualizarVBOPunto(QWidget *parent)
     parent->update();
 }
 
-void cmd_renderizarPunto::actualizarVBOThick(QWidget *parent)
+void cmd_renderizarPunto::receiveDirectPostion(float x1, float y1)
 {
-
-}
-
-void cmd_renderizarPunto::receiveDirectPostion(float x1, float y1, float x2, float y2)
-{
-
+    this->puntoCords.setX(x1); this->puntoCords.setY(y1);
 }
 
 void cmd_renderizarPunto::setPuntoPosition(Punto *puntoInicial, QWidget *parent)
@@ -129,6 +124,7 @@ void cmd_renderizarPunto::setPuntoPosition(Punto *puntoInicial, QWidget *parent)
     this->puntoCords = *puntoInicial;
     this->setGenerateCordsThick();
     this->actualizarVBOPunto(parent);
+
 }
 
 float cmd_renderizarPunto::getThick() const
@@ -149,24 +145,23 @@ void cmd_renderizarPunto::setGenerateCordsThick()
 
     float xcoord;
     float ycoord;
-    qDebug() << x <<" xpunto" << y << " ypunto   " << thick << " thickpunto";
+//    qDebug() << x <<" xpunto" << y << " ypunto   " << thick << " HOLA";
+    verticesRectangle.clear(); //clear all to draw again
+    puntoRectangle.clear(); //clear all to draw again
 
-    xcoord = x - this->thick; verticesRectangle.push_back(xcoord);
-    ycoord = y + this->thick; verticesRectangle.push_back(ycoord);
+    xcoord = x - thicky; verticesRectangle.push_back(xcoord);
+    ycoord = y + thicky; verticesRectangle.push_back(ycoord); puntoRectangle.push_back({xcoord, ycoord});
 
-    xcoord = x + this->thick; verticesRectangle.push_back(xcoord);
-    ycoord = y + this->thick; verticesRectangle.push_back(ycoord);
+    xcoord = x + thicky; verticesRectangle.push_back(xcoord);
+    ycoord = y + thicky; verticesRectangle.push_back(ycoord); puntoRectangle.push_back({xcoord, ycoord});
 
-    xcoord = x + this->thick; verticesRectangle.push_back(xcoord);
-    ycoord = y - this->thick; verticesRectangle.push_back(ycoord);
+    xcoord = x + thicky; verticesRectangle.push_back(xcoord);
+    ycoord = y - thicky; verticesRectangle.push_back(ycoord); puntoRectangle.push_back({xcoord, ycoord});
 
-    xcoord = x - this->thick; verticesRectangle.push_back(xcoord);
-    ycoord = y - this->thick; verticesRectangle.push_back(ycoord);
+    xcoord = x - thicky; verticesRectangle.push_back(xcoord);
+    ycoord = y - thicky; verticesRectangle.push_back(ycoord); puntoRectangle.push_back({xcoord, ycoord});
 
-    int taa = verticesRectangle.size();
-    for(int i = 0 ; i < taa; i++){
-        qDebug() << verticesRectangle.at(i);
-    }
+    qDebug() << puntoRectangle.size() << " HOLA";
 }
 
 void cmd_renderizarPunto::setColorThick(glm::vec3 color)
@@ -182,4 +177,9 @@ glm::mat4 cmd_renderizarPunto::getMVP() const
 void cmd_renderizarPunto::setMVP(const glm::mat4 &MVP)
 {
     this->m_MVP = MVP;
+}
+
+vector<Punto> &cmd_renderizarPunto::getPuntosArea()
+{
+    return this->puntoRectangle;
 }

@@ -53,6 +53,8 @@ public:
     ~cmd_renderizarLineas();
 
     void setShaderProgram(const Shader &newShader);
+    Shader getShaderProgram();
+
     void setTextureProgram(Texture *newTexture);
     void setColorLinea(glm::vec3 color);
 

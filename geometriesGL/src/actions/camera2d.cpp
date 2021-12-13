@@ -175,7 +175,7 @@ void Camera2D::MoveWorldWithMouse(float mouseX, float mouseY){
     m_position += difference;
 
 //    qDebug() <<"POSITIO: "<< m_position.x << " :x" << m_position.y << " :y";
-    qDebug() <<"MOUSE: "<< mouseX << " :x" << mouseY << " :y";
+//    qDebug() <<"MOUSE: "<< mouseX << " :x" << mouseY << " :y";
 
     this->RecalculateViewMatrix();
 }

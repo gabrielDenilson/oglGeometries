@@ -14,6 +14,7 @@ namespace COLORG {
     const static glm::vec3 LIGHT_STEEL_BLUE(0.56, 0.56, 0.73);
     const static glm::vec3 NAVY_BLUE(0.13, 0.13, 0.55);
     const static glm::vec3 BLACK(0.0, 0.0, 0.0);
+    const static glm::vec3 RED(1.0, 0.0, 0.0);
 }
 
 class DrawableObject_Linea : public Geometry, protected QOpenGLExtraFunctions
@@ -25,6 +26,7 @@ public:
     //estado de renderizacion
     Shader shaderProgram;
     Texture Sprite;
+//    Camera2D cameraLinea;
 
     bool transformar;
     glm::mat4 model = glm::mat4(1.0); //inicializacion no afecta a la figura
@@ -49,6 +51,8 @@ public:
     void setTexture(Texture *textureProgram) override;
     void setCamera(Camera2D *viewMatrix) override;
 
+    Shader getShader();
+    Camera2D getCamera();
 
     //!Funciondes de renderizado dinamico
     void setStartPoint(Punto *firstPoint, Geometry *child, QWidget *parent) override;

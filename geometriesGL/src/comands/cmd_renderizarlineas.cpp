@@ -18,6 +18,7 @@ cmd_renderizarLineas::cmd_renderizarLineas() : lineaCords(0.0 , 0.0f, 0.0f, 0.0f
                                                puntosCoord{  { 0.0f , 0.0f},
                                                              { 0.0f , 0.0f}  },
                                                END_LINE(Polyline2D::EndCapStyle::SQUARE),
+                                               shader_Renderiza_Linea(),
                                                thick(0.2)
 {
     initializeOpenGLFunctions();
@@ -92,6 +93,11 @@ cmd_renderizarLineas::~cmd_renderizarLineas()
 void cmd_renderizarLineas::setShaderProgram(const Shader &newShader)
 {
     this->shader_Renderiza_Linea = newShader;
+
+}
+
+Shader cmd_renderizarLineas::*getShaderProgram()
+{
 }
 
 void cmd_renderizarLineas::setTextureProgram(Texture *newTexture)

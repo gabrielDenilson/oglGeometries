@@ -11,6 +11,11 @@ Punto::Punto(float x, float y)
 {
 }
 
+Punto::~Punto()
+{
+
+}
+
 void Punto::setX(float x)
 {
     this->x = x;

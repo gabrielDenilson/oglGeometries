@@ -7,8 +7,9 @@
 class DrawableObject_Punto : public Geometry
 {
 protected:
-    cmd_renderizarPunto *renderable;
 public:
+    cmd_renderizarPunto *renderable;
+
     glm::vec3 Color;
     //estado de renderizacion
     Shader shaderProgram;
@@ -35,18 +36,21 @@ public:
     void setTexture(Texture *textureProgram) override;
     void setCamera(Camera2D *viewMatrix) override;
 
+    vector<Punto> &get_points_area() override;
+    void setColorPunto(glm::vec3 colorSet) override;
 
     //!Funciondes de renderizado dinamico
     void setStartPoint(Punto *firstPoint, Geometry *child, QWidget *parent) override;
     void setEndPoint(Punto *endPoint, Geometry *child, QWidget *parent) override;
 
 
+
     void setDirectPosition(float x, float y);
-    void setColorPunto(glm::vec3 color);
+//    void setColorPunto(glm::vec3 color);
     void setThick(float thick);
     void setColorThick(glm::vec3 color);
 
-    void drawPunto();
+    void drawPunto(QWidget *parent);
 
     void setMVP(const glm::mat4 &MVP);
     glm::mat4 getMVP();

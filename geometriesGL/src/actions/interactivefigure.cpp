@@ -97,6 +97,75 @@ void InteractiveFigure::receiveLastPoint(Punto *puntoFinal, QWidget *parent)
     parent->update();
 }
 
+void InteractiveFigure::doSelect(Punto *P)
+{
+    //get vector of points from groupShapes
+//    points.push_back(Punto(-10, 10));
+//    points.push_back(Punto(10, 10));
+//    points.push_back(Punto(10, -10));
+//    points.push_back(Punto(-10, -10));
+
+        //check if P is in any of the points
+        for(int i = 1; i < this->groupShapes->get_compound_size(); i++){
+            qDebug() << groupShapes->get_compound_size() <<" ELEMENTOS GRUPO vuelta : "<<i;
+            lastPunto = this->groupShapes->getChhilGeometry(i);
+
+
+//            points = lastPunto->get_points_area();
+
+            int loop = 1;
+//            int loop = points.size() / 4;
+            int a = 0, b = 1, c = 2, d = 3;
+            for(int j = 0; j < loop; j++){
+
+                std::vector<Punto> &points = lastPunto->get_points_area();
+                qDebug() << points.size() <<" TAMAÑO PUNTOS";
+                if(checkSelect(P, &points[a], &points[b], &points[c], &points[d])){
+                    qDebug() << "Seleccionado: " << i;
+                    lastPunto->setColorPunto(COLORG::RED);
+                    break;
+                } /*else { qDebug() << "no seleccionado"; }*/
+//                a += 4;
+//                b += 4;
+//                c += 4;
+//                d += 4;
+            }
+        }
+}
+
+bool InteractiveFigure::checkSelect(Punto *P, Punto *A, Punto *B, Punto *C, Punto *D)
+{
+    //Given the points A, B, C, D of a quad, determine if the point P is on the quad.
+    //The quad is defined by the points A, B, C, D.
+    //collision x-axis
+    bool CollisionX = false;
+    if (P->getX() >= A->getX() && P->getX() <= B->getX()) {
+        CollisionX = true;
+        qDebug() << " X SELECT";
+    }
+    else if (P->getX() >= D->getX() && P->getX() <= C->getX()) {
+        CollisionX = true;
+        qDebug() << " X SELECT";
+    }
+    //collision y-axis
+    bool CollisionY = false;
+    if (P->getY() >= C->getY() && P->getY() <= A->getY()) {
+        CollisionY = true;
+        qDebug() << " Y SELECT";
+    }
+    else if (P->getY() >= D->getY() && P->getY() <= B->getY()) {
+        CollisionY = true;
+        qDebug() << " Y SELECT";
+    }
+    //return
+    if (CollisionX && CollisionY) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void InteractiveFigure::create_buffer_lines(int linesSize)
 {
     for(int i = 0; i < linesSize; i++){

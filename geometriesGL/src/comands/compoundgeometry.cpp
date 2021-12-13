@@ -126,6 +126,11 @@ Geometry *CompoundGeometry::getChhilGeometry(int positionChild)
     return this->lista_Componentes_Geometry.at(positionChild);
 }
 
+void CompoundGeometry::setColorPunto(glm::vec3)
+{
+
+}
+
 //Geometry *CompoundGeometry::getChildGeometry(Geometry *geometryPointer)
 //{
 //    Geometry

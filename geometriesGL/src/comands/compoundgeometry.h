@@ -41,7 +41,9 @@ public:
     void setStartPoint(Punto *firstPoint, Geometry *child, QWidget *parent) override;
     void setEndPoint(Punto *lastPoint, Geometry *child, QWidget *parent) override;
     Geometry *getChhilGeometry(int positionChil) override;
+//    vector<Punto> get_points_area() override;
     Geometry *getChildGeometry(Geometry *geometryPointer);
+    void setColorPunto(glm::vec3) override;
 };
 
 #endif // COMPOUNDGEOMETRY_H

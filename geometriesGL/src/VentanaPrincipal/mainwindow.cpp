@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    qDebug() << path;
 //    QFile file(path);
-    QFile file("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/repositorios/VentanaPrincipal/themes/py_dracula_light.qss");
+    QFile file("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/repositorios/VentanaPrincipal/themes/py_dracula_dark.qss");
 
 //    interface_modulos func;
     interface_modulos::theme(this, file, true);

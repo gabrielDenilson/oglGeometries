@@ -1,4 +1,4 @@
-QT       += core gui opengl
+QT       += core gui opengl sql
 
 LIBS += -lopengl32
 
@@ -30,8 +30,7 @@ SOURCES += \
     geometriesGL/res/focmaths.cpp \
     geometriesGL/src/VentanaPrincipal/customgrip.cpp \
     geometriesGL/src/VentanaPrincipal/interface_modulos.cpp \
-    geometriesGL/src/VentanaPrincipal/mainsimplewindow.cpp \
-    geometriesGL/src/VentanaPrincipal/mainwindow.cpp \
+    geometriesGL/src/VentanaPrincipal/mainhome.cpp \
     geometriesGL/src/VentanaPrincipal/settings.cpp \
     geometriesGL/src/actions/camera2d.cpp \
     geometriesGL/src/actions/interactivefigure.cpp \
@@ -50,6 +49,10 @@ SOURCES += \
     geometriesGL/src/comands/shader.cpp \
     geometriesGL/src/comands/spriterender.cpp \
     geometriesGL/src/comands/texture.cpp \
+    geometriesGL/src/measureActions/dbclient_interface.cpp \
+    geometriesGL/src/measureActions/dbmanager.cpp \
+    geometriesGL/src/measureActions/dbmanager_interface.cpp \
+    geometriesGL/src/measureActions/form_addclient.cpp \
     linea.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -74,8 +77,7 @@ HEADERS += \
     geometriesGL/res/purebaClase.h \
     geometriesGL/src/VentanaPrincipal/customgrip.h \
     geometriesGL/src/VentanaPrincipal/interface_modulos.h \
-    geometriesGL/src/VentanaPrincipal/mainsimplewindow.h \
-    geometriesGL/src/VentanaPrincipal/mainwindow.h \
+    geometriesGL/src/VentanaPrincipal/mainhome.h \
     geometriesGL/src/VentanaPrincipal/settings.h \
     geometriesGL/src/actions/actionsPrueba.h \
     geometriesGL/src/actions/camera2d.h \
@@ -96,6 +98,10 @@ HEADERS += \
     geometriesGL/src/comands/spriterender.h \
     geometriesGL/src/comands/texture.h \
     geometriesGL/src/forms/formsPrueba.h \
+    geometriesGL/src/measureActions/dbclient_interface.h \
+    geometriesGL/src/measureActions/dbmanager.h \
+    geometriesGL/src/measureActions/dbmanager_interface.h \
+    geometriesGL/src/measureActions/form_addclient.h \
     linea.h \
     mainwindow.h \
     measurewidget.h \
@@ -111,8 +117,8 @@ FORMS += \
     dialog_createfigures.ui \
     form_measures.ui \
     formdrawable.ui \
-    geometriesGL/src/VentanaPrincipal/main.ui \
-    geometriesGL/src/VentanaPrincipal/mainwindow.ui \
+    geometriesGL/src/VentanaPrincipal/mainhome.ui \
+    geometriesGL/src/measureActions/form_addclient.ui \
     mainwindow.ui \
     windowwidget.ui
 
@@ -384,6 +390,7 @@ DISTFILES += \
     geometriesGL/src/VentanaPrincipal/themes/defaultDarkThemeGabo.qss \
     geometriesGL/src/VentanaPrincipal/themes/py_dracula_dark.qss \
     geometriesGL/src/VentanaPrincipal/themes/py_dracula_light.qss \
+    geometriesGL/src/VentanaPrincipal/themes/widgets_dracula.qss \
     shaders/fragmentShader.fs \
     shaders/fragmentShader_spriteRender.frag \
     shaders/vertexShader.vs \

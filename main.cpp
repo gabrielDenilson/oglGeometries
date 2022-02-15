@@ -1,5 +1,5 @@
 
-#include "geometriesGL/src/VentanaPrincipal/mainwindow.h"
+#include "geometriesGL/src/VentanaPrincipal/mainhome.h"
 #include "form_measures.h"
 
 #include <QApplication>
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 //    drawableWidget.show();
 
-    MainWindow ventanaPrincipal(nullptr);
+    MainHome ventanaPrincipal(nullptr);
 
     ventanaPrincipal.show();
 

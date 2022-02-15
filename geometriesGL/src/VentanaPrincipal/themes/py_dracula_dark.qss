@@ -189,45 +189,8 @@ Content App */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QTableWidget */
-QTableWidget {	
-	background-color: transparent;
-	padding: 10px;
-	border-radius: 5px;
-	gridline-color: rgb(44, 49, 58);
-	border-bottom: 1px solid rgb(44, 49, 60);
-}
-QTableWidget::item{
-	border-color: rgb(44, 49, 60);
-	padding-left: 5px;
-	padding-right: 5px;
-	gridline-color: rgb(44, 49, 60);
-}
-QTableWidget::item:selected{
-	background-color: rgb(189, 147, 249);
-}
-QHeaderView::section{
-	background-color: rgb(33, 37, 43);
-	max-width: 30px;
-	border: 1px solid rgb(44, 49, 58);
-	border-style: none;
-    border-bottom: 1px solid rgb(44, 49, 60);
-    border-right: 1px solid rgb(44, 49, 60);
-}
-QTableWidget::horizontalHeader {	
-	background-color: rgb(33, 37, 43);
-}
-QHeaderView::section:horizontal
-{
-    border: 1px solid rgb(33, 37, 43);
-	background-color: rgb(33, 37, 43);
-	padding: 3px;
-	border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
-}
-QHeaderView::section:vertical
-{
-    border: 1px solid rgb(44, 49, 60);
-}
+
+
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 LineEdit */
@@ -250,7 +213,7 @@ QLineEdit:focus {
 PlainTextEdit */
 QPlainTextEdit {
 	background-color: rgb(27, 29, 35);
-	border-radius: 5px;
+        border-radius: 50px;
 	padding: 10px;
 	selection-color: rgb(255, 255, 255);
 	selection-background-color: rgb(255, 121, 198);
@@ -481,17 +444,5 @@ QCommandLinkButton:pressed {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Button */
-#pagesContainer QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	border-radius: 5px;	
-	background-color: rgb(52, 59, 72);
-}
-#pagesContainer QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 2px solid rgb(61, 70, 86);
-}
-#pagesContainer QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 2px solid rgb(43, 50, 61);
-}
+
 

@@ -1,12 +1,12 @@
-#include "customgrip.h"
-# include <QMouseEvent>
+#include "geometriesGL/src/VentanaPrincipal/customgrip.h"
+#include <QMouseEvent>
 
-CustomGrip::CustomGrip(MainWindow *self, QWidget *parent, Qt::Edge, bool disable_color)
+CustomGrip::CustomGrip(MainHome *self, QWidget *parent, Qt::Edge, bool disable_color)
 {
 
 }
 
-void CustomGrip::resize_top(MainWindow *self, QMouseEvent *event)
+void CustomGrip::resize_top(MainHome *self, QMouseEvent *event)
 {
     int height = max(self->parent->minimumHeight(), self->parent->height() - event->y());
     QRect geo = self->geometry();
@@ -15,14 +15,14 @@ void CustomGrip::resize_top(MainWindow *self, QMouseEvent *event)
     event->accept();
 }
 
-void CustomGrip::resize_bottom(MainWindow *self, QMouseEvent *event)
+void CustomGrip::resize_bottom(MainHome *self, QMouseEvent *event)
 {
     int height = max(self->parent->minimumHeight(), self->height() - event->x());
     self->parent->resize(self->parent->width(), height);
     event->accept();
 }
 
-void CustomGrip::resize_left(MainWindow *self, QMouseEvent *event)
+void CustomGrip::resize_left(MainHome *self, QMouseEvent *event)
 {
     int width = max(self->parent->minimumHeight(), self->parent->width() - event->x());
     QRect geo = self->geometry();
@@ -31,7 +31,7 @@ void CustomGrip::resize_left(MainWindow *self, QMouseEvent *event)
     event->accept();
 }
 
-void CustomGrip::resize_right(MainWindow *self, QMouseEvent *event)
+void CustomGrip::resize_right(MainHome *self, QMouseEvent *event)
 {
     int width = max(self->parent->minimumHeight(), self->width() - event->x());
     self->parent->resize(width, self->parent->height());

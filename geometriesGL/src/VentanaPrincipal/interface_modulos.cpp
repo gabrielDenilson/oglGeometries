@@ -1,14 +1,16 @@
-#include "interface_modulos.h"
+#include "geometriesGL/src/VentanaPrincipal/interface_modulos.h"
 
 
 #include <QMouseEvent>
 
-#include "settings.h"
+#include "geometriesGL/src/VentanaPrincipal/settings.h"
 
-//#include "ui_mainwindow.h"
-#include "ui_main.h"
+#include "ui_mainhome.h"
 
 #include <QStyle>
+
+#include <QDir>
+#include <QDebug>
 
 
 
@@ -22,7 +24,7 @@ interface_modulos::~interface_modulos()
 
 }
 
-void interface_modulos::maximize_restore(MainWindow *self)
+void interface_modulos::maximize_restore(MainHome *self)
 {
     bool status = GLOBAL_STATE;
     if(status == false){
@@ -67,7 +69,7 @@ QString interface_modulos::deselectMenu(QString getStyle)
     return deselect;
 }
 
-void interface_modulos::selectStandardMenu(MainWindow *self, QWidget *widget)
+void interface_modulos::selectStandardMenu(MainHome *self, QWidget *widget)
 {
     QList<QPushButton *> list = self->ui->topMenu->findChildren<QPushButton *>();
     for (int i = 0; i < list.size(); i++) {
@@ -77,7 +79,7 @@ void interface_modulos::selectStandardMenu(MainWindow *self, QWidget *widget)
     }
 }
 
-void interface_modulos::resetStyle(MainWindow *self, QWidget *widget)
+void interface_modulos::resetStyle(MainHome *self, QWidget *widget)
 {
     QList<QPushButton *> list = self->ui->topMenu->findChildren<QPushButton *>();
     for (int i = 0; i < list.size(); i++) {
@@ -87,19 +89,19 @@ void interface_modulos::resetStyle(MainWindow *self, QWidget *widget)
     }
 }
 
-void interface_modulos::dobleClickMaximizeRestore(MainWindow *self, QMouseEvent *event)
+void interface_modulos::dobleClickMaximizeRestore(MainHome *self, QMouseEvent *event)
 {
 
 }
 
-void interface_modulos::uiDefinitions(MainWindow)
+void interface_modulos::uiDefinitions(MainHome)
 {
 
 }
 
 
 
-void interface_modulos::toggleMenu(MainWindow *self, bool enable)
+void interface_modulos::toggleMenu(MainHome *self, bool enable)
 {
     int width;
     int maxExtend;
@@ -129,7 +131,7 @@ void interface_modulos::toggleMenu(MainWindow *self, bool enable)
     }
 }
 
-void interface_modulos::toggleLeftBox(MainWindow *self, bool enable)
+void interface_modulos::toggleLeftBox(MainHome *self, bool enable)
 {
     int widthRightBox = 0;
     int width = 0;
@@ -167,7 +169,7 @@ void interface_modulos::toggleLeftBox(MainWindow *self, bool enable)
     start_box_animation(self, width, widthRightBox, "left");
 }
 
-void interface_modulos::toggleRightBox(MainWindow *self, bool enable)
+void interface_modulos::toggleRightBox(MainHome *self, bool enable)
 {
     int widthLeftBox = 0;
     int width = 0;
@@ -205,7 +207,7 @@ void interface_modulos::toggleRightBox(MainWindow *self, bool enable)
     start_box_animation(self, widthLeftBox, width, "right");
 }
 
-void interface_modulos::start_box_animation(MainWindow *self, int left_box_width, int right_box_width, string direction)
+void interface_modulos::start_box_animation(MainHome *self, int left_box_width, int right_box_width, string direction)
 {
     int right_width = 0;
     int left_width = 0;
@@ -247,7 +249,7 @@ void interface_modulos::start_box_animation(MainWindow *self, int left_box_width
     self->group->start();
 }
 
-void interface_modulos::theme(MainWindow *self, QFile &file, bool use_theme)
+void interface_modulos::theme(MainHome *self, QFile &file, bool use_theme)
 {
     if(use_theme){
         QByteArray lineFile;
@@ -267,15 +269,37 @@ void interface_modulos::theme(MainWindow *self, QFile &file, bool use_theme)
     }
 }
 
-void interface_modulos::set_theme(MainWindow *self)
+void interface_modulos::set_theme(MainHome *self)
 {
     self->ui->lineEdit->setStyleSheet("background-color: #6272a4;");
-    self->ui->pushButton->setStyleSheet("background-color: #6272a4;");
-    self->ui->plainTextEdit->setStyleSheet("background-color: #6272a4;");
-    self->ui->tableWidget->setStyleSheet("QScrollBar:vertical { background: #6272a4; } QScrollBar:horizontal { background: #6272a4; }");
-    self->ui->scrollArea->setStyleSheet("QScrollBar:vertical { background: #6272a4; } QScrollBar:horizontal { background: #6272a4; }");
-    self->ui->comboBox->setStyleSheet("background-color: #6272a4;");
-    self->ui->horizontalScrollBar->setStyleSheet("background-color: #6272a4;");
-    self->ui->verticalScrollBar->setStyleSheet("background-color: #6272a4;");
-    self->ui->commandLinkButton->setStyleSheet("color: #ff79c6;");
+//    self->ui->pushButton_buscar->setStyleSheet("background-color: #6272a4;");
+//    self->ui->plainTextEdit->setStyleSheet("background-color: #6272a4;");
+
+// create QFile with direccion of file
+    QFile file("../src/VentanaPrincipal/themes/widgets_dracula.qss");
+
+    //set theme
+    set_themeWidget(self->ui->widgets, file);
+
+    // set spacing between rows in tableWidget
+//    self->ui->scrollArea->setStyleSheet("QScrollBar:vertical { background: #6272a4; } QScrollBar:horizontal { background: #6272a4; }");
+//    self->ui->comboBox->setStyleSheet("background-color: #6272a4;");
+//    self->ui->horizontalScrollBar->setStyleSheet("background-color: #6272a4;");
+//    self->ui->verticalScrollBar->setStyleSheet("background-color: #6272a4;");
+//    self->ui->commandLinkButton->setStyleSheet("color: #ff79c6;");
+}
+
+void interface_modulos::set_themeWidget(QWidget *widget, QFile &file){
+    QByteArray lineFile;
+    QString styleFile;
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    while(!file.atEnd()){
+        lineFile = file.readLine();
+        styleFile.append(lineFile);
+    }
+
+    widget->setStyleSheet(styleFile);
 }

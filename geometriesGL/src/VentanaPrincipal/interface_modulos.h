@@ -1,13 +1,15 @@
 #ifndef INTERFACE_MODULOS_H
 #define INTERFACE_MODULOS_H
 
-#include <mainwindow.h>
-#include "settings.h"
+#include "geometriesGL/src/VentanaPrincipal/settings.h"
+
+#include "mainhome.h"
+
 
 static bool GLOBAL_STATE = false;
 static bool GLOBAL_TITLE_BAR = true;
 
-class interface_modulos : public MainWindow
+class interface_modulos : public MainHome
 {
 public:
     interface_modulos();
@@ -15,10 +17,10 @@ public:
 
 public slots:
 
-    static void maximize_restore(MainWindow *self);
-    static bool returnStatus(MainWindow *self){ return GLOBAL_STATE; }
+    static void maximize_restore(MainHome *self);
+    static bool returnStatus(MainHome *){ return GLOBAL_STATE; }
 
-    static void setStatus(MainWindow, bool status){ GLOBAL_STATE = status; }
+    static void setStatus(MainHome, bool status){ GLOBAL_STATE = status; }
 
     //Seleccionar-Deseleccionar Menu
     //seleccionar
@@ -26,23 +28,27 @@ public slots:
     //deseleccionar
     static QString deselectMenu(QString getStyle);
     //start secection
-    static void selectStandardMenu(MainWindow *self, QWidget *widget);
+    static void selectStandardMenu(MainHome *self, QWidget *widget);
     //reset selection
-    static void resetStyle(MainWindow *self, QWidget *widget);
+    static void resetStyle(MainHome *self, QWidget *widget);
 
     //START GUI DEFINITIONS
-    void dobleClickMaximizeRestore(MainWindow *self, QMouseEvent *event);
+    void dobleClickMaximizeRestore(MainHome *self, QMouseEvent *event);
     void moveWindow(QMouseEvent *event);
-    void resize_Grips(MainWindow *self);
-    void uiDefinitions(MainWindow);
+    void resize_Grips(MainHome *self);
+    void uiDefinitions(MainHome);
 
 
-    static void toggleMenu(MainWindow *self, bool enable);
-    static void toggleLeftBox(MainWindow *self, bool enable);
-    static void toggleRightBox(MainWindow *self, bool enable);
-    static void start_box_animation(MainWindow *self, int left_box_width, int right_box_width, string direction);
-    static void theme(MainWindow *self, QFile &file, bool use_theme);
-    static void set_theme(MainWindow *self);
+    static void toggleMenu(MainHome *self, bool enable);
+    static void toggleLeftBox(MainHome *self, bool enable);
+    static void toggleRightBox(MainHome *self, bool enable);
+    static void start_box_animation(MainHome *self, int left_box_width, int right_box_width, string direction);
+    static void theme(MainHome *self, QFile &file, bool use_theme);
+    static void set_theme(MainHome *self);
+    //function to set theme of a widget
+    static void set_themeWidget(QWidget *widget, QFile &file);
+
+
 
 private:
 

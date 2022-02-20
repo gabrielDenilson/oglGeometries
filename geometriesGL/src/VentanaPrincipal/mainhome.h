@@ -11,6 +11,8 @@
 #include "geometriesGL/src/measureActions/dbmanager.h"
 
 #include "geometriesGL/src/measureActions/form_addclient.h"
+#include "geometriesGL/src/measureActions/form_viewwidget_showpedidos.h"
+#include "geometriesGL/src/measureActions/form_viewwidget_design.h"
 
 using namespace std;
 
@@ -34,7 +36,11 @@ public:
 private:
     QMouseEvent *eventoMouse;
 
-    QSharedPointer<Form_addClient> iP_form_addClient;
+    Form_addClient *iP_form_addClient;
+
+    Form_ViewWidget_ShowPedidos *iP_form_viewwidget_showpedidos;
+
+    Form_ViewWidget_Design *iP_form_viewwidget_design;
 
     QSharedPointer<DbManager_interface> iP_interface;
 
@@ -47,6 +53,11 @@ public:
     QPropertyAnimation *right_box;
     QParallelAnimationGroup *group;
 
+protected:
+
+    QAction *action_showPedidos;
+    QAction *action_deleteClient;
+
 public slots:
     void slotMenuToggle();
     void slotLeftBoxToggle();
@@ -58,9 +69,15 @@ public slots:
     void setCurrentHome4();
 
     void showFormAddClient();
+    void setCurrentPedidosClient();
 
     void makePush();
     void closedDrawing();
+
+    void slot_EmmitPedidos();
+    void slot_EmmitRegistro();
+
+    void slot_printItem(QTableWidgetItem *item);
 
 
 private slots:

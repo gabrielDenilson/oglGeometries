@@ -52,7 +52,12 @@ SOURCES += \
     geometriesGL/src/measureActions/dbclient_interface.cpp \
     geometriesGL/src/measureActions/dbmanager.cpp \
     geometriesGL/src/measureActions/dbmanager_interface.cpp \
+    geometriesGL/src/measureActions/dbpedidos_interface.cpp \
     geometriesGL/src/measureActions/form_addclient.cpp \
+    geometriesGL/src/measureActions/form_itemdesign.cpp \
+    geometriesGL/src/measureActions/form_showpedidos.cpp \
+    geometriesGL/src/measureActions/form_viewwidget_design.cpp \
+    geometriesGL/src/measureActions/form_viewwidget_showpedidos.cpp \
     linea.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -101,7 +106,12 @@ HEADERS += \
     geometriesGL/src/measureActions/dbclient_interface.h \
     geometriesGL/src/measureActions/dbmanager.h \
     geometriesGL/src/measureActions/dbmanager_interface.h \
+    geometriesGL/src/measureActions/dbpedidos_interface.h \
     geometriesGL/src/measureActions/form_addclient.h \
+    geometriesGL/src/measureActions/form_itemdesign.h \
+    geometriesGL/src/measureActions/form_showpedidos.h \
+    geometriesGL/src/measureActions/form_viewwidget_design.h \
+    geometriesGL/src/measureActions/form_viewwidget_showpedidos.h \
     linea.h \
     mainwindow.h \
     measurewidget.h \
@@ -119,6 +129,10 @@ FORMS += \
     formdrawable.ui \
     geometriesGL/src/VentanaPrincipal/mainhome.ui \
     geometriesGL/src/measureActions/form_addclient.ui \
+    geometriesGL/src/measureActions/form_itemdesign.ui \
+    geometriesGL/src/measureActions/form_showpedidos.ui \
+    geometriesGL/src/measureActions/form_viewwidget_design.ui \
+    geometriesGL/src/measureActions/form_viewwidget_showpedidos.ui \
     mainwindow.ui \
     windowwidget.ui
 
@@ -384,9 +398,11 @@ DISTFILES += \
     geometriesGL/src/VentanaPrincipal/images/icons/icon_minimize.png \
     geometriesGL/src/VentanaPrincipal/images/icons/icon_restore.png \
     geometriesGL/src/VentanaPrincipal/images/icons/icon_settings.png \
+    geometriesGL/src/VentanaPrincipal/images/images/File.png \
     geometriesGL/src/VentanaPrincipal/images/images/PyDracula.png \
     geometriesGL/src/VentanaPrincipal/images/images/PyDracula_horizontal.png \
     geometriesGL/src/VentanaPrincipal/images/images/PyDracula_vertical.png \
+    geometriesGL/src/VentanaPrincipal/images/images/document-128.png \
     geometriesGL/src/VentanaPrincipal/themes/defaultDarkThemeGabo.qss \
     geometriesGL/src/VentanaPrincipal/themes/py_dracula_dark.qss \
     geometriesGL/src/VentanaPrincipal/themes/py_dracula_light.qss \

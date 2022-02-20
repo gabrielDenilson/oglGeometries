@@ -165,6 +165,7 @@ public:
     QFrame *row_3;
     QHBoxLayout *horizontalLayout_12;
     QTableWidget *tableWidget;
+    QWidget *widgetPage_pedididos;
     QFrame *extraRightBox;
     QVBoxLayout *verticalLayout_7;
     QFrame *themeSettingsTopDetail;
@@ -823,7 +824,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 397, 218));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 218, 218));
         scrollAreaWidgetContents_2->setStyleSheet(QString::fromUtf8(" QScrollBar:vertical {\n"
 "	border: none;\n"
 "    background: rgb(52, 59, 72);\n"
@@ -1249,6 +1250,7 @@ public:
         tableWidget->setMidLineWidth(8);
         tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         tableWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        tableWidget->setAutoScroll(true);
         tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
         tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -1275,6 +1277,9 @@ public:
         verticalLayout->addWidget(row_3);
 
         stackedWidget->addWidget(widgets);
+        widgetPage_pedididos = new QWidget();
+        widgetPage_pedididos->setObjectName(QString::fromUtf8("widgetPage_pedididos"));
+        stackedWidget->addWidget(widgetPage_pedididos);
 
         verticalLayout_15->addWidget(stackedWidget);
 
@@ -1376,12 +1381,7 @@ public:
         creditsLabel = new QLabel(bottomBar);
         creditsLabel->setObjectName(QString::fromUtf8("creditsLabel"));
         creditsLabel->setMaximumSize(QSize(16777215, 16));
-        QFont font8;
-        font8.setFamily(QString::fromUtf8("Segoe UI"));
-        font8.setBold(false);
-        font8.setItalic(false);
-        font8.setWeight(50);
-        creditsLabel->setFont(font8);
+        creditsLabel->setFont(font);
         creditsLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout_5->addWidget(creditsLabel);
@@ -1446,17 +1446,17 @@ public:
         textEdit->setHtml(QCoreApplication::translate("MainHome", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:12pt; font-weight:600; color:#ff79c6;\">ROGER</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:10pt; color:#ffffff;\">An interface created using QT and qDesigner , and with colors based on the Dracula theme.</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-ind"
-                        "ent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:10pt; color:#ffffff;\">MIT License</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:10pt; color:#bd93f9;\">GeometriesOGL: </span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:12pt; font-weight:600; color:#ff79c6;\">Convert UI</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:10pt;\">DISE\303\221O</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI"
-                        "'; font-size:12pt; font-weight:600; color:#ff79c6;\">Convert QRC</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:9pt; color:#ffffff;\">pyside6-rcc resources.qrc -o resources_rc.py</span></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">ROGER</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">An interface created using QT and qDesigner , and with colors based on the Dracula theme.</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">MIT License</s"
+                        "pan></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#bd93f9;\">GeometriesOGL: </span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">Convert UI</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">DISE\303\221O</p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">Convert QRC</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#ffffff;"
+                        "\">pyside6-rcc resources.qrc -o resources_rc.py</span></p></body></html>", nullptr));
         titleRightInfo->setText(QCoreApplication::translate("MainHome", "RogerEU", nullptr));
 #if QT_CONFIG(tooltip)
         settingsTopBtn->setToolTip(QCoreApplication::translate("MainHome", "Settings", nullptr));

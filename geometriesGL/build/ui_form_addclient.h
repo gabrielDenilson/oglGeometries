@@ -58,13 +58,6 @@ public:
     QLineEdit *lineEdit_ContactoCliente;
     QLabel *label_5;
     QSpacerItem *horizontalSpacer_6;
-    QSpacerItem *verticalSpacer_5;
-    QHBoxLayout *horizontalLayout_5;
-    QSpacerItem *horizontalSpacer_7;
-    QLabel *label_2;
-    QSpacerItem *horizontalSpacer_8;
-    QComboBox *comboBox_2;
-    QSpacerItem *horizontalSpacer_9;
     QSpacerItem *verticalSpacer_6;
     QHBoxLayout *horizontalLayout_8;
     QSpacerItem *horizontalSpacer_14;
@@ -82,7 +75,7 @@ public:
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        horizontalLayout_7->setContentsMargins(5, 12, 5, 9);
+        horizontalLayout_7->setContentsMargins(5, 19, 5, 9);
         label_AddClient = new QLabel(Form_addClient);
         label_AddClient->setObjectName(QString::fromUtf8("label_AddClient"));
 
@@ -94,6 +87,14 @@ public:
 
         dateTimeEdit_Client = new QDateTimeEdit(Form_addClient);
         dateTimeEdit_Client->setObjectName(QString::fromUtf8("dateTimeEdit_Client"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(dateTimeEdit_Client->sizePolicy().hasHeightForWidth());
+        dateTimeEdit_Client->setSizePolicy(sizePolicy);
+        dateTimeEdit_Client->setReadOnly(true);
+        dateTimeEdit_Client->setProperty("showGroupSeparator", QVariant(false));
+        dateTimeEdit_Client->setCalendarPopup(true);
 
         horizontalLayout_7->addWidget(dateTimeEdit_Client);
 
@@ -114,6 +115,15 @@ public:
 
         lineEdit_idClient = new QLineEdit(Form_addClient);
         lineEdit_idClient->setObjectName(QString::fromUtf8("lineEdit_idClient"));
+        lineEdit_idClient->setStyleSheet(QString::fromUtf8(" QLineEdit{\n"
+"    color: white;\n"
+"    background-color: rgb(27, 29, 35);\n"
+"    border-radius: 7px;\n"
+"    border: 2px solid rgb(33, 37, 43);\n"
+"    padding: 5px;\n"
+"    padding-left: 10px;\n"
+"}"));
+        lineEdit_idClient->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         horizontalLayout_6->addWidget(lineEdit_idClient);
 
@@ -145,11 +155,11 @@ public:
         comboBox_3->addItem(QString());
         comboBox_3->addItem(QString());
         comboBox_3->setObjectName(QString::fromUtf8("comboBox_3"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(comboBox_3->sizePolicy().hasHeightForWidth());
-        comboBox_3->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(comboBox_3->sizePolicy().hasHeightForWidth());
+        comboBox_3->setSizePolicy(sizePolicy1);
         QFont font;
         font.setFamily(QString::fromUtf8("Segoe UI"));
         font.setPointSize(10);
@@ -252,57 +262,6 @@ public:
 
         verticalLayout_4->addLayout(horizontalLayout_4);
 
-        verticalSpacer_5 = new QSpacerItem(20, 19, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_4->addItem(verticalSpacer_5);
-
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setSpacing(16);
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        horizontalLayout_5->setContentsMargins(9, 22, -1, 18);
-        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
-
-        horizontalLayout_5->addItem(horizontalSpacer_7);
-
-        label_2 = new QLabel(Form_addClient);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        horizontalLayout_5->addWidget(label_2);
-
-        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
-
-        horizontalLayout_5->addItem(horizontalSpacer_8);
-
-        comboBox_2 = new QComboBox(Form_addClient);
-        comboBox_2->addItem(QString());
-        comboBox_2->addItem(QString());
-        comboBox_2->addItem(QString());
-        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(comboBox_2->sizePolicy().hasHeightForWidth());
-        comboBox_2->setSizePolicy(sizePolicy1);
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Segoe UI"));
-        font1.setPointSize(10);
-        font1.setBold(false);
-        font1.setItalic(false);
-        font1.setWeight(50);
-        comboBox_2->setFont(font1);
-        comboBox_2->setAutoFillBackground(false);
-        comboBox_2->setIconSize(QSize(16, 16));
-        comboBox_2->setFrame(true);
-
-        horizontalLayout_5->addWidget(comboBox_2);
-
-        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
-
-        horizontalLayout_5->addItem(horizontalSpacer_9);
-
-
-        verticalLayout_4->addLayout(horizontalLayout_5);
-
         verticalSpacer_6 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer_6);
@@ -352,8 +311,7 @@ public:
         QWidget::setTabOrder(lineEdit_idClient, comboBox_3);
         QWidget::setTabOrder(comboBox_3, lineEdit_apellidoCliente);
         QWidget::setTabOrder(lineEdit_apellidoCliente, lineEdit_ContactoCliente);
-        QWidget::setTabOrder(lineEdit_ContactoCliente, comboBox_2);
-        QWidget::setTabOrder(comboBox_2, btn_agregar);
+        QWidget::setTabOrder(lineEdit_ContactoCliente, btn_agregar);
 
         retranslateUi(Form_addClient);
 
@@ -364,7 +322,7 @@ public:
     {
         Form_addClient->setWindowTitle(QCoreApplication::translate("Form_addClient", "Form", nullptr));
         label_AddClient->setText(QCoreApplication::translate("Form_addClient", "Agregar Cliente", nullptr));
-        dateTimeEdit_Client->setDisplayFormat(QCoreApplication::translate("Form_addClient", "d-M-yyyy HH-mm", nullptr));
+        dateTimeEdit_Client->setDisplayFormat(QCoreApplication::translate("Form_addClient", "d-M-yyyy HH:mm:ss", nullptr));
         label_id->setText(QCoreApplication::translate("Form_addClient", "Id", nullptr));
         comboBox_3->setItemText(0, QCoreApplication::translate("Form_addClient", "M", nullptr));
         comboBox_3->setItemText(1, QCoreApplication::translate("Form_addClient", "F", nullptr));
@@ -373,11 +331,6 @@ public:
         label_nombre->setText(QCoreApplication::translate("Form_addClient", "Nombre", nullptr));
         label_4->setText(QCoreApplication::translate("Form_addClient", "Apellido", nullptr));
         label_5->setText(QCoreApplication::translate("Form_addClient", "Contacto", nullptr));
-        label_2->setText(QCoreApplication::translate("Form_addClient", "Tipo", nullptr));
-        comboBox_2->setItemText(0, QCoreApplication::translate("Form_addClient", "A medida", nullptr));
-        comboBox_2->setItemText(1, QCoreApplication::translate("Form_addClient", "Informal", nullptr));
-        comboBox_2->setItemText(2, QCoreApplication::translate("Form_addClient", "Servicio de arreglo", nullptr));
-
         btn_agregar->setText(QCoreApplication::translate("Form_addClient", "AGREGAR", nullptr));
         btn_cancelar->setText(QCoreApplication::translate("Form_addClient", "CANCELAR", nullptr));
     } // retranslateUi

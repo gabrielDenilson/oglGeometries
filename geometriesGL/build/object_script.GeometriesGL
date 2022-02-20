@@ -27,7 +27,12 @@ texture.o
 dbclient_interface.o
 dbmanager.o
 dbmanager_interface.o
+dbpedidos_interface.o
 form_addclient.o
+form_itemdesign.o
+form_showpedidos.o
+form_viewwidget_design.o
+form_viewwidget_showpedidos.o
 linea.o
 main.o
 mainwindow.o
@@ -45,6 +50,10 @@ moc_form_measures.o
 moc_formdrawable.o
 moc_mainhome.o
 moc_form_addclient.o
+moc_form_itemdesign.o
+moc_form_showpedidos.o
+moc_form_viewwidget_design.o
+moc_form_viewwidget_showpedidos.o
 moc_mainwindow.o
 moc_renderfigures.o
 moc_widgettrazado.o

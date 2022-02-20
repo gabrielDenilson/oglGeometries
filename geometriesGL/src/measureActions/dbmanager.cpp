@@ -317,5 +317,151 @@ QStringList DbManager::getFirstRow(QString tableName)
     return firstRow;
 }
 
+int DbManager::getLastIdClient(QString tableName)
+{
+    //Create a query to get the last id in the table
+    QSqlQuery query;
+    query.prepare("SELECT id FROM " + tableName + " ORDER BY id DESC LIMIT 1");
+
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+        return -1;
+    }
+
+    //Get the last id
+    query.next();
+    int lastId = query.value(0).toInt();
+
+    return lastId;
+}
+
+void DbManager::addClient(QStringList data)
+{
+    //Get the first QString from the QStringList and convert it to an int
+    int id = data.at(0).toInt();
+
+    //get the second QString from the QStringList
+    QString date = data.at(1);
+
+    //Get the second QString from the QStringList
+    QString name = data.at(2);
+
+    //Get the third QString from the QStringList
+    QString lastName = data.at(3);
+
+    //Get the fourth QString from the QStringList
+    QString contact = data.at(4);
+
+    //Get the fifth QString from the QStringList
+    QString pedidos = data.at(5);
+
+    //Get the sixth QString from the QStringList
+    QString tipo = data.at(6);
+
+    //Create a query to insert the data into the table
+    QSqlQuery query;
+    query.prepare("INSERT INTO ClientR (id, fechaRegistro, nombre, apellido, contacto, design, tipo) VALUES (:id, :date, :name, :lastName, :contact, :pedidos, :tipo)");
+
+    //Bind the values to the query
+    query.bindValue(":id", id);
+    query.bindValue(":date", date);
+    query.bindValue(":name", name);
+    query.bindValue(":lastName", lastName);
+    query.bindValue(":contact", contact);
+    query.bindValue(":pedidos", pedidos);
+    query.bindValue(":tipo", tipo);
+
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+    }
+
+    qDebug() << "Client added.";
+    
+
+}
+
+QStringList DbManager::getPedidoData(QString tableName, int idCliente)
+{
+    //Create a query to get the data from the table PedidosR where the idCliente is equal to the idCliente parameter
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " + tableName + " WHERE id_Cliente = " + QString::number(idCliente));
+    
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+        return QStringList();
+    }
+
+    //Get the data
+    query.next();
+    QStringList data;
+
+    for(int i = 0; i < query.record().count(); i++)
+    {
+        data.append(query.value(i).toString());
+    }
+
+    return data;
+}
+
+
+
+int DbManager::getNumeroPedidos(QString tableName, int idCliente)
+{
+    // Create a query to get the data from the table PedidosR where the idCliente is equal to the idCliente parameter
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM " + tableName + " WHERE id_cliente = " + QString::number(idCliente));
+
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+        return -1;
+    }
+
+    //Get the data
+    query.next();
+    int numeroPedidos = query.value(0).toInt();
+
+    return numeroPedidos;
+}
+
+
+
+std::vector<QStringList> DbManager::getPedidoData(int idCliente)
+{
+    //Create a vector to store the data
+    vector<QStringList> pedidoData;
+
+    //Create a query to get the data from the table PedidosR where the idCliente is equal to the idCliente parameter
+    QSqlQuery query;
+    query.prepare("SELECT * FROM PedidosR WHERE id_cliente = " + QString::number(idCliente));
+
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+        return pedidoData;
+    }
+
+    //Get the data
+    while(query.next())
+    {
+        QStringList data;
+        for(int i = 0; i < query.record().count(); i++)
+        {
+            data.append(query.value(i).toString());
+        }
+        pedidoData.push_back(data);
+    }
+
+    return pedidoData;
+}
+
 
 

@@ -20,7 +20,7 @@
       <number>5</number>
      </property>
      <property name="topMargin">
-      <number>12</number>
+      <number>19</number>
      </property>
      <property name="rightMargin">
       <number>5</number>
@@ -50,8 +50,23 @@
      </item>
      <item>
       <widget class="QDateTimeEdit" name="dateTimeEdit_Client">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="showGroupSeparator" stdset="0">
+        <bool>false</bool>
+       </property>
        <property name="displayFormat">
-        <string>d-M-yyyy HH-mm</string>
+        <string>d-M-yyyy HH:mm:ss</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -89,7 +104,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_idClient"/>
+      <widget class="QLineEdit" name="lineEdit_idClient">
+       <property name="styleSheet">
+        <string notr="true"> QLineEdit{
+    color: white;
+    background-color: rgb(27, 29, 35);
+    border-radius: 7px;
+    border: 2px solid rgb(33, 37, 43);
+    padding: 5px;
+    padding-left: 10px;
+}</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -365,136 +394,6 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer_5">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>19</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <property name="spacing">
-      <number>16</number>
-     </property>
-     <property name="leftMargin">
-      <number>9</number>
-     </property>
-     <property name="topMargin">
-      <number>22</number>
-     </property>
-     <property name="bottomMargin">
-      <number>18</number>
-     </property>
-     <item>
-      <spacer name="horizontalSpacer_7">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Preferred</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Tipo</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_8">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Preferred</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>10</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>A medida</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Informal</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Servicio de arreglo</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_9">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Preferred</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
     <spacer name="verticalSpacer_6">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -623,7 +522,6 @@
   <tabstop>comboBox_3</tabstop>
   <tabstop>lineEdit_apellidoCliente</tabstop>
   <tabstop>lineEdit_ContactoCliente</tabstop>
-  <tabstop>comboBox_2</tabstop>
   <tabstop>btn_agregar</tabstop>
  </tabstops>
  <resources/>

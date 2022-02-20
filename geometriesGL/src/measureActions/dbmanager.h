@@ -53,6 +53,16 @@ public:
     static QStringList getColumnNames(QString tableName);
     static QStringList getFirstRow(QString tableName);
 
+
+    //ADD NEW CLIENT FORM FUNCTIONS
+    static int getLastIdClient(QString tableName);
+    static void addClient(QStringList data);
+
+    // ADD NEW PEDIDO FORM FUNCTIONS
+    static QStringList getPedidoData(QString tableName, int idCliente);
+    static int getNumeroPedidos(QString tableName, int idCliente);
+    static std::vector<QStringList> getPedidoData(int idCliente);
+
 private:
     QSqlDatabase mi_dataBase;
 

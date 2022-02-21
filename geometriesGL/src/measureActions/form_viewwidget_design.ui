@@ -19,7 +19,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Diseños</string>
        </property>
       </widget>
      </item>
@@ -37,9 +37,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_agregarDiseno">
        <property name="text">
-        <string>PushButton</string>
+        <string>Agregar Diseño</string>
        </property>
       </widget>
      </item>

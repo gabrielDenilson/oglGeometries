@@ -19,8 +19,6 @@ MainHome::MainHome(QWidget *parent)
     // remove border
     this->setWindowFlags(Qt::FramelessWindowHint);
 
-    //    QString path = QDir().absoluteFilePath("C:/Users/GabrielSinn/OneDrive/Documento/QML_all/repositorios/VentanaPrincipal/themes/py_dracula_dark.qss");
-
     qDebug() << "Coneccion a base de datos /n";
     // crear objeto ip_dadatabe
 
@@ -28,10 +26,10 @@ MainHome::MainHome(QWidget *parent)
 
 
 
-    //    QFile file(path);
-        QFile file("C:/Users/GabrielSinn/OneDrive/Documentos/QML_all/repositorios/oglGeometries/geometriesGL/src/VentanaPrincipal/themes/py_dracula_dark.qss");
+        //    QFile file(path);
+        QFile file("../src/VentanaPrincipal/themes/py_dracula_dark.qss");
 
-    //    interface_modulos func;
+        //    interface_modulos func;
         interface_modulos::theme(this, file, true);
         interface_modulos::set_theme(this);
 
@@ -40,7 +38,7 @@ MainHome::MainHome(QWidget *parent)
         //set the current home
         setCurrentHome();
 
-    //    interface_modulos function;
+        //interface_modulos function;
 
         connect(ui->closeAppBtn, SIGNAL(clicked() ), this, SLOT(close()));
         connect(ui->maximizeRestoreAppBtn, SIGNAL(clicked() ), this, SLOT(showMaximized()));
@@ -60,13 +58,11 @@ MainHome::MainHome(QWidget *parent)
         //connect button ui->btn_addClient to slot showFormAddClient
         connect(ui->btn_addClient, SIGNAL(clicked()), this, SLOT(showFormAddClient()));
 
-    //    connect(ui->pushButtonStartDrawing, SIGNAL(clicked()), this, SLOT(slotRightBoxToggle()));
+        //    connect(ui->pushButtonStartDrawing, SIGNAL(clicked()), this, SLOT(slotRightBoxToggle()));
 
         animation = new QPropertyAnimation(widget->home, "geometry");
 
          ////////////////////////////    2   contructor of page ///////////////////////////
-
-
 
 
 
@@ -128,12 +124,7 @@ void MainHome::setCurrentHome()
 
 void MainHome::setCurrentHome2()
 {
-    // create form viewwidget_design
-   iP_form_viewwidget_design = new Form_ViewWidget_Design(this);
-    // add form viewwidget_design to widget design
-    ui->stackedWidget->addWidget(iP_form_viewwidget_design);
-
-    ui->stackedWidget->setCurrentWidget(iP_form_viewwidget_design);
+    ui->stackedWidget->setCurrentWidget(ui->design);
     interface_modulos::resetStyle(this, ui->btn_widgets);
     ui->btn_widgets->setStyleSheet(interface_modulos::selectMenu(ui->btn_widgets->styleSheet()));
 }

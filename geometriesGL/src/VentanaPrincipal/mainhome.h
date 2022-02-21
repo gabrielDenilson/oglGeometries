@@ -12,7 +12,7 @@
 
 #include "geometriesGL/src/measureActions/form_addclient.h"
 #include "geometriesGL/src/measureActions/form_viewwidget_showpedidos.h"
-#include "geometriesGL/src/measureActions/form_viewwidget_design.h"
+
 
 using namespace std;
 
@@ -39,8 +39,6 @@ private:
     Form_addClient *iP_form_addClient;
 
     Form_ViewWidget_ShowPedidos *iP_form_viewwidget_showpedidos;
-
-    Form_ViewWidget_Design *iP_form_viewwidget_design;
 
     QSharedPointer<DbManager_interface> iP_interface;
 

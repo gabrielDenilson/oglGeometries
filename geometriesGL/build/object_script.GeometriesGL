@@ -30,6 +30,7 @@ dbmanager_interface.o
 dbpedidos_interface.o
 form_addclient.o
 form_itemdesign.o
+form_new_design_file.o
 form_showpedidos.o
 form_viewwidget_design.o
 form_viewwidget_showpedidos.o
@@ -51,6 +52,7 @@ moc_formdrawable.o
 moc_mainhome.o
 moc_form_addclient.o
 moc_form_itemdesign.o
+moc_form_new_design_file.o
 moc_form_showpedidos.o
 moc_form_viewwidget_design.o
 moc_form_viewwidget_showpedidos.o

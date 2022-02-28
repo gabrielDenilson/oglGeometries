@@ -2,6 +2,7 @@
 #define FORM_NEW_DESIGN_FILE_H
 
 #include <QWidget>
+#include <QStringList>
 
 namespace Ui {
 class Form_New_Design_File;
@@ -15,10 +16,18 @@ public:
     explicit Form_New_Design_File(QWidget *parent = nullptr);
     ~Form_New_Design_File();
 
+    // function to store all rows of tableWidget_columnsDiseno
+    QStringList storeRows();
+
 public slots:
     
     void addRow();
     void lessRow();
+    void slot_receiveSaveDiseno();
+
+signals:
+
+    void signal_AceptarForm(QStringList lista_rows);
     
 
 private:
@@ -27,12 +36,8 @@ private:
 
     // Name of the table
     QString table_name;
-    QString table_id;
-    // properties of new design file
-    QString table_description;
-    
     // properties of new columns in design file
-    std::vector<QString> column_measures;
+    QStringList rows_measure;
 
 };
 

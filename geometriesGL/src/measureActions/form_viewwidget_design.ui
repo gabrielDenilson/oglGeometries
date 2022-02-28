@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0,0">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -35,6 +35,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_update">
+       <property name="text">
+        <string>Actualizar</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_agregarDiseno">
@@ -63,7 +70,7 @@
         <x>0</x>
         <y>0</y>
         <width>818</width>
-        <height>531</height>
+        <height>527</height>
        </rect>
       </property>
      </widget>

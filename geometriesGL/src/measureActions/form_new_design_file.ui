@@ -40,12 +40,40 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_unidadMedida"/>
+        <widget class="QComboBox" name="comboBox_unidadMedida">
+         <item>
+          <property name="text">
+           <string>Centimetro</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Metro</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pulgada</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableWidget_columnsDiseno"/>
+      <widget class="QTableWidget" name="tableWidget_columnsDiseno">
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,0">

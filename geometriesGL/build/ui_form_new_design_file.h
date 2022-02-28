@@ -78,6 +78,10 @@ public:
         horizontalLayout_2->addWidget(label_2);
 
         comboBox_unidadMedida = new QComboBox(Form_New_Design_File);
+        comboBox_unidadMedida->addItem(QString());
+        comboBox_unidadMedida->addItem(QString());
+        comboBox_unidadMedida->addItem(QString());
+        comboBox_unidadMedida->addItem(QString());
         comboBox_unidadMedida->setObjectName(QString::fromUtf8("comboBox_unidadMedida"));
 
         horizontalLayout_2->addWidget(comboBox_unidadMedida);
@@ -87,6 +91,8 @@ public:
 
         tableWidget_columnsDiseno = new QTableWidget(Form_New_Design_File);
         tableWidget_columnsDiseno->setObjectName(QString::fromUtf8("tableWidget_columnsDiseno"));
+        tableWidget_columnsDiseno->horizontalHeader()->setVisible(false);
+        tableWidget_columnsDiseno->verticalHeader()->setVisible(false);
 
         verticalLayout->addWidget(tableWidget_columnsDiseno);
 
@@ -146,6 +152,11 @@ public:
         Form_New_Design_File->setWindowTitle(QCoreApplication::translate("Form_New_Design_File", "Form", nullptr));
         label->setText(QCoreApplication::translate("Form_New_Design_File", "Nombre de dise\303\261o", nullptr));
         label_2->setText(QCoreApplication::translate("Form_New_Design_File", "Unidad de medida", nullptr));
+        comboBox_unidadMedida->setItemText(0, QCoreApplication::translate("Form_New_Design_File", "Centimetro", nullptr));
+        comboBox_unidadMedida->setItemText(1, QCoreApplication::translate("Form_New_Design_File", "Metro", nullptr));
+        comboBox_unidadMedida->setItemText(2, QCoreApplication::translate("Form_New_Design_File", "Pulgada", nullptr));
+        comboBox_unidadMedida->setItemText(3, QString());
+
         pushButton_lessRow->setText(QCoreApplication::translate("Form_New_Design_File", "-", nullptr));
         pushButton_addRow->setText(QCoreApplication::translate("Form_New_Design_File", "+", nullptr));
         pushButton_crearDiseno->setText(QCoreApplication::translate("Form_New_Design_File", "CREAR", nullptr));

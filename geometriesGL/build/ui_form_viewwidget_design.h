@@ -29,6 +29,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton_update;
     QPushButton *pushButton_agregarDiseno;
     QFrame *line;
     QScrollArea *scrollArea;
@@ -52,6 +53,11 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
+        pushButton_update = new QPushButton(Form_ViewWidget_Design);
+        pushButton_update->setObjectName(QString::fromUtf8("pushButton_update"));
+
+        horizontalLayout->addWidget(pushButton_update);
+
         pushButton_agregarDiseno = new QPushButton(Form_ViewWidget_Design);
         pushButton_agregarDiseno->setObjectName(QString::fromUtf8("pushButton_agregarDiseno"));
 
@@ -73,7 +79,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 818, 531));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 818, 527));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout->addWidget(scrollArea);
@@ -88,6 +94,7 @@ public:
     {
         Form_ViewWidget_Design->setWindowTitle(QCoreApplication::translate("Form_ViewWidget_Design", "Form", nullptr));
         label->setText(QCoreApplication::translate("Form_ViewWidget_Design", "Dise\303\261os", nullptr));
+        pushButton_update->setText(QCoreApplication::translate("Form_ViewWidget_Design", "Actualizar", nullptr));
         pushButton_agregarDiseno->setText(QCoreApplication::translate("Form_ViewWidget_Design", "Agregar Dise\303\261o", nullptr));
     } // retranslateUi
 

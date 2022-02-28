@@ -174,22 +174,6 @@ bool DbManager::removeAllPersons()
 
 }
 
-bool DbManager::createTable()
-{
-    bool exito = false;
-
-    QSqlQuery consulta;
-    consulta.prepare("CREATE TABLE people(id INTEGER PRIMARY KEY, name TEXT);");
-
-    if (!consulta.exec())
-    {
-        qDebug() << "Couldn't create the table 'people': one might already exist.";
-        exito = false;
-    }
-
-    return exito;
-}
-
 
 //Function to get the number of rows in the table 'tableName' in the database
 int DbManager::getRows(QString tableName) 
@@ -461,6 +445,43 @@ std::vector<QStringList> DbManager::getPedidoData(int idCliente)
     }
 
     return pedidoData;
+}
+
+QStringList DbManager::getTables()
+{
+    //Create a query to get the tables names in the database
+    QSqlQuery query;
+
+    //Execute the query in sqlite
+    if(!query.exec("SELECT name FROM sqlite_master WHERE type = 'table'"))
+    {
+        qDebug() << "Error: " << query.lastError();
+        return QStringList();
+    }
+
+    //Get the tables names
+    QStringList tables;
+    while(query.next())
+    {
+        tables.append(query.value(0).toString());
+    }
+
+    return tables;
+
+}
+
+void DbManager::executeQueryInDataBase(QString query_create_table)
+{
+    // Create a query to create the table
+    QSqlQuery query;
+    query.prepare(query_create_table);
+
+    //Execute the query
+    if(!query.exec())
+    {
+        qDebug() << "Error: " << query.lastError();
+    }
+
 }
 
 

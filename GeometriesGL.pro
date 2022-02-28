@@ -50,6 +50,7 @@ SOURCES += \
     geometriesGL/src/comands/spriterender.cpp \
     geometriesGL/src/comands/texture.cpp \
     geometriesGL/src/measureActions/dbclient_interface.cpp \
+    geometriesGL/src/measureActions/dbdesign_interface.cpp \
     geometriesGL/src/measureActions/dbmanager.cpp \
     geometriesGL/src/measureActions/dbmanager_interface.cpp \
     geometriesGL/src/measureActions/dbpedidos_interface.cpp \
@@ -57,6 +58,7 @@ SOURCES += \
     geometriesGL/src/measureActions/form_itemdesign.cpp \
     geometriesGL/src/measureActions/form_new_design_file.cpp \
     geometriesGL/src/measureActions/form_showpedidos.cpp \
+    geometriesGL/src/measureActions/form_viewinfo_design.cpp \
     geometriesGL/src/measureActions/form_viewwidget_design.cpp \
     geometriesGL/src/measureActions/form_viewwidget_showpedidos.cpp \
     linea.cpp \
@@ -105,6 +107,7 @@ HEADERS += \
     geometriesGL/src/comands/texture.h \
     geometriesGL/src/forms/formsPrueba.h \
     geometriesGL/src/measureActions/dbclient_interface.h \
+    geometriesGL/src/measureActions/dbdesign_interface.h \
     geometriesGL/src/measureActions/dbmanager.h \
     geometriesGL/src/measureActions/dbmanager_interface.h \
     geometriesGL/src/measureActions/dbpedidos_interface.h \
@@ -112,6 +115,7 @@ HEADERS += \
     geometriesGL/src/measureActions/form_itemdesign.h \
     geometriesGL/src/measureActions/form_new_design_file.h \
     geometriesGL/src/measureActions/form_showpedidos.h \
+    geometriesGL/src/measureActions/form_viewinfo_design.h \
     geometriesGL/src/measureActions/form_viewwidget_design.h \
     geometriesGL/src/measureActions/form_viewwidget_showpedidos.h \
     linea.h \
@@ -134,6 +138,7 @@ FORMS += \
     geometriesGL/src/measureActions/form_itemdesign.ui \
     geometriesGL/src/measureActions/form_new_design_file.ui \
     geometriesGL/src/measureActions/form_showpedidos.ui \
+    geometriesGL/src/measureActions/form_viewinfo_design.ui \
     geometriesGL/src/measureActions/form_viewwidget_design.ui \
     geometriesGL/src/measureActions/form_viewwidget_showpedidos.ui \
     mainwindow.ui \

@@ -43,7 +43,6 @@ public:
     static QString getPersonName(int id);
     static bool personExist(const QString& name);
     static bool removeAllPersons();
-    static bool createTable();
 
     static int getRows(QString tableName);
     static int getColumns(QString tableName);
@@ -62,6 +61,10 @@ public:
     static QStringList getPedidoData(QString tableName, int idCliente);
     static int getNumeroPedidos(QString tableName, int idCliente);
     static std::vector<QStringList> getPedidoData(int idCliente);
+
+    // QUERY FUNCTIONS FOR DESIGNS  
+    static QStringList getTables();
+    static void executeQueryInDataBase(QString query_create_table);
 
 private:
     QSqlDatabase mi_dataBase;

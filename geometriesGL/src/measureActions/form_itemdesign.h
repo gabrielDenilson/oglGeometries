@@ -12,17 +12,17 @@ class Form_ItemDesign : public QWidget
     Q_OBJECT
 
 public:
-    explicit Form_ItemDesign(QWidget *parent = nullptr);
+    explicit Form_ItemDesign(QWidget *parent);
+    explicit Form_ItemDesign(QWidget *parent, QString table_name);
     ~Form_ItemDesign();
 
     //reimplemented double click event
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
 
-public:
-    QString tableName;
-
 private:
     Ui::Form_ItemDesign *ui;
+
+    QString tableName; // name of the table
 };
 
 #endif // FORM_ITEMDESIGN_H

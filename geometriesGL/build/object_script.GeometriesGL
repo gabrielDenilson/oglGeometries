@@ -25,6 +25,7 @@ shader.o
 spriterender.o
 texture.o
 dbclient_interface.o
+dbdesign_interface.o
 dbmanager.o
 dbmanager_interface.o
 dbpedidos_interface.o

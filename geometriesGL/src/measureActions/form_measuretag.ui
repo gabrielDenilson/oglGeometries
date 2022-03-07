@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form_MeasureTag</class>
+ <widget class="QWidget" name="Form_MeasureTag">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>84</width>
+    <height>30</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+   <property name="spacing">
+    <number>6</number>
+   </property>
+   <property name="leftMargin">
+    <number>7</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label_name">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Valor</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_deleteMeasure">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {background-color: lightGray; border-radius: 15px; padding: 4px;} QPushButton:hover {background-color: gray;border: 2px solid rgb(61, 70, 86);} QPushButton:pressed {background-color:darkGray;border: 2px solid rgb(43, 50, 61);}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../VentanaPrincipal/resources.qrc">
+       <normaloff>:/icons/images/icons/icon_close.png</normaloff>:/icons/images/icons/icon_close.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>12</width>
+       <height>12</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../VentanaPrincipal/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

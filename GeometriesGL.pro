@@ -56,7 +56,9 @@ SOURCES += \
     geometriesGL/src/measureActions/dbpedidos_interface.cpp \
     geometriesGL/src/measureActions/form_addclient.cpp \
     geometriesGL/src/measureActions/form_itemdesign.cpp \
+    geometriesGL/src/measureActions/form_measuretag.cpp \
     geometriesGL/src/measureActions/form_new_design_file.cpp \
+    geometriesGL/src/measureActions/form_pagedesign.cpp \
     geometriesGL/src/measureActions/form_showpedidos.cpp \
     geometriesGL/src/measureActions/form_viewinfo_design.cpp \
     geometriesGL/src/measureActions/form_viewwidget_design.cpp \
@@ -113,7 +115,9 @@ HEADERS += \
     geometriesGL/src/measureActions/dbpedidos_interface.h \
     geometriesGL/src/measureActions/form_addclient.h \
     geometriesGL/src/measureActions/form_itemdesign.h \
+    geometriesGL/src/measureActions/form_measuretag.h \
     geometriesGL/src/measureActions/form_new_design_file.h \
+    geometriesGL/src/measureActions/form_pagedesign.h \
     geometriesGL/src/measureActions/form_showpedidos.h \
     geometriesGL/src/measureActions/form_viewinfo_design.h \
     geometriesGL/src/measureActions/form_viewwidget_design.h \
@@ -136,7 +140,9 @@ FORMS += \
     geometriesGL/src/VentanaPrincipal/mainhome.ui \
     geometriesGL/src/measureActions/form_addclient.ui \
     geometriesGL/src/measureActions/form_itemdesign.ui \
+    geometriesGL/src/measureActions/form_measuretag.ui \
     geometriesGL/src/measureActions/form_new_design_file.ui \
+    geometriesGL/src/measureActions/form_pagedesign.ui \
     geometriesGL/src/measureActions/form_showpedidos.ui \
     geometriesGL/src/measureActions/form_viewinfo_design.ui \
     geometriesGL/src/measureActions/form_viewwidget_design.ui \
